@@ -68,21 +68,22 @@ public class Huxley : MonoBehaviour
   public Animator Animator { get; private set; }
   public Camera Camera;
   public Rigidbody2D playerPos;
+
   public bool isRunning;
-  //public Health Health { get; private set; }
   private Vector2 posDelta;
   private Vector2 mousePos;
-  private Vector2 movement;
+  public float buffer = 40.0f;
+  //public Health Health { get; private set; }
 
   void Awake()
   {
     MovementController = GetComponent<MovementController>();
     Camera = GameManager.Instance.Camera;
-    playerPos = GetComponent<Rigidbody2D>();
 
     //FireballSpawnPoint = GetComponentInChildren<Transform>();
     MovementController.OnMoveStart += OnMoveStart;
     MovementController.OnMoveStop += OnMoveStop;
+    playerPos = GetComponent<Rigidbody2D>();
     // Health = GetComponent<Health>();
     //Health.OnDeath += OnDeath;
     //Health.OnChanged += OnChanged;
@@ -97,24 +98,114 @@ public class Huxley : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    MovementController.InputMove = Input.GetAxisRaw("Horizontal");
+    MovementController.InputMoveX = Input.GetAxisRaw("Horizontal");
+    MovementController.InputMoveY = Input.GetAxisRaw("Vertical");
 
     float inputX = Input.GetAxisRaw("Horizontal");
     float inputY = Input.GetAxisRaw("Vertical");
-    mousePos = Camera.ScreenToWorldPoint(Input.mousePosition);
 
-    posDelta = mousePos - playerPos.position;
 
-    movement = new Vector2(inputX, inputY);
+    mousePos = Input.mousePosition;
+    Vector2 playerPos = Camera.main.WorldToScreenPoint(transform.position);
 
-    if (mousePos.x > playerPos.position.x)
+
+    posDelta = mousePos - playerPos;
+
+    Debug.Log("deltaX" + Mathf.Abs(posDelta.x));
+    Debug.Log("deltaY" + Mathf.Abs(posDelta.y));
+
+
+    if (mousePos.y > (playerPos.y + 0.1f) && Mathf.Abs(posDelta.x) < buffer)
+    {
+      CurrentDirection = Direction.Up;
+    }
+    else if (mousePos.y < playerPos.y && Mathf.Abs(posDelta.x) < buffer)
+    {
+      CurrentDirection = Direction.Down;
+    }
+    else if (mousePos.x > (playerPos.x + +0.1f) && Mathf.Abs(posDelta.y) < buffer)
     {
       CurrentDirection = Direction.Right;
     }
-    else
+    else if (mousePos.x < playerPos.x && Mathf.Abs(posDelta.y) < buffer)
     {
       CurrentDirection = Direction.Left;
     }
+
+    if (Mathf.Abs(posDelta.x - posDelta.y) < buffer)
+    {
+      if (mousePos.x > (playerPos.x + 0.1f) && mousePos.y > (playerPos.y + 0.1f))
+      {
+        CurrentDirection = Direction.DiagUpRight;
+      }
+      else if (mousePos.x < playerPos.x && mousePos.y > (playerPos.y + 0.1f))
+      {
+        CurrentDirection = Direction.DiagUpLeft;
+      }
+      else if (mousePos.x > (playerPos.x + 0.1f) && mousePos.y < playerPos.y)
+      {
+        CurrentDirection = Direction.DiagDownRight;
+      }
+      else if (mousePos.x < playerPos.x && mousePos.y < playerPos.y)
+      {
+        CurrentDirection = Direction.DiagDownLeft;
+      }
+    }
+
+    if (mousePos.x < (playerPos.x + 0.1f) && mousePos.y > (playerPos.y + 0.1f))
+    {
+      CurrentDirection = Direction.DiagUpLeft;
+    }
+
+
+
+
+
+
+
+
+    /*if (posDelta.x != 0 && posDelta.y != 0)
+    {
+      if (posDelta.x > 0 && posDelta.y > 0)
+      {
+        CurrentDirection = Direction.DiagUpRight;
+      }
+      if (posDelta.x > 0 && posDelta.y < 0)
+      {
+        CurrentDirection = Direction.DiagDownRight;
+      }
+      if (posDelta.x < 0 && posDelta.y > 0)
+      {
+        CurrentDirection = Direction.DiagUpLeft;
+      }
+      if (posDelta.x < 0 && posDelta.y < 0)
+      {
+        CurrentDirection = Direction.DiagDownLeft;
+      }
+
+    }
+    else
+    {
+      if (posDelta.x > 0)
+      {
+        CurrentDirection = Direction.Right;
+      }
+      if (posDelta.x < 0)
+      {
+        CurrentDirection = Direction.Left;
+      }
+      if (posDelta.y > 0)
+      {
+        CurrentDirection = Direction.Up;
+      }
+      if (posDelta.y < 0)
+      {
+        CurrentDirection = Direction.Down;
+      }
+
+    }*/
+
+
 
 
     // Diagonals

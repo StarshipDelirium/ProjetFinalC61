@@ -37,7 +37,8 @@ public class MovementController : MonoBehaviour
   private int _layerMask;
 
   // Send a value to these Input every Update to use PlatformController
-  public float InputMove { get; set; }
+  public float InputMoveX { get; set; }
+  public float InputMoveY { get; set; }
 
   public BoxCollider2D BoxCollider2D { get; private set; }
   public Rigidbody2D Rigidbody2D { get; private set; }
@@ -156,7 +157,7 @@ public class MovementController : MonoBehaviour
 
   private void UpdateMove()
   {
-    if (InputMove != 0.0f)
+    if (InputMoveX != 0.0f || InputMoveY != 0.0f)
       UpdateMoveAcceleration();
     else
       UpdateMoveDeceleration();
@@ -164,11 +165,11 @@ public class MovementController : MonoBehaviour
 
   private void UpdateMoveAcceleration()
   {
-    var direction = new Vector3(InputMove, 0, 0);
+    var direction = new Vector3(InputMoveX, InputMoveY, 0);
     if (direction.magnitude > 1)
       direction = direction.normalized;
 
-    var speedMultiplier = IsWalking ? 1.0f : 2.0f;         //Modify for walk vs running speed
+    var speedMultiplier = IsWalking ? 1.0f : 0.0f;         //Modify for walk vs running speed
     var velocity = Rigidbody2D.velocity;
     velocity.x += direction.x * speedMultiplier * MoveAcceleration * Time.fixedDeltaTime;
     velocity.x = Mathf.Clamp(velocity.x, -MoveSpeed, MoveSpeed);
