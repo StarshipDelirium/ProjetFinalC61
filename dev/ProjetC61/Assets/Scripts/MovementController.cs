@@ -2,6 +2,7 @@
 
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(FacingController))]
 
 /**************************************************************************************
  * Inspiré et adapté à partir du code du professeur Maël Perreault dans le cours C63  *
@@ -43,6 +44,8 @@ public class MovementController : MonoBehaviour
   public BoxCollider2D BoxCollider2D { get; private set; }
   public Rigidbody2D Rigidbody2D { get; private set; }
 
+  public FacingController FacingController { get; private set; }
+
   public bool IsGrounded { get; private set; }
   public bool IsWalled { get; private set; }
   public bool IsWalledLeft { get; private set; }
@@ -56,7 +59,8 @@ public class MovementController : MonoBehaviour
 
   public void Reset()
   {
-    //InputMove = 0;
+    InputMoveX = 0;
+    InputMoveY = 0;
 
     IsGrounded = false;
     IsWalled = false;
@@ -169,7 +173,7 @@ public class MovementController : MonoBehaviour
     if (direction.magnitude > 1)
       direction = direction.normalized;
 
-    var speedMultiplier = IsWalking ? 1.0f : 0.0f;         //Modify for walk vs running speed
+    var speedMultiplier = IsMoving ? 1.0f : 0.0f;         //Modify for walk vs running speed
     var velocity = Rigidbody2D.velocity;
     velocity.x += direction.x * speedMultiplier * MoveAcceleration * Time.fixedDeltaTime;
     velocity.x = Mathf.Clamp(velocity.x, -MoveSpeed, MoveSpeed);
@@ -181,6 +185,7 @@ public class MovementController : MonoBehaviour
       FacingController.Facing = Facing.Right;
 
     InputMove = 0.0f;*/
+
   }
 
   private void UpdateMoveDeceleration()

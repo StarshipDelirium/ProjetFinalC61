@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
     Huxley = FindObjectOfType<Huxley>();
     //Level = FindObjectOfType<Level>();
     Camera = FindObjectOfType<Camera>();
+    Camera.transparencySortMode = TransparencySortMode.Orthographic;
 
     // Turning off a single layer by code
     //Camera.cullingMask &= ~(1 << LayerMask.NameToLayer("EnemyHitbox"));

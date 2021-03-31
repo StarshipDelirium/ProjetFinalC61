@@ -2,18 +2,7 @@
 
 public class Huxley : MonoBehaviour
 {
-  public enum Direction
-  {
-    DiagDownLeft,
-    DiagDownRight,
-    DiagUpLeft,
-    DiagUpRight,
-    Down,
-    Left,
-    Right,
-    Up,
-  }
-
+  FacingController FacingController;
   public enum Animation
   {
     Dead,
@@ -21,20 +10,17 @@ public class Huxley : MonoBehaviour
     Run,
     Walk,
   }
-
-  private Direction _currentDirection;
-  public Direction CurrentDirection
+  public Facing CurrentDirection
   {
-    get { return _currentDirection; }
+    get { return FacingController.Facing; }
     set
     {
-      _currentDirection = value;
+      FacingController.Facing = value;
       UpdateAnimations();
     }
   }
 
   private Animation _currentAnimation;
-
   public Animation CurrentAnimation
   {
     get { return _currentAnimation; }
@@ -51,6 +37,7 @@ public class Huxley : MonoBehaviour
     {
       var prefix = CurrentDirection.ToString();
       var suffix = CurrentAnimation.ToString();
+
       return "Huxley_" + prefix + "_" + suffix;
 
     }
@@ -78,6 +65,7 @@ public class Huxley : MonoBehaviour
   void Awake()
   {
     MovementController = GetComponent<MovementController>();
+    FacingController = GetComponent<FacingController>();
     Camera = GameManager.Instance.Camera;
 
     //FireballSpawnPoint = GetComponentInChildren<Transform>();
@@ -90,7 +78,7 @@ public class Huxley : MonoBehaviour
 
     Animator = GetComponent<Animator>();
 
-    CurrentDirection = Direction.Left;
+    CurrentDirection = Facing.W;
     CurrentAnimation = Animation.Idle;
     isRunning = false;
   }
@@ -101,60 +89,52 @@ public class Huxley : MonoBehaviour
     MovementController.InputMoveX = Input.GetAxisRaw("Horizontal");
     MovementController.InputMoveY = Input.GetAxisRaw("Vertical");
 
-    float inputX = Input.GetAxisRaw("Horizontal");
-    float inputY = Input.GetAxisRaw("Vertical");
-
-
     mousePos = Input.mousePosition;
     Vector2 playerPos = Camera.main.WorldToScreenPoint(transform.position);
 
 
     posDelta = mousePos - playerPos;
 
-    Debug.Log("deltaX" + Mathf.Abs(posDelta.x));
-    Debug.Log("deltaY" + Mathf.Abs(posDelta.y));
-
-
     if (mousePos.y > (playerPos.y + 0.1f) && Mathf.Abs(posDelta.x) < buffer)
     {
-      CurrentDirection = Direction.Up;
+      CurrentDirection = Facing.N;
     }
     else if (mousePos.y < playerPos.y && Mathf.Abs(posDelta.x) < buffer)
     {
-      CurrentDirection = Direction.Down;
+      CurrentDirection = Facing.S;
     }
     else if (mousePos.x > (playerPos.x + +0.1f) && Mathf.Abs(posDelta.y) < buffer)
     {
-      CurrentDirection = Direction.Right;
+      CurrentDirection = Facing.E;
     }
     else if (mousePos.x < playerPos.x && Mathf.Abs(posDelta.y) < buffer)
     {
-      CurrentDirection = Direction.Left;
+      CurrentDirection = Facing.W;
     }
 
     if (Mathf.Abs(posDelta.x - posDelta.y) < buffer)
     {
       if (mousePos.x > (playerPos.x + 0.1f) && mousePos.y > (playerPos.y + 0.1f))
       {
-        CurrentDirection = Direction.DiagUpRight;
+        CurrentDirection = Facing.NE;
       }
       else if (mousePos.x < playerPos.x && mousePos.y > (playerPos.y + 0.1f))
       {
-        CurrentDirection = Direction.DiagUpLeft;
+        CurrentDirection = Facing.NW;
       }
       else if (mousePos.x > (playerPos.x + 0.1f) && mousePos.y < playerPos.y)
       {
-        CurrentDirection = Direction.DiagDownRight;
+        CurrentDirection = Facing.SE;
       }
       else if (mousePos.x < playerPos.x && mousePos.y < playerPos.y)
       {
-        CurrentDirection = Direction.DiagDownLeft;
+        CurrentDirection = Facing.SW;
       }
     }
 
     if (mousePos.x < (playerPos.x + 0.1f) && mousePos.y > (playerPos.y + 0.1f))
     {
-      CurrentDirection = Direction.DiagUpLeft;
+      CurrentDirection = Facing.NW;
     }
 
 
@@ -259,7 +239,7 @@ public class Huxley : MonoBehaviour
       isRunning = true;
     }
 
-    if (CurrentAnimation == Animation.Run)
+    /*if (CurrentAnimation == Animation.Run)
     {
       //var speedRatio = MovementController.CurrentSpeed / MovementController.MoveSpeed;
       //Animator.speed = RunAnimationSpeed.Lerp(speedRatio);
@@ -268,19 +248,21 @@ public class Huxley : MonoBehaviour
     else
     {
       Animator.speed = 1.0f;
-    }
+    }*/
   }
 
   private void OnMoveStart(MovementController controller)
   {
-    if (isRunning)
+    /*if (isRunning)
     {
       CurrentAnimation = Animation.Run;
     }
     else
     {
       CurrentAnimation = Animation.Walk;
-    }
+    }*/
+
+    CurrentAnimation = Animation.Idle;
 
   }
 
