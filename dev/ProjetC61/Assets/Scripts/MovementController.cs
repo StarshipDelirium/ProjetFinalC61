@@ -85,6 +85,21 @@ public class MovementController : MonoBehaviour
   private void Update()
   {
 
+    var horizontal = Input.GetAxisRaw("Horizontal");
+    var vertical = Input.GetAxisRaw("Vertical");
+
+    var move = new Vector3(horizontal, vertical, 0);
+
+    if (move.magnitude > 1)
+    {
+      move = move.normalized;
+    }
+
+
+    transform.position += move * MoveSpeed * Time.deltaTime;
+
+    Debug.Log("IS MOVING: " + IsMoving);
+
   }
 
   private void FixedUpdate()
@@ -161,52 +176,42 @@ public class MovementController : MonoBehaviour
 
   private void UpdateMove()
   {
-    if (InputMoveX != 0.0f || InputMoveY != 0.0f)
-      UpdateMoveAcceleration();
-    else
-      UpdateMoveDeceleration();
-  }
-
-  private void UpdateMoveAcceleration()
-  {
-    var direction = new Vector3(InputMoveX, InputMoveY, 0);
-    if (direction.magnitude > 1)
-      direction = direction.normalized;
-
-    var speedMultiplier = IsMoving ? 1.0f : 0.0f;         //Modify for walk vs running speed
-    var velocity = Rigidbody2D.velocity;
-    velocity.x += direction.x * speedMultiplier * MoveAcceleration * Time.fixedDeltaTime;
-    velocity.x = Mathf.Clamp(velocity.x, -MoveSpeed, MoveSpeed);
-    Rigidbody2D.velocity = velocity;
-
-    /*if (InputMove < 0.0f)
-      FacingController.Facing = Facing.Left;
-    else
-      FacingController.Facing = Facing.Right;
-
-    InputMove = 0.0f;*/
-
-  }
-
-  private void UpdateMoveDeceleration()
-  {
-    var velocity = Rigidbody2D.velocity;
-    if (velocity.x > 0)
+    if (InputMoveX != 0 || InputMoveY != 0)
     {
-      velocity.x -= MoveDeceleration * Time.fixedDeltaTime;
-      if (velocity.x < 0)
-        velocity.x = 0;
+      var direction = new Vector3(InputMoveX, InputMoveY, 0);
+
+      if (direction.magnitude > 1)
+        direction = direction;
+
+      var velocity = Rigidbody2D.velocity;
+
+      if (InputMoveX != 0)
+      {
+        velocity.x += direction.x * MoveSpeed * Time.fixedDeltaTime;
+        velocity.x = Mathf.Clamp(velocity.x, -MoveSpeed, MoveSpeed);
+      }
+      if (InputMoveY != 0)
+      {
+        velocity.y += direction.y * MoveSpeed * Time.fixedDeltaTime;
+        velocity.y = Mathf.Clamp(velocity.y, -MoveSpeed, MoveSpeed);
+      }
+
+      Rigidbody2D.velocity = velocity;
+
+      InputMoveX = 0.0f;
+      InputMoveY = 0.0f;
     }
     else
     {
-      velocity.x += MoveDeceleration * Time.fixedDeltaTime;
-      if (velocity.x > 0)
-        velocity.x = 0;
+      var velocity = Rigidbody2D.velocity;
+
+      velocity.x = 0.0f;
+      velocity.y = 0.0f;
+
+      Rigidbody2D.velocity = velocity;
     }
 
-    Rigidbody2D.velocity = velocity;
   }
-
   private void SendEvents(PreviousState previousState)
   {
     // Grounded
@@ -236,7 +241,7 @@ public class MovementController : MonoBehaviour
 
     // Started moving
     if (!IsMoving
-        && Rigidbody2D.velocity.x != 0.0f)
+        && Rigidbody2D.velocity.x != 0.0f || Rigidbody2D.velocity.y != 0.0f)
     {
       IsMoving = true;
       OnMoveStart?.Invoke(this);
@@ -244,7 +249,7 @@ public class MovementController : MonoBehaviour
 
     // Stopped moving
     if (IsMoving
-        && Rigidbody2D.velocity.x == 0.0f)
+        && Rigidbody2D.velocity.x == 0.0f && Rigidbody2D.velocity.y == 0.0f)
     {
       IsMoving = false;
       OnMoveStop?.Invoke(this);

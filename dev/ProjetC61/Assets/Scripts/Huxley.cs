@@ -5,9 +5,7 @@ public class Huxley : MonoBehaviour
   FacingController FacingController;
   public enum Animation
   {
-    Dead,
     Idle,
-    Run,
     Walk,
   }
   public Facing CurrentDirection
@@ -35,10 +33,10 @@ public class Huxley : MonoBehaviour
   {
     get
     {
-      var prefix = CurrentDirection.ToString();
+      //var prefix = CurrentDirection.ToString();
       var suffix = CurrentAnimation.ToString();
 
-      return "Huxley_" + prefix + "_" + suffix;
+      return suffix;
 
     }
   }
@@ -46,6 +44,7 @@ public class Huxley : MonoBehaviour
   private void UpdateAnimations()
   {
     var animation = AnimationName;
+    //Animator.Play(animation);
     Animator.Play(animation);
   }
 
@@ -78,7 +77,8 @@ public class Huxley : MonoBehaviour
 
     Animator = GetComponent<Animator>();
 
-    CurrentDirection = Facing.W;
+    CurrentDirection = FacingController.InitialFacing;
+    //Animator.SetBool("isWalking", false);
     CurrentAnimation = Animation.Idle;
     isRunning = false;
   }
@@ -137,8 +137,22 @@ public class Huxley : MonoBehaviour
       CurrentDirection = Facing.NW;
     }
 
+    Animator.speed = 1.0f;
 
 
+    /* if (CurrentAnimation == Animation.Walk)
+     {
+       var speedRatioX = MovementController.CurrentSpeedX / MovementController.MoveSpeed;
+        var speedRatioY = MovementController.CurrentSpeedY / MovementController.MoveSpeed;
+        Animator.speed = RunAnimationSpeed.Lerp(speedRatioX);
+        Animator.speed = RunAnimationSpeed.Lerp(speedRatioY);
+
+       Animator.speed = 1.0f;
+     }
+     else
+     {
+       Animator.speed = 0.0f;
+     }*/
 
 
 
@@ -262,14 +276,18 @@ public class Huxley : MonoBehaviour
       CurrentAnimation = Animation.Walk;
     }*/
 
-    CurrentAnimation = Animation.Idle;
+    CurrentAnimation = Animation.Walk;
+    Debug.Log("HUXLEY ON MOVE START");
+
+
 
   }
 
   private void OnMoveStop(MovementController platform)
   {
     CurrentAnimation = Animation.Idle;
-    isRunning = false;
+    Debug.Log("HUXLEY ON MOVE STOP");
+
   }
 
   /*private void OnDeath(Health health)
