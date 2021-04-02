@@ -1,0 +1,1 @@
+﻿public enum Facing { Invalid = -1, N, S, E, W, NE, SE, SW, NW };
