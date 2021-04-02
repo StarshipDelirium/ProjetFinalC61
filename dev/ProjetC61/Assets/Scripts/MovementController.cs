@@ -85,7 +85,7 @@ public class MovementController : MonoBehaviour
   private void Update()
   {
 
-    var horizontal = Input.GetAxisRaw("Horizontal");
+    /*var horizontal = Input.GetAxisRaw("Horizontal");
     var vertical = Input.GetAxisRaw("Vertical");
 
     var move = new Vector3(horizontal, vertical, 0);
@@ -96,9 +96,9 @@ public class MovementController : MonoBehaviour
     }
 
 
-    transform.position += move * MoveSpeed * Time.deltaTime;
+    transform.position += move * MoveSpeed * Time.deltaTime;*/
+    //transform.Translate(transform.forward * MoveSpeed * Time.deltaTime);
 
-    Debug.Log("IS MOVING: " + IsMoving);
 
   }
 
@@ -181,7 +181,7 @@ public class MovementController : MonoBehaviour
       var direction = new Vector3(InputMoveX, InputMoveY, 0);
 
       if (direction.magnitude > 1)
-        direction = direction;
+        direction = direction.normalized;
 
       var velocity = Rigidbody2D.velocity;
 

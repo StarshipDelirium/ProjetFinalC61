@@ -53,7 +53,7 @@ public class Huxley : MonoBehaviour
   public MovementController MovementController { get; private set; }
   public Animator Animator { get; private set; }
   public Camera Camera;
-  public Rigidbody2D playerPos;
+  public Rigidbody2D rb;
 
   public bool isRunning;
   private Vector2 posDelta;
@@ -70,7 +70,7 @@ public class Huxley : MonoBehaviour
     //FireballSpawnPoint = GetComponentInChildren<Transform>();
     MovementController.OnMoveStart += OnMoveStart;
     MovementController.OnMoveStop += OnMoveStop;
-    playerPos = GetComponent<Rigidbody2D>();
+    rb = GetComponent<Rigidbody2D>();
     // Health = GetComponent<Health>();
     //Health.OnDeath += OnDeath;
     //Health.OnChanged += OnChanged;
@@ -102,8 +102,9 @@ public class Huxley : MonoBehaviour
     else if (mousePos.y < playerPos.y && Mathf.Abs(posDelta.x) < buffer)
     {
       CurrentDirection = Facing.S;
+
     }
-    else if (mousePos.x > (playerPos.x + +0.1f) && Mathf.Abs(posDelta.y) < buffer)
+    else if (mousePos.x > (playerPos.x + 0.1f) && Mathf.Abs(posDelta.y) < buffer)
     {
       CurrentDirection = Facing.E;
     }
@@ -112,7 +113,8 @@ public class Huxley : MonoBehaviour
       CurrentDirection = Facing.W;
     }
 
-    if (Mathf.Abs(posDelta.x - posDelta.y) < buffer)
+    rb.transform.Translate(transform.forward * MovementController.MoveSpeed * Time.smoothDeltaTime);
+    /*if (Mathf.Abs(posDelta.x - posDelta.y) < buffer)
     {
       if (mousePos.x > (playerPos.x + 0.1f) && mousePos.y > (playerPos.y + 0.1f))
       {
@@ -122,7 +124,7 @@ public class Huxley : MonoBehaviour
       {
         CurrentDirection = Facing.NW;
       }
-      else if (mousePos.x > (playerPos.x + 0.1f) && mousePos.y < playerPos.y)
+      else if (mousePos.x > (playerPos.x + 0.1f) && mousePos.y < playerPos.y + 0.1f)
       {
         CurrentDirection = Facing.SE;
       }
@@ -130,12 +132,14 @@ public class Huxley : MonoBehaviour
       {
         CurrentDirection = Facing.SW;
       }
-    }
+    }*/
 
-    if (mousePos.x < (playerPos.x + 0.1f) && mousePos.y > (playerPos.y + 0.1f))
-    {
-      CurrentDirection = Facing.NW;
-    }
+
+
+    /* if (mousePos.x < (playerPos.x + 0.1f) && mousePos.y > (playerPos.y + 0.1f))
+     {
+       CurrentDirection = Facing.NW;
+     }*/
 
     Animator.speed = 1.0f;
 
