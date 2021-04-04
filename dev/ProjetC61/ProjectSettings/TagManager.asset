@@ -13,13 +13,13 @@ TagManager:
   - UI
   - 
   - 
+  - Background
   - PlayerInteract
   - EnemyHitBox
   - CharacterHitBox
   - Floor
   - Player
-  - 
-  - 
+  - PlayerSword
   - 
   - 
   - 
@@ -43,4 +43,10 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Platform
+    uniqueID: 647176447
+    locked: 0
+  - name: Player
+    uniqueID: 2001256419
     locked: 0

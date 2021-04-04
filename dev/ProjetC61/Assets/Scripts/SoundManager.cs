@@ -1,18 +1,53 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  public enum Music
+  {
+    Music,
+
+    Count
+  }
+
+  public enum Sfx
+  {
+    Attack,
+    Hurt,
+    Jump,
+    Kil,
+    Rise,
+
+    Count
+  }
+
+  public AudioClip[] MusicAudioClips;
+  public AudioClip[] SfxAudioClips;
+  public AudioSource MusicAudioSource { get; private set; }
+  void Awake()
+  {
+    MusicAudioClips = Resources.LoadAll<AudioClip>("audio/music");
+    Debug.Assert((int)Music.Count == MusicAudioClips.Length, "SoundManager : Music enum length (" + (int)Music.Count + ") does not match Resources folder (" + MusicAudioClips.Length + ")");
+
+    SfxAudioClips = Resources.LoadAll<AudioClip>("shooter/audio/sfx");
+    Debug.Assert((int)Sfx.Count == SfxAudioClips.Length, "SoundManager : Sfx enum length " + (int)Sfx.Count + ") does not match Resources folder (" + SfxAudioClips.Length + ")");
+
+    //MusicAudioSource = gameObject.AddComponent<AudioSource>();
+    MusicAudioSource = GameManager.Instance.Camera.gameObject.AddComponent<AudioSource>();
+    MusicAudioSource.loop = true;
+    MusicAudioSource.volume = 0.08f;
+  }
+
+  public void Play(Music music)
+  {
+    MusicAudioSource.clip = MusicAudioClips[(int)music];
+    MusicAudioSource.Play();
+  }
+
+  public void Play(Sfx sfx)
+  {
+    MusicAudioSource.clip = MusicAudioClips[(int)sfx];
+    MusicAudioSource.Play();
+  }
+
 }

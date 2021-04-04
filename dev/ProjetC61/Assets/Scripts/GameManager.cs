@@ -33,9 +33,10 @@ public class GameManager : MonoBehaviour
   public PrefabManager PrefabManager { get; private set; }
   public SoundManager SoundManager { get; private set; }
   public LevelManager LevelManager { get; private set; }
-  public Huxley Huxley { get; private set; }
+  public Player Player { get; private set; }
   //public Level Level { get; private set; }
-  public Camera Camera { get; private set; }
+  //public Camera Camera { get; private set; }
+  public Camera Camera { get; set; }
   public Plane[] FrustumPlanes { get; private set; }
 
   private void Initialize()
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
     SceneManager.sceneLoaded += OnSceneLoaded;
 
     OnSceneLoaded();
+    //SoundManager.Play(SoundManager.Music.Music);
   }
 
   private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -56,10 +58,10 @@ public class GameManager : MonoBehaviour
 
   private void OnSceneLoaded()
   {
-    Huxley = FindObjectOfType<Huxley>();
+    Player = FindObjectOfType<Player>();
     //Level = FindObjectOfType<Level>();
     Camera = FindObjectOfType<Camera>();
-    Camera.transparencySortMode = TransparencySortMode.Orthographic;
+
 
     // Turning off a single layer by code
     //Camera.cullingMask &= ~(1 << LayerMask.NameToLayer("EnemyHitbox"));

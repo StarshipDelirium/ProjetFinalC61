@@ -28,22 +28,31 @@ public class MovementController : MonoBehaviour
 
   public MovementControllerEvent OnMoveStart;
   public MovementControllerEvent OnMoveStop;
+  public MovementControllerEvent OnJump;
+  public MovementControllerEvent OnFall;
+  public MovementControllerEvent OnLand;
   public MovementControllerEvent OnWall;
   public MovementControllerEvent OnCeiling;
+  public MovementControllerEvent OnJumpsRemainingChanged;
 
   public float MoveSpeed = 1;
   public float MoveAcceleration = 1000;
   public float MoveDeceleration = 1000;
+  public float AirMoveSpeedMultiplier = 1.0f;
+  public float JumpStrength = 200;
+  public int Jumps = 1;
+  public float JumpDelay = 0.05f;
 
   private int _layerMask;
 
   // Send a value to these Input every Update to use PlatformController
-  public float InputMoveX { get; set; }
-  public float InputMoveY { get; set; }
+
+  public bool InputJump { get; set; }
+  public float InputMove { get; set; }
+
 
   public BoxCollider2D BoxCollider2D { get; private set; }
   public Rigidbody2D Rigidbody2D { get; private set; }
-
   public FacingController FacingController { get; private set; }
 
   public bool IsGrounded { get; private set; }
@@ -51,54 +60,95 @@ public class MovementController : MonoBehaviour
   public bool IsWalledLeft { get; private set; }
   public bool IsWalledRight { get; private set; }
   public bool IsCeiling { get; private set; }
+  public bool IsJumping { get; private set; }
   public bool IsMoving { get; private set; }
-  public bool IsWalking { get; set; }
-  public bool IsRunning { get; set; }
+  public bool IsFalling { get; set; }
+  public bool IsAttacking { get; set; }
+
 
   public float CurrentSpeed { get { return Rigidbody2D.velocity.x; } }
 
+  private float _jumpsRemaining;
+  public float JumpsRemaining
+  {
+    get { return _jumpsRemaining; }
+    set
+    {
+      var previous = _jumpsRemaining;
+      _jumpsRemaining = Mathf.Clamp(value, 0, Jumps);
+
+      if (_jumpsRemaining != previous)
+        OnJumpsRemainingChanged?.Invoke(this);
+    }
+  }
+
+  private float JumpDelayTimer { get; set; }
+  private bool JumpForcePending { get; set; }
+
   public void Reset()
   {
-    InputMoveX = 0;
-    InputMoveY = 0;
+    InputJump = false;
+    InputMove = 0;
 
     IsGrounded = false;
     IsWalled = false;
     IsWalledLeft = false;
     IsWalledRight = false;
     IsCeiling = false;
+    IsJumping = false;
+    IsFalling = false;
+    IsAttacking = false;
     IsMoving = false;
-    IsWalking = false;
-    IsRunning = false;
+
+    JumpsRemaining = Jumps;
+    JumpDelayTimer = 0;
+    JumpForcePending = false;
 
     Rigidbody2D.velocity = Vector2.zero;
+  }
+
+  public void ResetJumpsRemaining()
+  {
+    JumpsRemaining = Jumps;
+  }
+
+  public void Jump()
+  {
+    // Prevent jumping too high by sending multiple Jumps before physics has time to process the AddForce request
+    // Setting velocity to 0 does not fix this as jumps have not been added to velocity yet
+    if (JumpForcePending)
+      return;
+
+    JumpForcePending = true;
+
+    // Cancel previous fall momentum on jump
+    Rigidbody2D.velocity = Rigidbody2D.velocity.WithY(0);
+
+    // Jump the same height regardless of object mass and gravity
+    var jumpStrength = JumpStrength * Rigidbody2D.mass * Mathf.Sqrt(Rigidbody2D.gravityScale);
+    Rigidbody2D.AddForce(Vector2.up * jumpStrength);
+
+    JumpsRemaining -= 1;
+    JumpDelayTimer = JumpDelay;
+    IsJumping = true;
+    IsFalling = false;
+    OnJump?.Invoke(this);
   }
   private void Awake()
   {
     BoxCollider2D = GetComponent<BoxCollider2D>();
     Rigidbody2D = GetComponent<Rigidbody2D>();
+    FacingController = GetComponent<FacingController>();
 
     _layerMask = LayerMask.GetMask(LayerMaskNames);
+
+    ResetJumpsRemaining();
 
   }
 
   private void Update()
   {
-
-    /*var horizontal = Input.GetAxisRaw("Horizontal");
-    var vertical = Input.GetAxisRaw("Vertical");
-
-    var move = new Vector3(horizontal, vertical, 0);
-
-    if (move.magnitude > 1)
-    {
-      move = move.normalized;
-    }
-
-
-    transform.position += move * MoveSpeed * Time.deltaTime;*/
-    //transform.Translate(transform.forward * MoveSpeed * Time.deltaTime);
-
+    JumpDelayTimer -= Time.deltaTime;
 
   }
 
@@ -112,6 +162,7 @@ public class MovementController : MonoBehaviour
     previousState.WasWalledRight = IsWalledRight;
 
     UpdateCollisions();
+    UpdateJump();
     UpdateMove();
 
     // Needs to be done after all updates to prevent bugs
@@ -154,6 +205,7 @@ public class MovementController : MonoBehaviour
       {
         //Debug.Log(gameObject.name + " Ground");
         IsGrounded = true;
+
       }
       else if (raycastHit.normal.y < 0.0f)
       {
@@ -174,55 +226,85 @@ public class MovementController : MonoBehaviour
     }
   }
 
+  private void UpdateJump()
+  {
+    JumpForcePending = false;
+
+    if (!InputJump)
+      return;
+
+    InputJump = false;
+
+    if (JumpsRemaining <= 0)
+      return;
+
+    if (JumpDelayTimer > 0.0f)
+      return;
+
+    if (IsGrounded
+        || (Jumps > 1 && JumpsRemaining > 0))
+    {
+      Jump();
+    }
+  }
+
   private void UpdateMove()
   {
-    if (InputMoveX != 0 || InputMoveY != 0)
+    if (InputMove != 0.0f)
+      UpdateMoveAcceleration();
+    else
+      UpdateMoveDeceleration();
+  }
+
+  private void UpdateMoveAcceleration()
+  {
+    var direction = new Vector3(InputMove, 0, 0);
+    if (direction.magnitude > 1)
+      direction = direction.normalized;
+
+    var speedMultiplier = IsGrounded ? 1.0f : AirMoveSpeedMultiplier;
+    var velocity = Rigidbody2D.velocity;
+    velocity.x += direction.x * speedMultiplier * MoveAcceleration * Time.fixedDeltaTime;
+    velocity.x = Mathf.Clamp(velocity.x, -MoveSpeed, MoveSpeed);
+    Rigidbody2D.velocity = velocity;
+
+    if (InputMove < 0.0f)
+      FacingController.Facing = Facing.Left;
+    else
+      FacingController.Facing = Facing.Right;
+
+    InputMove = 0.0f;
+  }
+
+  private void UpdateMoveDeceleration()
+  {
+    var velocity = Rigidbody2D.velocity;
+    if (velocity.x > 0)
     {
-      var direction = new Vector3(InputMoveX, InputMoveY, 0);
-
-      if (direction.magnitude > 1)
-        direction = direction.normalized;
-
-      var velocity = Rigidbody2D.velocity;
-
-      if (InputMoveX != 0)
-      {
-        velocity.x += direction.x * MoveSpeed * Time.fixedDeltaTime;
-        velocity.x = Mathf.Clamp(velocity.x, -MoveSpeed, MoveSpeed);
-      }
-      if (InputMoveY != 0)
-      {
-        velocity.y += direction.y * MoveSpeed * Time.fixedDeltaTime;
-        velocity.y = Mathf.Clamp(velocity.y, -MoveSpeed, MoveSpeed);
-      }
-
-      Rigidbody2D.velocity = velocity;
-
-      InputMoveX = 0.0f;
-      InputMoveY = 0.0f;
+      velocity.x -= MoveDeceleration * Time.fixedDeltaTime;
+      if (velocity.x < 0)
+        velocity.x = 0;
     }
     else
     {
-      var velocity = Rigidbody2D.velocity;
-
-      velocity.x = 0.0f;
-      velocity.y = 0.0f;
-
-      Rigidbody2D.velocity = velocity;
+      velocity.x += MoveDeceleration * Time.fixedDeltaTime;
+      if (velocity.x > 0)
+        velocity.x = 0;
     }
 
+    Rigidbody2D.velocity = velocity;
   }
   private void SendEvents(PreviousState previousState)
   {
     // Grounded
-    /*if (previousState.WasGrounded != IsGrounded
+    if (previousState.WasGrounded != IsGrounded
         && IsGrounded)
     {
       ResetJumpsRemaining();
       IsJumping = false;
       IsFalling = false;
       OnLand?.Invoke(this);
-    }*/
+    }
 
     // Ceiling
     if (previousState.WasCeiling != IsCeiling
@@ -239,9 +321,18 @@ public class MovementController : MonoBehaviour
       OnWall?.Invoke(this);
     }
 
+    // Fall
+    if (!IsGrounded
+        && !IsFalling
+        && Rigidbody2D.velocity.y < 0.0f)
+    {
+      IsFalling = true;
+      OnFall?.Invoke(this);
+    }
+
     // Started moving
     if (!IsMoving
-        && Rigidbody2D.velocity.x != 0.0f || Rigidbody2D.velocity.y != 0.0f)
+        && Rigidbody2D.velocity.x != 0.0f)
     {
       IsMoving = true;
       OnMoveStart?.Invoke(this);
@@ -249,7 +340,7 @@ public class MovementController : MonoBehaviour
 
     // Stopped moving
     if (IsMoving
-        && Rigidbody2D.velocity.x == 0.0f && Rigidbody2D.velocity.y == 0.0f)
+        && Rigidbody2D.velocity.x == 0.0f)
     {
       IsMoving = false;
       OnMoveStop?.Invoke(this);

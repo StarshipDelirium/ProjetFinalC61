@@ -2,8 +2,8 @@
 
 public class FacingController : MonoBehaviour
 {
-  public Facing InitialFacing = Facing.W;
   public Animator Animator;
+  public Facing InitialFacing = Facing.Left;
 
   private Facing _facing = Facing.Invalid;
   public Facing Facing
@@ -15,47 +15,32 @@ public class FacingController : MonoBehaviour
       {
         _facing = value;
 
-        switch (_facing)
+        if (_facing == Facing.Left)
         {
-          case Facing.N:
-            Animator.SetFloat("FacingY", 1.0f);
-            Animator.SetFloat("FacingX", 0.0f);
-            break;
-          case Facing.E:
-            Animator.SetFloat("FacingY", 0.0f);
-            Animator.SetFloat("FacingX", 1.0f);
-            break;
-          case Facing.S:
-            Animator.SetFloat("FacingY", -1.0f);
-            Animator.SetFloat("FacingX", 0.0f);
-            break;
-          case Facing.W:
-            Animator.SetFloat("FacingY", 0.0f);
-            Animator.SetFloat("FacingX", -1.0f);
-            break;
-          case Facing.NE:
-            Animator.SetFloat("FacingY", 1.0f);
-            Animator.SetFloat("FacingX", 1.0f);
-            break;
-          case Facing.NW:
-            Animator.SetFloat("FacingY", 1.0f);
-            Animator.SetFloat("FacingX", -1.0f);
-            break;
-          case Facing.SE:
-            Animator.SetFloat("FacingY", -1.0f);
-            Animator.SetFloat("FacingX", 1.0f);
-            break;
-          case Facing.SW:
-            Animator.SetFloat("FacingY", -1.0f);
-            Animator.SetFloat("FacingX", -1.0f);
-            break;
-          default:
-            break;
+          Animator.SetFloat("FacingX", -1.0f);
+        }
 
+        else
+        {
+          Animator.SetFloat("FacingX", 1.0f);
         }
       }
     }
   }
+
+  public float Direction
+  {
+    get { return Facing == Facing.Left ? -1 : 1; }
+  }
+
+  public void Flip()
+  {
+    if (Facing == Facing.Left)
+      Facing = Facing.Right;
+    else if (Facing == Facing.Right)
+      Facing = Facing.Left;
+  }
+
   private void Awake()
   {
     Animator = GetComponent<Animator>();

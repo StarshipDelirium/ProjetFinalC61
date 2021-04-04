@@ -8,22 +8,14 @@ public class PrefabManager : MonoBehaviour
 {
   public enum Person
   {
-    //Adrian,
-    Huxley,
-    //Mildred,
-    //Tate,
-    //Winnifred,
 
-    Count
+
+    //Count
   };
 
   /*public enum Enemy
   {
-    Aberration,
-    CultistF,
-    CultistM,
-    EldritchMagus,
-    Nyalarthotep,
+    
 
     Count
 
