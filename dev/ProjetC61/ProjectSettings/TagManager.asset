@@ -17,10 +17,10 @@ TagManager:
   - PlayerInteract
   - EnemyHitBox
   - CharacterHitBox
-  - Floor
+  - Ground
   - Player
   - PlayerSword
-  - 
+  - Foreground
   - 
   - 
   - 
@@ -38,11 +38,11 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
-    uniqueID: 2145516153
-    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2145516153
     locked: 0
   - name: Platform
     uniqueID: 647176447

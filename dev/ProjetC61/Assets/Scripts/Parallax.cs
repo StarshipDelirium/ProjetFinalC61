@@ -93,7 +93,7 @@ public class Parallax : MonoBehaviour
 
         if (layer.name.Contains("Graveyard"))
         {
-          parallaxSpeed = 0.10f;
+          parallaxSpeed = 0.02f;
         }
         else
         {

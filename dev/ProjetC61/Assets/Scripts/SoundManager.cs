@@ -29,11 +29,11 @@ public class SoundManager : MonoBehaviour
     MusicAudioClips = Resources.LoadAll<AudioClip>("audio/music");
     Debug.Assert((int)Music.Count == MusicAudioClips.Length, "SoundManager : Music enum length (" + (int)Music.Count + ") does not match Resources folder (" + MusicAudioClips.Length + ")");
 
-    SfxAudioClips = Resources.LoadAll<AudioClip>("shooter/audio/sfx");
+    SfxAudioClips = Resources.LoadAll<AudioClip>("audio/sfx");
     Debug.Assert((int)Sfx.Count == SfxAudioClips.Length, "SoundManager : Sfx enum length " + (int)Sfx.Count + ") does not match Resources folder (" + SfxAudioClips.Length + ")");
 
     //MusicAudioSource = gameObject.AddComponent<AudioSource>();
-    MusicAudioSource = GameManager.Instance.Camera.gameObject.AddComponent<AudioSource>();
+    MusicAudioSource = gameObject.AddComponent<AudioSource>();
     MusicAudioSource.loop = true;
     MusicAudioSource.volume = 0.08f;
   }

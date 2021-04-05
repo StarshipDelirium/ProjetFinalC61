@@ -153,4 +153,34 @@ public class Player : MonoBehaviour
     yield return null;
     Animator.SetBool("IsAttacking", false);
   }
+
+  public void OnLevelStart(LevelEntrance levelEntrance)
+  {
+    if (levelEntrance != null)
+    {
+      transform.position = levelEntrance.transform.position;
+    }
+    else
+    {
+      transform.position = Vector3.zero;
+    }
+
+    MovementController.Reset();
+  }
+
+  public void OnLevelRestart()
+  {
+    MovementController.BoxCollider2D.enabled = true;
+    MovementController.enabled = true;
+    //Health.Value = 1;
+    //CurrentState = State.Small;
+    GameManager.Instance.Camera.GetComponent<FollowObject>().TargetTransform = gameObject.transform;
+
+    //isRestart = false;
+  }
+
+  private void Start()
+  {
+    OnLevelRestart();
+  }
 }

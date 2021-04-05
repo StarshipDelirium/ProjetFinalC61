@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
     SceneManager.sceneLoaded += OnSceneLoaded;
 
     OnSceneLoaded();
-    //SoundManager.Play(SoundManager.Music.Music);
   }
 
   private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -67,36 +66,36 @@ public class GameManager : MonoBehaviour
     //Camera.cullingMask &= ~(1 << LayerMask.NameToLayer("EnemyHitbox"));
 
     // Dynamically create Mario in the scene
-    /*if (!Mario)
+    if (!Player)
 
     {
-      Mario = FindObjectOfType<Mario>();
+      Player = FindObjectOfType<Player>();
 
-      if (!Mario)
+      if (!Player)
       {
-        var marioGameObject = PrefabManager.Spawn(PrefabManager.PlatformerPrefab.Mario, Vector3.zero);
-        Mario = marioGameObject.GetComponent<Mario>();
-        DontDestroyOnLoad(Mario);
+        var playerGameObject = PrefabManager.Spawn(PrefabManager.Global.Player, Vector3.zero);
+        Player = playerGameObject.GetComponent<Player>();
+        DontDestroyOnLoad(Player);
       }
-    }*/
+    }
 
-    //LevelManager.OnLevelStart();
+    LevelManager.OnLevelStart();
   }
 
-  /*private void Update()
+  private void Update()
   {
     FrustumPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
 
-    if (Input.GetKeyDown(KeyCode.F10))
+    /*if (Input.GetKeyDown(KeyCode.F10))
     {
       MovementController.ShowDebug = !MovementController.ShowDebug;
-    }
+    }*/
   }
 
   public void RestartLevel()
   {
     LevelManager.GoToLevel(LevelManager.CurrentLevel, LevelManager.LevelEntranceId);
-    Mario.OnLevelRestart();
+    Player.OnLevelRestart();
   }
 
   public bool IsInsideCamera(Renderer renderer)
@@ -105,5 +104,5 @@ public class GameManager : MonoBehaviour
       return true;
 
     return false;
-  }*/
+  }
 }
