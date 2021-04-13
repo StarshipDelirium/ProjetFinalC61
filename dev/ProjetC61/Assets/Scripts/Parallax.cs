@@ -1,119 +1,39 @@
 ﻿using UnityEngine;
-
 public class Parallax : MonoBehaviour
 {
-  public GameObject[] BgLayers;
-  private Camera mainCam;
-  private Vector2 screenBounds;
-  public float buffer;
-  public Rigidbody2D targetPlayer;
-  public float scrollingSpeed;
-  public float parallaxSpeed;
+  public Transform[] backgrounds;
+  private float[] parallaxScales;             // Proportion of camera movement to move backgrounds
+  public float smoothing = 0.3f;                // To smooth parallax transition visually
+  private Transform cam;
+  private Vector3 previousCamPos;
 
-  private Vector3 lastScreenPos;
+  void Awake()
+  {
+    cam = GameManager.Instance.Camera.transform;
+  }
   void Start()
   {
-    mainCam = gameObject.GetComponent<Camera>();
-    targetPlayer = GameManager.Instance.Player.GetComponent<Rigidbody2D>();
-    screenBounds = mainCam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCam.transform.position.z));
-    foreach (GameObject layer in BgLayers)
+    previousCamPos = cam.position;
+    parallaxScales = new float[backgrounds.Length];
+
+    for (int i = 0; i < backgrounds.Length; i++)
     {
-      LoadChildLayers(layer);
-    }
-
-    lastScreenPos = transform.position;
-  }
-
-  private void LoadChildLayers(GameObject layer)
-  {
-    float layerWidth = layer.GetComponent<SpriteRenderer>().bounds.size.x - buffer;
-    int childrenNeeded = (int)Mathf.Ceil(screenBounds.x * 2 / layerWidth);
-    GameObject clone = Instantiate(layer) as GameObject;
-
-    for (int i = 0; i <= childrenNeeded; ++i)
-    {
-      GameObject c = Instantiate(clone) as GameObject;
-      c.transform.SetParent(layer.transform);
-      c.transform.position = new Vector3(layerWidth * i, layer.transform.position.y, layer.transform.position.z);
-      c.name = layer.name + i;
-    }
-
-    Destroy(clone);
-    Destroy(layer.GetComponent<SpriteRenderer>());
-  }
-
-  private void RepositionChildLayers(GameObject layer)
-  {
-    Transform[] children = layer.GetComponentsInChildren<Transform>();
-
-    if (children.Length > 1)
-    {
-      GameObject firstChild = children[1].gameObject;
-      GameObject lastChild = children[children.Length - 1].gameObject;
-      float midLayerWidth = lastChild.GetComponent<SpriteRenderer>().bounds.extents.x - buffer;
-
-      if (transform.position.x + screenBounds.x > lastChild.transform.position.x + midLayerWidth)
-      {
-        firstChild.transform.SetAsLastSibling();
-        firstChild.transform.position = new Vector3(lastChild.transform.position.x + midLayerWidth * 2, lastChild.transform.position.y, lastChild.transform.position.z);
-      }
-      else if (transform.position.x - screenBounds.x < firstChild.transform.position.x - midLayerWidth)
-      {
-        lastChild.transform.SetAsFirstSibling();
-        lastChild.transform.position = new Vector3(firstChild.transform.position.x - midLayerWidth * 2, firstChild.transform.position.y, firstChild.transform.position.z);
-      }
+      parallaxScales[i] = backgrounds[i].position.z * -1;                                                             // scale is determined by z position, how far each layer is from the camera
     }
   }
-
-  private void Update()
+  void FixedUpdate()
   {
-    Vector3 velocity = Vector3.zero;
-    scrollingSpeed = targetPlayer.velocity.x;
-
-    Vector3 desiredPos = transform.position + new Vector3(scrollingSpeed, 0, 0);
-    Vector3 smoothPos = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, 0.3f);
-    transform.position = smoothPos;
-  }
-
-  private void LateUpdate()
-  {
-    bool flipLeft = false;
-    float parallaxSpeed;
-
-    if (targetPlayer.velocity.x != 0.0f)
+    for (int i = 0; i < backgrounds.Length; i++)
     {
-      if (targetPlayer.velocity.x < 0.0f)
-      {
-        flipLeft = true;
-      }
+      float parallax = (previousCamPos.x - cam.position.x) * parallaxScales[i];                                 // parallax calculated with the difference between previous and current camera position, multiplied by background's parallaxScale
 
-      foreach (GameObject layer in BgLayers)
-      {
-        RepositionChildLayers(layer);
+      float backgroundTargetPosX = backgrounds[i].position.x + parallax;                                                              // setting a target position on X axis which is the current position plus the parallax
 
-        if (layer.name.Contains("Graveyard"))
-        {
-          parallaxSpeed = 0.02f;
-        }
-        else
-        {
-          parallaxSpeed = layer.name.Contains("Sky") ? 0.07f : 0.25f;
-        }
+      Vector3 backgroundTargetPos = new Vector3(backgroundTargetPosX, backgrounds[i].position.y, backgrounds[i].position.z);          // create a target position with background's current position, but with new target X position
 
-        float delta = transform.position.x - lastScreenPos.x;
-
-        if (!flipLeft)
-        {
-          layer.transform.Translate(Vector3.left * -Mathf.Abs(delta * parallaxSpeed) * -1);
-        }
-        else
-        {
-          layer.transform.Translate(Vector3.left * delta * parallaxSpeed);
-        }
-      }
+      backgrounds[i].position = Vector3.Lerp(backgrounds[i].position, backgroundTargetPos, smoothing * Time.deltaTime);               // assign new position to background, lerp to fade between current and target position to smooth transition
     }
 
-
-    lastScreenPos = transform.position;
+    previousCamPos = cam.position;
   }
 }

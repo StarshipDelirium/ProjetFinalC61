@@ -40,7 +40,6 @@ public class FacingController : MonoBehaviour
     else if (Facing == Facing.Right)
       Facing = Facing.Left;
   }
-
   private void Awake()
   {
     Animator = GetComponent<Animator>();

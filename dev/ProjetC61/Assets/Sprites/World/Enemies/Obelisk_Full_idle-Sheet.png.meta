@@ -1,0 +1,440 @@
+fileFormatVersion: 2
+guid: effe8c39c2b928f469d4c8a34d2dbb6c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6999596334043417283
+    second: Obelisk_Full_idle-Sheet_0
+  - first:
+      213: 486668982430636922
+    second: Obelisk_Full_idle-Sheet_1
+  - first:
+      213: -5986545731396416641
+    second: Obelisk_Full_idle-Sheet_2
+  - first:
+      213: -6694553688033227527
+    second: Obelisk_Full_idle-Sheet_3
+  - first:
+      213: -4586525545711336942
+    second: Obelisk_Full_idle-Sheet_4
+  - first:
+      213: 6175983169092068416
+    second: Obelisk_Full_idle-Sheet_5
+  - first:
+      213: 1279785706215720733
+    second: Obelisk_Full_idle-Sheet_6
+  - first:
+      213: -3369101256614429322
+    second: Obelisk_Full_idle-Sheet_7
+  - first:
+      213: -7618268912938782151
+    second: Obelisk_Full_idle-Sheet_8
+  - first:
+      213: 9025722383062096639
+    second: Obelisk_Full_idle-Sheet_9
+  - first:
+      213: 198984885825277085
+    second: Obelisk_Full_idle-Sheet_10
+  - first:
+      213: -9127467552738197958
+    second: Obelisk_Full_idle-Sheet_11
+  - first:
+      213: 7461934032155756559
+    second: Obelisk_Full_idle-Sheet_12
+  - first:
+      213: 800604685566911659
+    second: Obelisk_Full_idle-Sheet_13
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 48
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cac8c5c7cf832160800000000000000
+      internalID: 6999596334043417283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7b9afc6cdef0c600800000000000000
+      internalID: 486668982430636922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7b4c7810648beca0800000000000000
+      internalID: -5986545731396416641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fc8ff6d3ea2813a0800000000000000
+      internalID: -6694553688033227527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2120f9e01536950c0800000000000000
+      internalID: -4586525545711336942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 044268478ff75b550800000000000000
+      internalID: 6175983169092068416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d174c97b156b2c110800000000000000
+      internalID: 1279785706215720733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67dbc23e14c8e31d0800000000000000
+      internalID: -3369101256614429322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 1520
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 932f1e879c8764690800000000000000
+      internalID: -7618268912938782151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 1710
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffa55b3efaec14d70800000000000000
+      internalID: 9025722383062096639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 1900
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9c894b03bfe2c200800000000000000
+      internalID: 198984885825277085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 2090
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3eb224ce98b45180800000000000000
+      internalID: -9127467552738197958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 2280
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f08ca0c977d1e8760800000000000000
+      internalID: 7461934032155756559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Obelisk_Full_idle-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 2470
+        y: 0
+        width: 190
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba4aab048b15c1b00800000000000000
+      internalID: 800604685566911659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

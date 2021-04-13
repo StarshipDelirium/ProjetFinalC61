@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     Hurt,
     Crouch,
     Fall,
+    Block,
+    Climb,
   }
 
   private Animation _currentAnimation;
@@ -44,13 +46,22 @@ public class Player : MonoBehaviour
     Animator.Play(animation);
   }
 
+  private int _currentDamage;
+  public int CurrentDamage
+  {
+    get { return _currentDamage; }
+    set { _currentDamage = value; }
+  }
+
   public Vector2 RunAnimationSpeed = new Vector2(0.05f, 0.35f);
   public MovementController MovementController { get; private set; }
+  private BoxCollider2D playerCollider;
   public CapsuleCollider2D SwordCollider { get; private set; }
   public Animator Animator { get; private set; }
   private IEnumerator coroutine;
   //public Health Health { get; private set; }
   public bool isInvincible = false;
+  public bool IsAttacking { get; set; }
   public bool isRestart = false;
   public float invincibleTimer = 2;
 
@@ -58,6 +69,7 @@ public class Player : MonoBehaviour
   {
     MovementController = GetComponent<MovementController>();
     SwordCollider = GetComponentInChildren<CapsuleCollider2D>();
+    playerCollider = gameObject.GetComponent<BoxCollider2D>();
     MovementController.OnJump += OnJump;
     MovementController.OnFall += OnFall;
     MovementController.OnMoveStart += OnMoveStart;
@@ -66,27 +78,45 @@ public class Player : MonoBehaviour
 
     Animator = GetComponent<Animator>();
     CurrentAnimation = Animation.Idle;
+    CurrentDamage = 1;
+    IsAttacking = false;
   }
   void Update()
   {
     MovementController.InputJump = Input.GetButtonDown("Jump");
     MovementController.InputMove = Input.GetAxisRaw("Horizontal");
 
+    Debug.Log("IS GROUNDED: " + MovementController.IsGrounded);
+
     if (Input.GetButtonDown("Fire1"))
     {
-
+      IsAttacking = true;
       CurrentAnimation = Animation.Attack;
       //GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Attack);
       //coroutine = AttackOnce();
       //StartCoroutine(coroutine);
     }
+    else
+    {
+      IsAttacking = false;
+    }
 
     if (Input.GetKeyDown("left shift"))
+    {
+      CurrentAnimation = Animation.Block;
+    }
+
+    if (Input.GetKeyUp("left shift"))
+    {
+      CurrentAnimation = Animation.Idle;
+    }
+
+    if (Input.GetKeyDown("left ctrl"))
     {
       CurrentAnimation = Animation.Crouch;
     }
 
-    if (Input.GetKeyUp("left shift"))
+    if (Input.GetKeyUp("left ctrl"))
     {
       CurrentAnimation = Animation.Idle;
     }
@@ -101,11 +131,20 @@ public class Player : MonoBehaviour
       Animator.speed = 1.0f;
     }
 
-    if (CurrentAnimation == Animation.Attack)
-    {
-      SwordCollider.transform.localScale = gameObject.transform.localScale;
-    }
+  }
 
+  private void OnCollisionStay2D(Collision2D collision)
+  {
+    /*if (collision.collider.CompareTag("Platform"))
+    {
+      var playerMaxY = playerCollider.bounds.max.y;
+      var playerMinY = playerCollider.bounds.min.y;
+
+      if (playerMaxY > collision.collider.bounds.max.y && playerMinY < collision.collider.bounds.min.y)
+      {
+        CurrentAnimation = Animation.Climb;
+      }
+    }*/
   }
 
   private void OnJump(MovementController platform)

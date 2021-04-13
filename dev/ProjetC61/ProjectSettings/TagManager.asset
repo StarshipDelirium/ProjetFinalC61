@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Platform
+  - PlayerSword
   layers:
   - Default
   - TransparentFX
@@ -15,15 +17,15 @@ TagManager:
   - 
   - Background
   - PlayerInteract
-  - EnemyHitBox
-  - CharacterHitBox
+  - Enemy
+  - EnemyHitbox
   - Ground
   - Player
   - PlayerSword
   - Foreground
-  - 
-  - 
-  - 
+  - Platform
+  - Spawner
+  - PlayerFeet
   - 
   - 
   - 

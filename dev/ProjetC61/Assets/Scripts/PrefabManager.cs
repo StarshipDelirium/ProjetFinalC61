@@ -13,15 +13,15 @@ public class PrefabManager : MonoBehaviour
     Count
   };
 
-  /*public enum Enemy
+  public enum Enemy
   {
-    
+    Skeleton,
 
     Count
 
   };
 
-  public enum Item
+  /*public enum Item
   {
 
   }
@@ -32,7 +32,7 @@ public class PrefabManager : MonoBehaviour
   }*/
 
   public GameObject[] GlobalGameObjects;
-  //public GameObject[] EnemyGameObjects;
+  public GameObject[] EnemyGameObjects;
   //public GameObject[] ItemGameObjects;
   //public GameObject[] UsableGameObjects;
 
@@ -41,11 +41,11 @@ public class PrefabManager : MonoBehaviour
   {
     GlobalGameObjects = Resources.LoadAll<GameObject>("prefabs/global/character");
 
-    //EnemyGameObjects = Resources.LoadAll<GameObject>("prefabs/global/enemy");
+    EnemyGameObjects = Resources.LoadAll<GameObject>("prefabs/global/enemy");
     //ItemGameObjects = Resources.LoadAll<GameObject>("prefabs/global/items");
     //UsableGameObjects = Resources.LoadAll<GameObject>("prefabs/global/usables");
     Debug.Assert((int)Global.Count == GlobalGameObjects.Length, "PrefabManager : Prefab enum length (" + (int)Global.Count + ") does not match Resources folder (" + GlobalGameObjects.Length + ")");
-    //Debug.Assert((int)Enemy.Count == EnemyGameObjects.Length, "PrefabManager : Prefab enum length (" + (int)Enemy.Count + ") does not match Resources folder (" + EnemyGameObjects.Length + ")");
+    Debug.Assert((int)Enemy.Count == EnemyGameObjects.Length, "PrefabManager : Prefab enum length (" + (int)Enemy.Count + ") does not match Resources folder (" + EnemyGameObjects.Length + ")");
     //Debug.Assert((int)Item.Count == ItemGameObjects.Length, "PrefabManager : Prefab enum length (" + (int)Item.Count + ") does not match Resources folder (" + ItemGameObjects.Length + ")");
     //Debug.Assert((int)Usable.Count == UsableGameObjects.Length, "PrefabManager : Prefab enum length (" + (int)Usable.Count + ") does not match Resources folder (" + UsableGameObjects.Length + ")");
 
@@ -59,13 +59,13 @@ public class PrefabManager : MonoBehaviour
     return Instantiate(gameObject, position, rotation);
   }
 
-  /*public GameObject Spawn(Enemy prefab, Vector3 position, Quaternion rotation)
+  public GameObject Spawn(Enemy prefab, Vector3 position, Quaternion rotation)
   {
     GameObject gameObject = EnemyGameObjects[(int)prefab];
     return Instantiate(gameObject, position, rotation);
   }
 
-  public GameObject Spawn(Item prefab, Vector3 position, Quaternion rotation)
+  /*public GameObject Spawn(Item prefab, Vector3 position, Quaternion rotation)
   {
     GameObject gameObject = ItemGameObjects[(int)prefab];
     return Instantiate(gameObject, position, rotation);

@@ -17,7 +17,7 @@ public class MovementController : MonoBehaviour
     public bool WasWalledRight;
   }
 
-  private static readonly string[] LayerMaskNames = { "Ground" };
+  private static readonly string[] LayerMaskNames = { "Ground", "Platform" };
   private static readonly Vector2 ColliderSize = new Vector2(0.005f, 0.005f);
   //private static readonly Color DebugCollisionOnColor = Color.green;
   //private static readonly Color DebugCollisionOffColor = Color.red;
