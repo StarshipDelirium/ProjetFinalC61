@@ -169,11 +169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d40f71293d2d548b3ed3f09681549f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 5
-  MoveAcceleration: 5
+  MoveSpeed: 6
+  MoveAcceleration: 6
   MoveDeceleration: 7
   AirMoveSpeedMultiplier: 1.5
-  JumpStrength: 275
+  JumpStrength: 290
   Jumps: 2
   JumpDelay: 0.01
 --- !u!212 &377761947373174670
@@ -259,7 +259,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RunAnimationSpeed: {x: 0.9, y: 1.6}
   isInvincible: 0
-  IsAttacking: 0
   isRestart: 0
   invincibleTimer: 2
 --- !u!114 &293423155838446237

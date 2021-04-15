@@ -86,8 +86,6 @@ public class Player : MonoBehaviour
     MovementController.InputJump = Input.GetButtonDown("Jump");
     MovementController.InputMove = Input.GetAxisRaw("Horizontal");
 
-    Debug.Log("IS GROUNDED: " + MovementController.IsGrounded);
-
     if (Input.GetButtonDown("Fire1"))
     {
       IsAttacking = true;

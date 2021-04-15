@@ -9,7 +9,7 @@ public class Parallax : MonoBehaviour
 
   void Awake()
   {
-    cam = GameManager.Instance.Camera.transform;
+    cam = gameObject.transform;
   }
   void Start()
   {

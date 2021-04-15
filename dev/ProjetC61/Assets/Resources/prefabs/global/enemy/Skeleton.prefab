@@ -129,6 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03f1b386222d054281a953c76c2aefa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StunnedTimer: 0.5
+  MovementController: {fileID: 7411113641255773938}
 --- !u!212 &3294853809927844065
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -243,9 +245,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd4ce33976e831242a17d73462017ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StunnedTimer: 0.5
+  MovementController: {fileID: 0}
   Animator: {fileID: 3981531025573417136}
   skeletonCollider: {fileID: 3294853809927844074}
   MovementController: {fileID: 7411113641255773938}
+  Player: {fileID: 0}
 --- !u!1 &5629219652167014578
 GameObject:
   m_ObjectHideFlags: 0

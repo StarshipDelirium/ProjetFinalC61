@@ -57,17 +57,14 @@ public class GameManager : MonoBehaviour
 
   private void OnSceneLoaded()
   {
-    Player = FindObjectOfType<Player>();
-    //Level = FindObjectOfType<Level>();
+
     Camera = FindObjectOfType<Camera>();
 
+    //Level = FindObjectOfType<Level>();
 
-    // Turning off a single layer by code
-    //Camera.cullingMask &= ~(1 << LayerMask.NameToLayer("EnemyHitbox"));
+    Player = FindObjectOfType<Player>();
 
-    // Dynamically create Mario in the scene
-    if (!Player)
-
+    if (!Player && !SceneManager.GetActiveScene().name.Equals("MainMenu"))
     {
       Player = FindObjectOfType<Player>();
 
@@ -78,6 +75,14 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(Player);
       }
     }
+
+
+
+    // Turning off a single layer by code
+    //Camera.cullingMask &= ~(1 << LayerMask.NameToLayer("EnemyHitbox"));
+
+    // Dynamically create Mario in the scene
+
 
     LevelManager.OnLevelStart();
   }

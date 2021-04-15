@@ -42,11 +42,13 @@ public class Skeleton : SimpleEnemy
   public BoxCollider2D skeletonCollider;
   public MovementController MovementController;
   public Player Player;
+  public float NormalSpeed;
   private void Awake()
   {
     Animator = gameObject.GetComponent<Animator>();
     skeletonCollider = gameObject.GetComponent<BoxCollider2D>();
     MovementController = gameObject.GetComponent<MovementController>();
+    NormalSpeed = MovementController.MoveSpeed;
     Player = GameManager.Instance.Player;
     CurrentAnimation = Animation.Default;
   }
@@ -56,6 +58,15 @@ public class Skeleton : SimpleEnemy
     if (CurrentAnimation == Animation.Action)
     {
       MovementController.InputMove = MovementController.FacingController.Direction;
+    }
+
+    if (isHit)
+    {
+      MovementController.MoveSpeed = 0.0f;
+    }
+    else
+    {
+      MovementController.MoveSpeed = NormalSpeed;
     }
   }
 
@@ -72,4 +83,6 @@ public class Skeleton : SimpleEnemy
       health.Value -= Player.CurrentDamage;
     }*/
   }
+
+
 }

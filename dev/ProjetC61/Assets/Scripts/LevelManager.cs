@@ -9,7 +9,8 @@ public class LevelManager : MonoBehaviour
     Invalid = -1,
 
     // Define value by hand
-    SampleScene = 0,
+    MainMenu = 0,
+    Cemetery = 1,
 
 
     // Or add new at the end and never delete
@@ -53,16 +54,18 @@ public class LevelManager : MonoBehaviour
 
   public void OnLevelStart()
   {
-    LevelEntrances = FindObjectsOfType<LevelEntrance>();
-    LevelExits = FindObjectsOfType<LevelExit>();
-    //DebugCheckForErrors();
+    if (CurrentLevel != Level.MainMenu)
+    {
+      LevelEntrances = FindObjectsOfType<LevelEntrance>();
+      LevelExits = FindObjectsOfType<LevelExit>();
+      //DebugCheckForErrors();
 
-    GameManager.Instance.Camera.GetComponent<FollowObject>().TargetTransform = GameManager.Instance.Player.transform;
-    GameManager.Instance.Player.gameObject.SetActive(true);
+      GameManager.Instance.Camera.GetComponent<FollowObject>().TargetTransform = GameManager.Instance.Player.transform;
+      GameManager.Instance.Player.gameObject.SetActive(true);
+      OnLevelStartCommon();
+    }
 
 
-
-    OnLevelStartCommon();
   }
 
   private void OnLevelStartCommon()
