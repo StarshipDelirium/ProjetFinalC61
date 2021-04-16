@@ -171,11 +171,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 6
   MoveAcceleration: 6
-  MoveDeceleration: 7
+  MoveDeceleration: 6
   AirMoveSpeedMultiplier: 1.5
-  JumpStrength: 290
+  JumpStrength: 300
   Jumps: 2
-  JumpDelay: 0.01
+  JumpDelay: 0.001
 --- !u!212 &377761947373174670
 SpriteRenderer:
   m_ObjectHideFlags: 0

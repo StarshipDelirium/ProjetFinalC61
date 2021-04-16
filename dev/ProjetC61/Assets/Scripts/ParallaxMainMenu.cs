@@ -85,4 +85,5 @@ public class ParallaxMainMenu : MonoBehaviour
     }
     previousCamPos = transform.position;
   }
+
 }

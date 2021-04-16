@@ -7,6 +7,7 @@ public class SoundManager : MonoBehaviour
   {
     FestivalOfSpirits,
     Music,
+    UnholyIllusions,
 
     Count
   }
@@ -36,7 +37,7 @@ public class SoundManager : MonoBehaviour
     //MusicAudioSource = gameObject.AddComponent<AudioSource>();
     MusicAudioSource = gameObject.AddComponent<AudioSource>();
     MusicAudioSource.loop = true;
-    MusicAudioSource.volume = 0.08f;
+    MusicAudioSource.volume = 0.06f;
   }
 
   public void Play(Music music)

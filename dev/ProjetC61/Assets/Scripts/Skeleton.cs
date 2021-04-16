@@ -77,11 +77,7 @@ public class Skeleton : SimpleEnemy
 
   private void OnTriggerEnter2D(Collider2D collision)
   {
-    /*if (collision.CompareTag("PlayerSword") && Player.IsAttacking)
-    {
-      var health = gameObject.GetComponent<Health>();
-      health.Value -= Player.CurrentDamage;
-    }*/
+    //
   }
 
 

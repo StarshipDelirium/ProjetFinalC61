@@ -26,7 +26,7 @@ public class MovementController : MonoBehaviour
 
   public delegate void MovementControllerEvent(MovementController movementController);
 
-  public MovementControllerEvent OnMoveStart;
+  public MovementControllerEvent OnMoveStart;                       // Event functions to be defined in each class that uses them depending on their desired behavior
   public MovementControllerEvent OnMoveStop;
   public MovementControllerEvent OnJump;
   public MovementControllerEvent OnFall;
@@ -340,7 +340,7 @@ public class MovementController : MonoBehaviour
 
     // Stopped moving
     if (IsMoving
-        && Rigidbody2D.velocity.x == 0.0f)
+        && Rigidbody2D.velocity.x == 0.0f && !IsAttacking)
     {
       IsMoving = false;
       OnMoveStop?.Invoke(this);

@@ -32,7 +32,6 @@ public class Player : MonoBehaviour
   {
     get
     {
-      //var prefix = CurrentDirection.ToString();
       var suffix = CurrentAnimation.ToString();
 
       return suffix;
@@ -42,11 +41,10 @@ public class Player : MonoBehaviour
   private void UpdateAnimations()
   {
     var animation = AnimationName;
-    //Animator.Play(animation);
     Animator.Play(animation);
   }
 
-  private int _currentDamage;
+  private int _currentDamage;                               // current damage dealt by player
   public int CurrentDamage
   {
     get { return _currentDamage; }
@@ -61,42 +59,44 @@ public class Player : MonoBehaviour
   private IEnumerator coroutine;
   //public Health Health { get; private set; }
   public bool isInvincible = false;
-  public bool IsAttacking { get; set; }
   public bool isRestart = false;
   public float invincibleTimer = 2;
+  private float defaultSpeed;
+
 
   private void Awake()
   {
     MovementController = GetComponent<MovementController>();
     SwordCollider = GetComponentInChildren<CapsuleCollider2D>();
     playerCollider = gameObject.GetComponent<BoxCollider2D>();
+
     MovementController.OnJump += OnJump;
     MovementController.OnFall += OnFall;
     MovementController.OnMoveStart += OnMoveStart;
     MovementController.OnMoveStop += OnMoveStop;
     MovementController.OnLand += OnLand;
 
+    defaultSpeed = MovementController.MoveSpeed;
     Animator = GetComponent<Animator>();
     CurrentAnimation = Animation.Idle;
     CurrentDamage = 1;
-    IsAttacking = false;
   }
   void Update()
   {
-    MovementController.InputJump = Input.GetButtonDown("Jump");
+
+    MovementController.InputJump = Input.GetKey("space");
+
     MovementController.InputMove = Input.GetAxisRaw("Horizontal");
+
+
 
     if (Input.GetButtonDown("Fire1"))
     {
-      IsAttacking = true;
+      Animator.SetTrigger("IsAttacking");
+      MovementController.IsAttacking = true;
       CurrentAnimation = Animation.Attack;
+
       //GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Attack);
-      //coroutine = AttackOnce();
-      //StartCoroutine(coroutine);
-    }
-    else
-    {
-      IsAttacking = false;
     }
 
     if (Input.GetKeyDown("left shift"))
@@ -131,22 +131,32 @@ public class Player : MonoBehaviour
 
   }
 
-  private void OnCollisionStay2D(Collision2D collision)
+  private void OnTriggerStay2D(Collider2D collision)
   {
-    /*if (collision.collider.CompareTag("Platform"))
+    var health = collision.GetComponentInParent<Health>();
+    var playerPos = playerCollider.bounds.min.y;
+
+    if (health)
     {
-      var playerMaxY = playerCollider.bounds.max.y;
-      var playerMinY = playerCollider.bounds.min.y;
+      var enemyPosition = collision.bounds.min.y + 0.7 * collision.bounds.extents.y;
 
-      if (playerMaxY > collision.collider.bounds.max.y && playerMinY < collision.collider.bounds.min.y)
+      if (playerPos > enemyPosition)
       {
-        CurrentAnimation = Animation.Climb;
+        health.Value -= 1;
+        MovementController.Jump();
       }
-    }*/
+      else
+      { // Enemy Wins
+        if (!isInvincible)
+        {
+          //Health.Value -= 1;
+        }
+      }
+    }
   }
-
   private void OnJump(MovementController platform)
   {
+    Animator.SetTrigger("IsJumping");
     CurrentAnimation = Animation.Jump;
     //GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Jump);
   }
@@ -160,6 +170,7 @@ public class Player : MonoBehaviour
   {
     if (MovementController.IsGrounded)
     {
+      Animator.SetTrigger("IsRunning");
       CurrentAnimation = Animation.Run;
     }
   }
@@ -210,14 +221,27 @@ public class Player : MonoBehaviour
     MovementController.BoxCollider2D.enabled = true;
     MovementController.enabled = true;
     //Health.Value = 1;
-    //CurrentState = State.Small;
     GameManager.Instance.Camera.GetComponent<FollowObject>().TargetTransform = gameObject.transform;
 
-    //isRestart = false;
   }
 
   private void Start()
   {
     OnLevelRestart();
+  }
+
+  public void OnAttackStart()                                                   // Fired on first frame of Attack Animation
+  {
+    MovementController.MoveSpeed = 0;                                           // Force player movement speed to 0 to avoid sliding while attacking
+  }
+  public void OnAttackComplete()                                                // Fired on last frame of Attack Animation
+  {
+    MovementController.MoveSpeed = defaultSpeed;                                // Resume normal movement speed and toggle Attack off
+    MovementController.IsAttacking = false;
+
+    if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))                     // Checks if player currently holding A or D key down to immediately switch to Run animation instead of toggling to default Idle
+    {
+      CurrentAnimation = Animation.Run;
+    }
   }
 }

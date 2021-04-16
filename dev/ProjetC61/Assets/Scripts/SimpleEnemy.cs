@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Flash))]
 public class SimpleEnemy : MonoBehaviour
@@ -13,7 +12,7 @@ public class SimpleEnemy : MonoBehaviour
     set { _damage = value; }
   }
 
-  public float StunnedTimer = 0.5f;
+  public float StunnedTimer = 1;
 
   public Health Health { get; private set; }
   private Animator animator;
@@ -38,7 +37,7 @@ public class SimpleEnemy : MonoBehaviour
     else if (isHit && StunnedTimer <= 0)
     {
       isHit = false;
-      StunnedTimer = 0.5f;
+      StunnedTimer = 1;
       animator.enabled = true;
     }
   }
