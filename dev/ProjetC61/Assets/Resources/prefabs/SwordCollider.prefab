@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4251611234514678630}
   - component: {fileID: 4251611234514678629}
-  - component: {fileID: 920541422812105183}
   m_Layer: 14
   m_Name: SwordCollider
   m_TagString: PlayerSword
@@ -48,24 +47,3 @@ CapsuleCollider2D:
   m_Offset: {x: -1.3819369, y: 0.029667698}
   m_Size: {x: 0.21846677, y: 0.18059534}
   m_Direction: 1
---- !u!50 &920541422812105183
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4251611234514678631}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 0
-  m_CollisionDetection: 1
-  m_Constraints: 4

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Spawner : SimpleEnemy
+public class Spawner : MonoBehaviour
 {
   public enum Animation
   {
@@ -37,13 +37,18 @@ public class Spawner : SimpleEnemy
     Animator.Play(animation);
   }
 
-  public float spawnTimer = 5;
+  public float spawnTimer = 10;
   public Transform SpawnPoint;
   public Animator Animator;
+  public Health Health;
   private void Awake()
   {
+    Health = GetComponent<Health>();
     Animator = gameObject.GetComponent<Animator>();
+    Health.OnHit += OnHit;
+    Health.OnDeath += OnDeath;
     CurrentAnimation = Animation.Idle;
+
   }
 
   void Update()
@@ -56,5 +61,26 @@ public class Spawner : SimpleEnemy
       CurrentAnimation = Animation.Summon;
       spawnTimer = 5;
     }
+  }
+
+  private void OnHit(Health health)
+  {
+    //Play hit sound
+    Flash flash = gameObject.GetComponent<Flash>();                 // if enemy is hit, will stop moving and flash for 1 second
+    flash.Duration = 0.5f;
+    flash.StartFlash();
+  }
+
+  private void OnDeath(Health health)
+  {
+
+    Flash flash = gameObject.GetComponent<Flash>();
+    flash.StartFlash();
+    Fade fade = gameObject.AddComponent<Fade>();
+    fade.FadeOutTime = 1;
+    fade.StartFade();
+
+    // Destroy object or store in pool
+    Destroy(gameObject);
   }
 }

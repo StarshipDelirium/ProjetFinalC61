@@ -16,10 +16,25 @@ public class PrefabManager : MonoBehaviour
   public enum Enemy
   {
     Skeleton,
+    Sorcerer,
 
     Count
 
   };
+
+  public enum Projectiles             // Poolable
+  {
+    SorcererFireball,
+
+    Count
+  }
+
+  public enum Vfx                    // Poolable
+  {
+    Explosion,
+
+    Count
+  }
 
   /*public enum Item
   {
@@ -33,6 +48,9 @@ public class PrefabManager : MonoBehaviour
 
   public GameObject[] GlobalGameObjects;
   public GameObject[] EnemyGameObjects;
+  public GameObject[] ProjectilesGameObjects;
+  public GameObject[] VfxGameObjects;
+
   //public GameObject[] ItemGameObjects;
   //public GameObject[] UsableGameObjects;
 
@@ -42,10 +60,14 @@ public class PrefabManager : MonoBehaviour
     GlobalGameObjects = Resources.LoadAll<GameObject>("prefabs/global/character");
 
     EnemyGameObjects = Resources.LoadAll<GameObject>("prefabs/global/enemy");
+    ProjectilesGameObjects = Resources.LoadAll<GameObject>("prefabs/global/projectiles");
+    VfxGameObjects = Resources.LoadAll<GameObject>("prefabs/global/vfx");
     //ItemGameObjects = Resources.LoadAll<GameObject>("prefabs/global/items");
     //UsableGameObjects = Resources.LoadAll<GameObject>("prefabs/global/usables");
     Debug.Assert((int)Global.Count == GlobalGameObjects.Length, "PrefabManager : Prefab enum length (" + (int)Global.Count + ") does not match Resources folder (" + GlobalGameObjects.Length + ")");
     Debug.Assert((int)Enemy.Count == EnemyGameObjects.Length, "PrefabManager : Prefab enum length (" + (int)Enemy.Count + ") does not match Resources folder (" + EnemyGameObjects.Length + ")");
+    Debug.Assert((int)Projectiles.Count == ProjectilesGameObjects.Length, "PrefabManager : Prefab enum length (" + (int)Projectiles.Count + ") does not match Resources folder (" + ProjectilesGameObjects.Length + ")");
+    Debug.Assert((int)Vfx.Count == VfxGameObjects.Length, "PrefabManager : Prefab enum length (" + (int)Vfx.Count + ") does not match Resources folder (" + VfxGameObjects.Length + ")");
     //Debug.Assert((int)Item.Count == ItemGameObjects.Length, "PrefabManager : Prefab enum length (" + (int)Item.Count + ") does not match Resources folder (" + ItemGameObjects.Length + ")");
     //Debug.Assert((int)Usable.Count == UsableGameObjects.Length, "PrefabManager : Prefab enum length (" + (int)Usable.Count + ") does not match Resources folder (" + UsableGameObjects.Length + ")");
 
@@ -80,5 +102,18 @@ public class PrefabManager : MonoBehaviour
   {
     GameObject gameObject = GlobalGameObjects[(int)prefab];
     return Instantiate(gameObject, vector, Quaternion.identity);
+  }
+
+
+  // Prefab without coordinates to provide for Object Pooling
+  public GameObject Spawn(Projectiles prefab)
+  {
+    GameObject gameObject = ProjectilesGameObjects[(int)prefab];
+    return gameObject;
+  }
+  public GameObject Spawn(Vfx prefab)
+  {
+    GameObject gameObject = VfxGameObjects[(int)prefab];
+    return gameObject;
   }
 }

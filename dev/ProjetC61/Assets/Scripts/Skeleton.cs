@@ -2,7 +2,6 @@
 
 public class Skeleton : SimpleEnemy
 {
-
   public enum Animation
   {
     Default,          // Rise

@@ -18,7 +18,7 @@ public class PlayerSword : MonoBehaviour
   private CapsuleCollider2D swordCollider;
   private void Awake()
   {
-    player = gameObject.GetComponentInParent<Player>();
+    player = GetComponentInParent<Player>();
     swordCollider = gameObject.GetComponent<CapsuleCollider2D>();
     hasHit = false;
     hitTimer = 0.5f;
@@ -41,10 +41,9 @@ public class PlayerSword : MonoBehaviour
   {
     var health = collision.GetComponentInParent<Health>();
 
-    if (player.CurrentAnimation == Player.Animation.Attack && !hasHit)
+    if (health && player.CurrentAnimation == Player.Animation.Attack && !hasHit)
     {
-      Debug.Log("CAN HIT");
-      hasHit = !hasHit;
+      hasHit = true;
       Damage = defaultDamage;
       health.Value -= Damage;
 
