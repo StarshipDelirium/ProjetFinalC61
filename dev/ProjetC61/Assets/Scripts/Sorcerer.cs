@@ -73,7 +73,7 @@ public class Sorcerer : SimpleEnemy
       else
       {
         Quaternion rotation = new Quaternion(0f, 90.0f, 0.0f, 0.0f);
-        PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Projectiles.SorcererFireball), LeftFireballSpawnPoint.position, rotation);
+        PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Projectiles.SorcererFireball), RightFireballSpawnPoint.position, rotation);
       }
     }
     else

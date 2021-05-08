@@ -176,7 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Animator: {fileID: 8626667717009796106}
   fireballCollider: {fileID: 916839800013573602}
-  RetrieveTimer: 10
+  PoolTimer: 8
   damage: 1
   Speed: 5
 --- !u!61 &916839800013573602

@@ -37,7 +37,7 @@ public class SorcererFireball : MonoBehaviour
   }
   public Animator Animator;
   public BoxCollider2D fireballCollider;
-  public float PoolTimer = 10;                                                       // if no impact detected, timer before object to returned to pool
+  public float PoolTimer = 8;                                                       // if no impact detected, timer before object to returned to pool
   public int damage = 1;
   public float Speed = 5;
   private Vector3 direction;
@@ -75,6 +75,7 @@ public class SorcererFireball : MonoBehaviour
     if (PoolTimer <= 0)                                                             // if no impact detected after countdown, return object to parent pool 
     {
       PoolManager.Reclaim(gameObject);
+      PoolTimer = 8;
     }
   }
 

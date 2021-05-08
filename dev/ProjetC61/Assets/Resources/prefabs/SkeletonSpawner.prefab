@@ -98,13 +98,13 @@ SpriteRenderer:
   m_SortingLayerID: 647176447
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 6999596334043417283, guid: effe8c39c2b928f469d4c8a34d2dbb6c,
+  m_Sprite: {fileID: -7936291079345413365, guid: 9956c7dcac9f1454cb14ba9f3f5ebf4f,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.9583335, y: 7.9282637}
+  m_Size: {x: 2.083842, y: 4.1666665}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -141,11 +141,11 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.1052773, y: -1.5323787}
-  m_Size: {x: 1.0807366, y: 4.021282}
+  m_Offset: {x: 0.039239883, y: 0.1054852}
+  m_Size: {x: 0.6953573, y: 2.6724534}
   m_Direction: 0
 --- !u!114 &3507114442863783633
 MonoBehaviour:
@@ -159,11 +159,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c0676850755c214a95f51104021f19a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StunnedTimer: 1
-  isHit: 0
   spawnTimer: 5
   SpawnPoint: {fileID: 7209767440746129634}
   Animator: {fileID: 0}
+  Health: {fileID: 0}
 --- !u!114 &7572782678011039280
 MonoBehaviour:
   m_ObjectHideFlags: 0

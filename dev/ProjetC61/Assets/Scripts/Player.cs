@@ -9,11 +9,11 @@ public class Player : MonoBehaviour
     Jump,
     Run,
     Attack,
+    PowerAttack,
     Hurt,
     Crouch,
     Fall,
     Block,
-    Climb,
   }
 
   private Animation _currentAnimation;
@@ -49,6 +49,8 @@ public class Player : MonoBehaviour
   public MovementController MovementController;
   private float defaultSpeed;
   private int _currentDamage;                               // current damage dealt by player
+  private float clickTime;
+  private bool mouseClicked = false;
   public int CurrentDamage
   {
     get { return _currentDamage; }
@@ -98,14 +100,40 @@ public class Player : MonoBehaviour
 
     MovementController.InputMove = Input.GetAxisRaw("Horizontal");
 
-    if (Input.GetButtonDown("Fire1"))
+    if (Input.GetMouseButtonDown(0))
+    {
+      clickTime = Time.time;                                                    // Time saved until mouse button released to differentiate single click vs mouse hold
+      mouseClicked = true;
+    }
+
+    if (Input.GetMouseButtonUp(0) && !MovementController.IsJumping && !MovementController.IsFalling)
+    {
+      Animator.SetTrigger("IsAttacking");
+      MovementController.IsAttacking = true;
+
+      if ((Time.time - clickTime < 0.25f))                                              // normal attack
+      {
+        CurrentDamage = 1;
+        CurrentAnimation = Animation.Attack;
+      }
+      else if (mouseClicked && (Time.time - clickTime) > 0.25f)                         // mouse button held down for power attack
+      {
+        CurrentDamage = 3;
+        CurrentAnimation = Animation.PowerAttack;
+
+      }
+    }
+
+
+
+    /*if (Input.GetButtonDown("Fire1"))
     {
       Animator.SetTrigger("IsAttacking");
       MovementController.IsAttacking = true;
       CurrentAnimation = Animation.Attack;
 
       //GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Attack);
-    }
+    }*/
 
     if (CurrentAnimation == Animation.Run)
     {
@@ -271,14 +299,24 @@ public class Player : MonoBehaviour
 
   private void ResumePlayerControl()
   {
-    if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))                     // Checks if player currently holding A or D key down to immediately switch to Run animation instead of toggling to default Idle
+    if (Input.GetMouseButton(0))
     {
-      CurrentAnimation = Animation.Run;
+      CurrentAnimation = Animation.Attack;
     }
     else
     {
-      CurrentAnimation = Animation.Idle;
+      if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))                     // Checks if player currently holding A or D key down to immediately switch to Run animation instead of toggling to default Idle
+      {
+        CurrentAnimation = Animation.Run;
+      }
+      else if (Input.GetKey(KeyCode.Space))
+      {
+        CurrentAnimation = Animation.Jump;
+      }
+      else
+      {
+        CurrentAnimation = Animation.Idle;
+      }
     }
   }
-
 }

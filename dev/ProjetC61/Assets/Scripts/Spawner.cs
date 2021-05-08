@@ -6,6 +6,7 @@ public class Spawner : MonoBehaviour
   {
     Idle,
     Summon,
+    Destruct,
   }
 
   private Animation _currentAnimation;
@@ -74,13 +75,11 @@ public class Spawner : MonoBehaviour
   private void OnDeath(Health health)
   {
 
-    Flash flash = gameObject.GetComponent<Flash>();
-    flash.StartFlash();
-    Fade fade = gameObject.AddComponent<Fade>();
-    fade.FadeOutTime = 1;
-    fade.StartFade();
+    CurrentAnimation = Animation.Destruct;
+  }
 
-    // Destroy object or store in pool
-    Destroy(gameObject);
+  public void OnDestructComplete()
+  {
+    Destroy(gameObject);                                        // called on last frame of Destruct animation
   }
 }
