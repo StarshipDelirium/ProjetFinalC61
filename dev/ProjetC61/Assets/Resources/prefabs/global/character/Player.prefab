@@ -173,11 +173,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 6
   MoveAcceleration: 6
-  MoveDeceleration: 6
+  MoveDeceleration: 15
   AirMoveSpeedMultiplier: 1.5
   JumpStrength: 300
-  Jumps: 2
-  JumpDelay: 0.001
+  Jumps: 3
+  JumpDelay: 0.5
 --- !u!212 &377761947373174670
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -262,6 +262,7 @@ MonoBehaviour:
   RunAnimationSpeed: {x: 0.9, y: 1.6}
   Animator: {fileID: 377761947373174660}
   MovementController: {fileID: 377761947373174671}
+  canFall: 0
   Health: {fileID: 6901430660938650582}
   Flash: {fileID: 4455021148548693147}
   isInvincible: 0

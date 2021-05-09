@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
   public Vector2 RunAnimationSpeed = new Vector2(0.05f, 0.35f);
   public Animator Animator;
   public MovementController MovementController;
+  public bool canFall = false;
   private float defaultSpeed;
   private int _currentDamage;                               // current damage dealt by player
   private float clickTime;
@@ -106,17 +107,17 @@ public class Player : MonoBehaviour
       mouseClicked = true;
     }
 
-    if (Input.GetMouseButtonUp(0) && !MovementController.IsJumping && !MovementController.IsFalling)
+    if (Input.GetMouseButtonUp(0))
     {
       Animator.SetTrigger("IsAttacking");
       MovementController.IsAttacking = true;
 
-      if ((Time.time - clickTime < 0.25f))                                              // normal attack
+      if ((Time.time - clickTime < 0.2f))                                              // normal attack
       {
         CurrentDamage = 1;
         CurrentAnimation = Animation.Attack;
       }
-      else if (mouseClicked && (Time.time - clickTime) > 0.25f)                         // mouse button held down for power attack
+      else if (mouseClicked && (Time.time - clickTime) > 0.2f)                         // mouse button held down for power attack
       {
         CurrentDamage = 3;
         CurrentAnimation = Animation.PowerAttack;
@@ -263,19 +264,15 @@ public class Player : MonoBehaviour
 
   private void OnLand(MovementController platform)
   {
-    if (MovementController.IsMoving)
-    {
-      CurrentAnimation = Animation.Run;
-    }
-    else
-    {
-      CurrentAnimation = Animation.Idle;
-    }
+    ResumePlayerControl();
   }
 
   public void OnAttackStart()                                                   // Fired on first frame of Attack Animation
   {
-    MovementController.MoveSpeed = 0;                                           // Force player movement speed to 0 to avoid sliding while attacking
+    if (!MovementController.IsJumping && !MovementController.IsFalling)
+    {
+      MovementController.MoveSpeed = 0;                                           // Force player movement speed to 0 to avoid sliding while attacking
+    }
   }
   public void OnAttackComplete()                                                // Fired on last frame of Attack Animation
   {
@@ -299,6 +296,9 @@ public class Player : MonoBehaviour
 
   private void ResumePlayerControl()
   {
+    MovementController.IsAttacking = false;
+    MovementController.MoveSpeed = defaultSpeed;
+
     if (Input.GetMouseButton(0))
     {
       CurrentAnimation = Animation.Attack;
