@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
   public PrefabManager PrefabManager { get; private set; }
   public SoundManager SoundManager { get; private set; }
   public LevelManager LevelManager { get; private set; }
+
+  public DialogueManager DialogueManager { get; private set; }
+  public SaveLoadManager SaveLoadManager { get; private set; }
   public Player Player { get; private set; }
   //public Level Level { get; private set; }
   //public Camera Camera { get; private set; }
@@ -44,6 +47,8 @@ public class GameManager : MonoBehaviour
     SoundManager = GetComponentInChildren<SoundManager>();
     PrefabManager = GetComponentInChildren<PrefabManager>();
     LevelManager = GetComponentInChildren<LevelManager>();
+    DialogueManager = GetComponentInChildren<DialogueManager>();
+    SaveLoadManager = GetComponentInChildren<SaveLoadManager>();
 
     SceneManager.sceneLoaded += OnSceneLoaded;
 

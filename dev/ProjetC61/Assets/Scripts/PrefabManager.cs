@@ -32,6 +32,7 @@ public class PrefabManager : MonoBehaviour
   public enum Vfx                    // Poolable
   {
     Explosion,
+    SaveFX,
 
     Count
   }
@@ -102,6 +103,12 @@ public class PrefabManager : MonoBehaviour
   {
     GameObject gameObject = GlobalGameObjects[(int)prefab];
     return Instantiate(gameObject, vector, Quaternion.identity);
+  }
+
+  public void Spawn(Vfx prefab, Vector3 position, Quaternion rotation)
+  {
+    GameObject gameObject = VfxGameObjects[(int)prefab];
+    Instantiate(gameObject, position, rotation);
   }
 
 

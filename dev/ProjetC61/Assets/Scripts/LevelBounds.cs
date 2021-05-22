@@ -10,9 +10,9 @@ public class LevelBounds : MonoBehaviour
   private bool isMax = false;
   private Vector2 screenBounds;
 
-  private void Awake()
+  private void OnEnable()
   {
-    cam = GameManager.Instance.Camera;
+    cam = FindObjectOfType<Camera>();
     targetPlayer = GameManager.Instance.Player.GetComponent<Transform>();
     screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, cam.transform.position.z));
   }

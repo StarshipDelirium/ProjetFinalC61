@@ -52,6 +52,8 @@ public class Player : MonoBehaviour
   private int _currentDamage;                               // current damage dealt by player
   private float clickTime;
   private bool mouseClicked = false;
+  private IInterractable interractable;
+  private ISaveable saveCheckpoint;
   public int CurrentDamage
   {
     get { return _currentDamage; }
@@ -67,6 +69,8 @@ public class Player : MonoBehaviour
   public bool isInvincible = false;
   public bool isRestart = false;
   public float invincibleTimer = 2;
+  public int redPotion = 1;
+  public int bluePotion = 3;
   //private IEnumerator coroutine;
 
 
@@ -136,6 +140,16 @@ public class Player : MonoBehaviour
       //GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Attack);
     }*/
 
+    if (Input.GetKeyUp(KeyCode.J))
+    {
+      GameManager.Instance.SaveLoadManager.SaveGameData(0);
+    }
+
+    if (Input.GetKeyUp(KeyCode.L))
+    {
+      GameManager.Instance.SaveLoadManager.LoadGameData();
+    }
+
     if (CurrentAnimation == Animation.Run)
     {
       var speedRatio = MovementController.CurrentSpeed / MovementController.MoveSpeed;
@@ -166,6 +180,23 @@ public class Player : MonoBehaviour
       CurrentAnimation = Animation.Idle;
     }
 
+    if (Input.GetKeyUp(KeyCode.E) && interractable != null)
+    {
+      interractable.Interact();
+      Debug.Log("PLAY INTERRACYABLE NOT NULL");
+
+    }
+
+    if (Input.GetKeyUp(KeyCode.Tab) && interractable != null)
+    {
+      interractable.CancelInteraction();
+    }
+
+    if (Input.GetKeyUp(KeyCode.H) && saveCheckpoint != null)
+    {
+      saveCheckpoint.Save();
+    }
+
     if (isInvincible && invincibleTimer > 0)
     {
       invincibleTimer -= Time.deltaTime;
@@ -181,11 +212,36 @@ public class Player : MonoBehaviour
   private void OnTriggerEnter2D(Collider2D collision)
   {
     var transform = collision.GetComponentInParent<Transform>();
-    if (!isInvincible)
+    IInterractable interact = collision.GetComponent<IInterractable>();
+    ISaveable savePoint = collision.GetComponent<ISaveable>();
+
+    if (!isInvincible && collision.CompareTag("Enemy"))
     {
       StartCoroutine(Knockback(transform));
       Health.Value -= 1;
     }
+    else if (interact != null)                                  // verifies if collision object is an interractable object
+    {
+      interractable = interact;                                 // save in variable to access when player presses E     
+      interractable.Prompt();
+
+      if (savePoint != null)
+      {
+        saveCheckpoint = savePoint;
+      }
+    }
+  }
+
+  private void OnTriggerExit2D(Collider2D collision)
+  {
+    IInterractable interact = collision.GetComponent<IInterractable>();
+
+    if (interact != null)
+    {
+      interractable = null;                                     // release variable for next interaction
+    }
+
+    // reset animator trigger to hide dialogue box
   }
 
   private void OnChanged(Health health)
