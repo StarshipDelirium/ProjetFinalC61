@@ -35,7 +35,9 @@ public class GameManager : MonoBehaviour
   public LevelManager LevelManager { get; private set; }
 
   public DialogueManager DialogueManager { get; private set; }
+  public InteractPrompt InteractPrompt { get; private set; }
   public SaveLoadManager SaveLoadManager { get; private set; }
+  public InventoryManager InventoryManager { get; private set; }
   public Player Player { get; private set; }
   //public Level Level { get; private set; }
   //public Camera Camera { get; private set; }
@@ -48,7 +50,9 @@ public class GameManager : MonoBehaviour
     PrefabManager = GetComponentInChildren<PrefabManager>();
     LevelManager = GetComponentInChildren<LevelManager>();
     DialogueManager = GetComponentInChildren<DialogueManager>();
+    InteractPrompt = GetComponentInChildren<InteractPrompt>();
     SaveLoadManager = GetComponentInChildren<SaveLoadManager>();
+    InventoryManager = GetComponentInChildren<InventoryManager>();
 
     SceneManager.sceneLoaded += OnSceneLoaded;
 

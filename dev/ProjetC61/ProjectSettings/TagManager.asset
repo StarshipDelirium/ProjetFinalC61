@@ -7,6 +7,10 @@ TagManager:
   - Platform
   - PlayerSword
   - Enemy
+  - HealthPotion
+  - HealthElixir
+  - ManaPotion
+  - ManaElixir
   layers:
   - Default
   - TransparentFX
@@ -27,7 +31,7 @@ TagManager:
   - Platform
   - Spawner
   - PlayerFeet
-  - 
+  - PickUp
   - 
   - 
   - 

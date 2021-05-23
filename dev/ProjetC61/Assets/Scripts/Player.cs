@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
   private int _currentDamage;                               // current damage dealt by player
   private float clickTime;
   private bool mouseClicked = false;
-  private IInterractable interractable;
+  private IInteractable interactable;
   private ISaveable saveCheckpoint;
   public int CurrentDamage
   {
@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
   public CapsuleCollider2D SwordCollider { get; private set; }
   //public Animator Animator { get; private set; }
   public Health Health;
+  public Mana Mana;
   public Flash Flash;
   //public Health Health { get; private set; }
   public bool isInvincible = false;
@@ -83,9 +84,10 @@ public class Player : MonoBehaviour
     playerCollider = gameObject.GetComponent<BoxCollider2D>();
     Flash = gameObject.GetComponent<Flash>();
     Health = GetComponent<Health>();
+    Mana = GetComponent<Mana>();
     Health.OnHit += OnHit;
     Health.OnDeath += OnDeath;
-    Health.OnChanged += OnChanged;
+    Mana.OnUse += OnUse;
     Animator = gameObject.GetComponent<Animator>();
     MovementController = gameObject.GetComponent<MovementController>();
     MovementController.OnJump += OnJump;
@@ -140,14 +142,33 @@ public class Player : MonoBehaviour
       //GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Attack);
     }*/
 
+    if (Input.GetKeyUp(KeyCode.I))
+    {
+      FindObjectOfType<InventoryManager>().OpenInventory();
+    }
     if (Input.GetKeyUp(KeyCode.J))
     {
       GameManager.Instance.SaveLoadManager.SaveGameData(0);
     }
 
+    if (Input.GetKeyUp(KeyCode.U))
+    {
+      FindObjectOfType<InventoryManager>().TestAdd();
+    }
+
     if (Input.GetKeyUp(KeyCode.L))
     {
       GameManager.Instance.SaveLoadManager.LoadGameData();
+    }
+
+    if (Input.GetKeyUp(KeyCode.M))
+    {
+      Mana.Value -= 2;
+    }
+
+    if (Input.GetKeyUp(KeyCode.P))
+    {
+      Mana.Value += 2;
     }
 
     if (CurrentAnimation == Animation.Run)
@@ -180,16 +201,16 @@ public class Player : MonoBehaviour
       CurrentAnimation = Animation.Idle;
     }
 
-    if (Input.GetKeyUp(KeyCode.E) && interractable != null)
+    if (Input.GetKeyUp(KeyCode.E) && interactable != null)
     {
-      interractable.Interact();
+      interactable.Interact();
       Debug.Log("PLAY INTERRACYABLE NOT NULL");
 
     }
 
-    if (Input.GetKeyUp(KeyCode.Tab) && interractable != null)
+    if (Input.GetKeyUp(KeyCode.Tab) && interactable != null)
     {
-      interractable.CancelInteraction();
+      interactable.CancelInteraction();
     }
 
     if (Input.GetKeyUp(KeyCode.H) && saveCheckpoint != null)
@@ -209,21 +230,15 @@ public class Player : MonoBehaviour
     }
   }
 
-  private void OnTriggerEnter2D(Collider2D collision)
+  private void OnTriggerStay2D(Collider2D collision)
   {
-    var transform = collision.GetComponentInParent<Transform>();
-    IInterractable interact = collision.GetComponent<IInterractable>();
+    IInteractable interact = collision.GetComponent<IInteractable>();
     ISaveable savePoint = collision.GetComponent<ISaveable>();
 
-    if (!isInvincible && collision.CompareTag("Enemy"))
+    if (interact != null)                                  // verifies if collision object is an interractable object
     {
-      StartCoroutine(Knockback(transform));
-      Health.Value -= 1;
-    }
-    else if (interact != null)                                  // verifies if collision object is an interractable object
-    {
-      interractable = interact;                                 // save in variable to access when player presses E     
-      interractable.Prompt();
+      interactable = interact;                                 // save in variable to access when player presses E     
+      interactable.Prompt();
 
       if (savePoint != null)
       {
@@ -232,21 +247,45 @@ public class Player : MonoBehaviour
     }
   }
 
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    var transform = collision.GetComponentInParent<Transform>();
+
+
+    if (!isInvincible && collision.CompareTag("Enemy"))
+    {
+      StartCoroutine(Knockback(transform));
+      Health.Value -= 1;
+    }
+  }
+
   private void OnTriggerExit2D(Collider2D collision)
   {
-    IInterractable interact = collision.GetComponent<IInterractable>();
+    IInteractable interact = collision.GetComponent<IInteractable>();
+    ISaveable saveable = collision.GetComponent<ISaveable>();
 
     if (interact != null)
     {
-      interractable = null;                                     // release variable for next interaction
+      interactable.CancelInteraction();
+      interactable = null;                                     // release variable for next interaction
+    }
+
+    if (saveable != null)
+    {
+      saveCheckpoint = null;
     }
 
     // reset animator trigger to hide dialogue box
   }
 
-  private void OnChanged(Health health)
+  private void OnChanged(Mana mana)
   {
-    // might only be needed in UI
+
+  }
+
+  private void OnUse(Mana mana)
+  {
+
   }
 
   private void OnHit(Health health)
@@ -374,5 +413,10 @@ public class Player : MonoBehaviour
         CurrentAnimation = Animation.Idle;
       }
     }
+  }
+
+  public void OnSaveLoaded()
+  {
+
   }
 }

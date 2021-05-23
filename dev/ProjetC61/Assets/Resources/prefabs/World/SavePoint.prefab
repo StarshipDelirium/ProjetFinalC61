@@ -97,7 +97,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.057242274, y: 0}
+  m_Offset: {x: 0.016359031, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -108,7 +108,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5730155, y: 3.03125}
+  m_Size: {x: 2.3089128, y: 3.03125}
   m_EdgeRadius: 0
 --- !u!114 &5404560445697035696
 MonoBehaviour:
@@ -127,7 +127,6 @@ MonoBehaviour:
     CharacterName: Savepoint
     sentences:
     - Press 'H' to save game, or 'Tab' to cancel.
-    - Game saved.
   VFX: {fileID: 5404560446038750429}
 --- !u!1 &5404560446038750428
 GameObject:

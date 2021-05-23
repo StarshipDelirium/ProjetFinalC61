@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 377761947373174661}
   - component: {fileID: 6901430660938650582}
   - component: {fileID: 4455021148548693147}
+  - component: {fileID: 4359081981045799233}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -268,6 +269,8 @@ MonoBehaviour:
   isInvincible: 0
   isRestart: 0
   invincibleTimer: 2
+  redPotion: 1
+  bluePotion: 3
 --- !u!114 &6901430660938650582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,6 +300,19 @@ MonoBehaviour:
   FlashOnTime: 0.1
   FlashOffTime: 0.1
   Duration: 1
+--- !u!114 &4359081981045799233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377761947373174669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1aa04df100bf3943acf2a5bb0e21d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Max: 10
 --- !u!50 &1577230552248152486
 Rigidbody2D:
   serializedVersion: 4

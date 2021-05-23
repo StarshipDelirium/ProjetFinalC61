@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 
-public class SaveCheckpoint : MonoBehaviour, IInterractable, ISaveable
+public class SaveCheckpoint : MonoBehaviour, IInteractable, ISaveable
 {
   public int ID;
   public Dialogue dialogue;
   public Transform VFX;
   private bool isActivated = false;
   private bool interacted;
-  private string prompt = "";
   public delegate void SaveCheckpointEvent(SaveCheckpoint checkpoint);
 
   public SaveCheckpointEvent OnChanged;
@@ -48,21 +47,13 @@ public class SaveCheckpoint : MonoBehaviour, IInterractable, ISaveable
 
     }
   }
-
-  void OnGUI()
-  {
-    if (isActivated)
-    {
-      Debug.Log("ON GUI");
-      GUI.Box(new Rect(100, Screen.height - 150, Screen.width - 150, 100), (prompt));
-    }
-  }
-
   public void Prompt()
   {
-    prompt = "Press 'E' to interact";
-    isActivated = true;
-
+    if (!isActivated)
+    {
+      FindObjectOfType<InteractPrompt>().ShowPrompt();
+      isActivated = true;
+    }
   }
 
   public void CancelInteraction()
@@ -70,18 +61,10 @@ public class SaveCheckpoint : MonoBehaviour, IInterractable, ISaveable
     isActivated = false;
     interacted = false;
     FindObjectOfType<DialogueManager>().EndDialogue();
+    FindObjectOfType<InteractPrompt>().HidePrompt();
   }
-
-  public void OnTriggerExit2D(Collider2D collider)
-  {
-    isActivated = false;
-    interacted = false;
-
-  }
-
   public void Save()
   {
-
     GameManager.Instance.SaveLoadManager.SaveGameData(this.ID);
     GameManager.Instance.PrefabManager.Spawn(PrefabManager.Vfx.SaveFX, VFX.position, gameObject.transform.rotation);
     FindObjectOfType<DialogueManager>().DisplayNextSentence();
