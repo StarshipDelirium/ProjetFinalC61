@@ -21,18 +21,13 @@ public class Mana : MonoBehaviour
     get { return _value; }
     set
     {
-
       var previous = _value;
 
       _value = Mathf.Clamp(value, 0, Max);
 
       if (_value != previous)
-        OnChanged?.Invoke(this);
-
-      if (_value < previous)
       {
-
-        OnUse?.Invoke(this);
+        OnChanged?.Invoke(this);
       }
     }
   }

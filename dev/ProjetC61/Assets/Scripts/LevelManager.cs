@@ -20,6 +20,9 @@ public class LevelManager : MonoBehaviour
   public string LevelEntranceId { get; private set; } = "Default";
   public LevelEntrance LevelEntrance { get; private set; }
   public LevelEntrance[] LevelEntrances { get; private set; }
+
+  public SaveCheckpoint SaveCheckpoint { get; private set; }
+  public SaveCheckpoint[] SaveCheckpoints { get; private set; }
   public LevelExit[] LevelExits { get; private set; }
 
   public void Awake()
@@ -74,6 +77,22 @@ public class LevelManager : MonoBehaviour
     GameManager.Instance.Player.OnLevelStart(LevelEntrance);
   }
 
+  public void OnSaveLoaded()
+  {
+    SaveCheckpoints = FindObjectsOfType<SaveCheckpoint>();
+    LevelExits = FindObjectsOfType<LevelExit>();
+
+    GameManager.Instance.Camera.GetComponent<FollowObject>().TargetTransform = GameManager.Instance.Player.transform;
+    GameManager.Instance.Player.gameObject.SetActive(true);
+    OnLoadLevelStart();
+  }
+
+  private void OnLoadLevelStart()
+  {
+    SaveCheckpoint = FindCheckpoint();
+    GameManager.Instance.Player.OnSaveLoaded(SaveCheckpoint);
+  }
+
   private LevelEntrance FindLevelEntrance()
   {
     for (int i = 0; i < LevelEntrances.Length; i++)
@@ -89,6 +108,24 @@ public class LevelManager : MonoBehaviour
     }
 
     Debug.LogError("LevelManager : Could not find LevelEntrance for Id " + LevelEntranceId);
+    return null;
+  }
+
+  private SaveCheckpoint FindCheckpoint()
+  {
+    int loadCheckpoint = (int)GameManager.Instance.SaveLoadManager.saveGame.CheckpointID;
+    Debug.Log("LOADCHECKPOINT: " + loadCheckpoint);
+
+    for (int i = 0; i < SaveCheckpoints.Length; ++i)
+    {
+      SaveCheckpoint checkpoint = SaveCheckpoints[i];
+
+      if (checkpoint.ID == loadCheckpoint)
+      {
+        return checkpoint;
+      }
+    }
+
     return null;
   }
 

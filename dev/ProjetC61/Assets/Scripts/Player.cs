@@ -70,8 +70,7 @@ public class Player : MonoBehaviour
   public bool isInvincible = false;
   public bool isRestart = false;
   public float invincibleTimer = 2;
-  public int redPotion = 1;
-  public int bluePotion = 3;
+
   //private IEnumerator coroutine;
 
 
@@ -318,7 +317,6 @@ public class Player : MonoBehaviour
   {
     MovementController.BoxCollider2D.enabled = true;
     MovementController.enabled = true;
-    //Health.Value = 1;
     GameManager.Instance.Camera.GetComponent<FollowObject>().TargetTransform = gameObject.transform;
 
   }
@@ -415,8 +413,19 @@ public class Player : MonoBehaviour
     }
   }
 
-  public void OnSaveLoaded()
+  public void OnSaveLoaded(SaveCheckpoint saveCheckpoint)
   {
+
+    if (saveCheckpoint != null)
+    {
+      transform.position = saveCheckpoint.transform.position;
+    }
+    else
+    {
+      transform.position = Vector3.zero;
+    }
+
+    MovementController.Reset();
 
   }
 }

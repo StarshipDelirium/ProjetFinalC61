@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
 
   private void OnSceneLoaded()
   {
+    Debug.Log("ON SCENE LOADED");
 
     Camera = FindObjectOfType<Camera>();
 
@@ -85,15 +86,16 @@ public class GameManager : MonoBehaviour
       }
     }
 
+    if (SaveLoadManager.saveFileLoaded)
+    {
+      LevelManager.OnSaveLoaded();
+      SaveLoadManager.saveFileLoaded = false;
+    }
+    else
+    {
+      LevelManager.OnLevelStart();
 
-
-    // Turning off a single layer by code
-    //Camera.cullingMask &= ~(1 << LayerMask.NameToLayer("EnemyHitbox"));
-
-    // Dynamically create Mario in the scene
-
-
-    LevelManager.OnLevelStart();
+    }
   }
 
   private void Update()

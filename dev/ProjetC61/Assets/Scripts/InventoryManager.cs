@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
-//[System.Serializable]
+/*************************************************************************************************
+ * https://www.geeksforgeeks.org/c-sharp-dictionary-with-examples/
+ ************************************************************************************************/
 public class InventoryManager : MonoBehaviour
 {
   public Animator Animator;
@@ -56,7 +59,7 @@ public class InventoryManager : MonoBehaviour
 
   }
 
-  public void AddItem(string newItemID)
+  public void AddItem(string newItemID, int optionalSaveQty = 0)                      // optional int qty to use same function when finding new items in game or loading a save file
   {
     foreach (InventorySlot slot in Slots)
     {
@@ -78,8 +81,12 @@ public class InventoryManager : MonoBehaviour
             slot.GetComponent<InventorySlot>().Icon.sprite = ManaPotion;
             break;
           case "ME":                                              // Mana Elixir
+            slot.gameObject.AddComponent<ManaElixir>();
+            slot.GetComponent<InventorySlot>().Icon.sprite = ManaElixir;
             break;
           case "CK":                                              // Cemetery Key
+            slot.gameObject.AddComponent<ManaElixir>();
+            slot.GetComponent<InventorySlot>().Icon.sprite = ManaElixir;
             break;
           default:
             break;
@@ -93,12 +100,18 @@ public class InventoryManager : MonoBehaviour
         slot.GetComponent<Button>().interactable = true;
 
         Item item = slot.GetComponent<Item>();
-        item.TotalCount = 1;
+        if (optionalSaveQty > 0)
+        {
+          item.TotalCount = optionalSaveQty;
+        }
+        else
+        {
+          item.TotalCount = 1;
+        }
+
         slot.Qty.text = item.TotalCount.ToString();
         Debug.Log(item.Name + " " + item.TotalCount);
         break;
-
-
       }
     }
   }
@@ -198,8 +211,51 @@ public class InventoryManager : MonoBehaviour
     ItemDescription.text = "";
   }
 
+  private void ClearInventory()                                                   // Remove all items before loading save file to ensure correct items and count
+  {
+    string[] itemIDs = { "HP", "HE", "MP", "ME", "CK" };
+
+    foreach (string id in itemIDs)
+    {
+      RemoveItem(id);
+    }
+  }
+
   private void UseItem()
   {
     selectedItem.Use();
+  }
+
+  public void LoadInventory(Dictionary<string, int> inventory)                      // load inventory from last save
+  {
+    ClearInventory();                                                               // clear first to avoid duplicates and wrong qty
+
+    foreach (KeyValuePair<string, int> item in inventory)
+    {
+      if (item.Value > 0)                                                           // only display items on hand
+      {
+        AddItem(item.Key, item.Value);
+      }
+    }
+  }
+
+  public Dictionary<string, int> GetCurrentInventory()
+  {
+    Dictionary<string, int> currentInventory = new Dictionary<string, int>();                 // create Dictionary of itemID and quantity on hand for save file
+
+    foreach (InventorySlot slot in Slots)
+    {
+      if (slot.hasItem)
+      {
+        Item item = slot.GetComponent<Item>();
+
+        string itemID = item.ID;
+        int qty = item.TotalCount;
+
+        currentInventory.Add(itemID, qty);
+      }
+    }
+
+    return currentInventory;
   }
 }
