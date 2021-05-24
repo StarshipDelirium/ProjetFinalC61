@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 552538743231873028}
   - component: {fileID: 552538743231873029}
   - component: {fileID: 552538743231873026}
+  - component: {fileID: 5060618932032625971}
   m_Layer: 19
   m_Name: HealthElixir
-  m_TagString: HealthPotion
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,7 +96,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0027679503, y: -0.0064586103}
+  m_Offset: {x: -0.00423494, y: -0.00085633993}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -106,5 +107,17 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.45755786, y: 0.49422354}
+  m_Size: {x: 0.48837054, y: 0.6062696}
   m_EdgeRadius: 0
+--- !u!114 &5060618932032625971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552538743231873031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b626a9e72834a5e4c93c01a36d6c4fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

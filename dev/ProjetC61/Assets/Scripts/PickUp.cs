@@ -11,18 +11,8 @@ public class PickUp : MonoBehaviour
   {
     if (GameManager.Instance.Player != null)
     {
-
-      switch (itemType)                                    // depending on which item type pickup script is attached to
-      {
-        case "HealthPotion":
-          break;
-        case "HealthElixir":
-          break;
-        case "ManaPotion":
-          break;
-        case "ManaElixir":
-          break;
-      }
+      FindObjectOfType<InventoryManager>().CheckInventory(itemType);               // add item to inventory or increment total count if already on hand
+      Destroy(gameObject);
     }
   }
 }

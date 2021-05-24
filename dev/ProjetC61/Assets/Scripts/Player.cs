@@ -151,24 +151,24 @@ public class Player : MonoBehaviour
       GameManager.Instance.SaveLoadManager.SaveGameData(0);
     }
 
-    if (Input.GetKeyUp(KeyCode.U))
-    {
-      FindObjectOfType<InventoryManager>().TestAdd();
-    }
-
-    if (Input.GetKeyUp(KeyCode.L))
-    {
-      GameManager.Instance.SaveLoadManager.LoadGameData();
-    }
-
-    if (Input.GetKeyUp(KeyCode.M))
+    if (Input.GetKeyUp(KeyCode.K))
     {
       Mana.Value -= 2;
     }
 
     if (Input.GetKeyUp(KeyCode.P))
     {
-      Mana.Value += 2;
+      FindObjectOfType<InventoryManager>().CheckInventory("HP");
+    }
+
+    if (Input.GetKeyUp(KeyCode.O))
+    {
+      FindObjectOfType<InventoryManager>().CheckInventory("MP");
+    }
+
+    if (Input.GetKeyUp(KeyCode.L))
+    {
+      GameManager.Instance.SaveLoadManager.LoadGameData();
     }
 
     if (CurrentAnimation == Animation.Run)

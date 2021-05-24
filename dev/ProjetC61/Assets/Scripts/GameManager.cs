@@ -119,4 +119,17 @@ public class GameManager : MonoBehaviour
 
     return false;
   }
+
+  public void PauseGame()
+  {
+    Time.timeScale = 0;
+    Player.MovementController.enabled = false;
+  }
+
+  public void ResumeGame()
+  {
+    Time.timeScale = 1;
+    Player.MovementController.enabled = true;
+
+  }
 }
