@@ -223,7 +223,10 @@ public class InventoryManager : MonoBehaviour
 
   private void UseItem()
   {
-    selectedItem.Use();
+    if (onScreen)
+    {
+      selectedItem.Use();
+    }
   }
 
   public void LoadInventory(Dictionary<string, int> inventory)                      // load inventory from last save

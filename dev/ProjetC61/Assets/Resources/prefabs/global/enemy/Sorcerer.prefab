@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 3844872647684888640}
   m_Layer: 10
   m_Name: Sorcerer
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Max: 3
-  Start: 3
+  StartValue: 10
 --- !u!114 &3844872647684888644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 3844872647947480113}
   m_Layer: 11
   m_Name: EnemyHitBox
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

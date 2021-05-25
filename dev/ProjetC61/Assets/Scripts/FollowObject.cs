@@ -8,8 +8,11 @@ public class FollowObject : MonoBehaviour
   private void Start()
   {
     LevelBoss = GetComponent<LevelBoss>();
-    LevelBoss.OnTriggerFight += OnTriggerFight;
-    LevelBoss.OnBossKilled += OnBossKilled;
+    if(LevelBoss != null)
+    {
+      LevelBoss.OnTriggerFight += OnTriggerFight;
+      LevelBoss.OnBossKilled += OnBossKilled;
+    }
   }
   void LateUpdate()
   {

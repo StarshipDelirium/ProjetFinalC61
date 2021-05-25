@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5793123556849975942}
   m_Layer: 11
   m_Name: FireballHitbox
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 6504304101226825120}
   m_Layer: 10
   m_Name: SorcererFireball
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

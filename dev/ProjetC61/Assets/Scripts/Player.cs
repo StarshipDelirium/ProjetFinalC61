@@ -228,7 +228,7 @@ public class Player : MonoBehaviour
     {
       isInvincible = false;
       invincibleTimer = 2;
-      //Flash.StopFlash();
+      Flash.StopFlash();
     }
   }
 
@@ -247,6 +247,11 @@ public class Player : MonoBehaviour
         saveCheckpoint = savePoint;
       }
     }
+    if (!isInvincible && collision.CompareTag("Enemy"))
+    {
+      StartCoroutine(Knockback(transform, collision.name));
+      Health.Value -= 1;
+    }
   }
 
   private void OnTriggerEnter2D(Collider2D collision)
@@ -256,7 +261,7 @@ public class Player : MonoBehaviour
 
     if (!isInvincible && collision.CompareTag("Enemy"))
     {
-      StartCoroutine(Knockback(transform));
+      StartCoroutine(Knockback(transform, collision.name));
       Health.Value -= 1;
     }
   }
@@ -292,7 +297,7 @@ public class Player : MonoBehaviour
 
   private void OnHit(Health health)
   {
-    //Flash.StartFlash();
+    Flash.StartFlash();
     CurrentAnimation = Animation.Hurt;
 
     isInvincible = true;
@@ -301,6 +306,7 @@ public class Player : MonoBehaviour
   private void OnDeath(Health health)
   {
     gameObject.SetActive(false);
+    GameManager.Instance.EndGame();
   }
   public void OnLevelStart(LevelEntrance levelEntrance)
   {
@@ -378,10 +384,17 @@ public class Player : MonoBehaviour
     ResumePlayerControl();
   }
 
-  IEnumerator Knockback(Transform collisionSource)
+  IEnumerator Knockback(Transform collisionSource, string collisionName)
   {
     MovementController.enabled = false;
-    MovementController.Rigidbody2D.velocity = new Vector2((transform.position.x - collisionSource.position.x) * 4, MovementController.Rigidbody2D.velocity.y * 6);    // knocks back player in opposite direction of collision
+    if("SpikesHitBox".Equals(collisionName))
+    {
+      MovementController.Rigidbody2D.velocity = new Vector2((transform.position.x - collisionSource.position.x) * 2, transform.position.y - MovementController.Rigidbody2D.velocity.y + 4 * 1.75f);    // knocks back player in opposite direction of collision
+    }
+    else
+    {
+      MovementController.Rigidbody2D.velocity = new Vector2((transform.position.x - collisionSource.position.x) * 2, transform.position.y - MovementController.Rigidbody2D.velocity.y * 1.75f);    // knocks back player in opposite direction of collision
+    }
 
     yield return new WaitForSeconds(0.3f);                      // to keep player immobile in knockback position before resuming control
 
