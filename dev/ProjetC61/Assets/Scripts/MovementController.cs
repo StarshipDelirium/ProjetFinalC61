@@ -241,7 +241,7 @@ public class MovementController : MonoBehaviour
     if (JumpDelayTimer > 0.0f)
       return;
 
-    if (IsGrounded && JumpsRemaining > 0)
+    if (IsGrounded || JumpsRemaining > 0)
     {
       Jump();
     }

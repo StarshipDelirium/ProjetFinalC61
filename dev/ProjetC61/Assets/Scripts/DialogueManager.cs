@@ -14,7 +14,6 @@ public class DialogueManager : MonoBehaviour
   public Text DialogText;                           // text to be displayed
   public Text PrologueText;
   public IntroDialogue intro;
-  public bool isPrologue;
   public Animator Animator;
   private Queue<string> sentences;                  // to store relevant dialog, First In First Out collection
   private Text TextArea;
@@ -30,15 +29,15 @@ public class DialogueManager : MonoBehaviour
 
   private void OnEnable()
   {
-    if (SceneManager.GetActiveScene().name.Equals("Prologue"))                        // to use DialogueManager with different Animators
+    if ("Prologue".Equals(SceneManager.GetActiveScene().name))                        // to use DialogueManager with different Animators
     {
-      isPrologue = true;
+      Debug.Log("THIS IS PROLOGUE");
       TextArea = PrologueText;
       typingSpeed = 0.5f;
     }
     else
     {
-      isPrologue = false;
+      Debug.Log("THIS IS NOT PROLOGUE");
       TextArea = DialogText;
       typingSpeed = 0.1f;
     }
@@ -47,16 +46,16 @@ public class DialogueManager : MonoBehaviour
   internal void StartDialogue(Dialogue dialogue)      // when triggered by a DialogueTrigger
   {
 
-    if (!isPrologue)
+    if (!"Prologue".Equals(SceneManager.GetActiveScene().name))
     {
       Animator.SetBool("isActive", true);             // parameter added in Unity Animator to transition between hide/show dialogue box on screen
       Name.text = dialogue.CharacterName;
     }
 
-
-
-
-    sentences.Clear();                                          // clear any previous dialogue
+    if(sentences != null)
+    {
+      sentences.Clear();                              // clear any previous dialogue
+    }
 
     foreach (string sentence in dialogue.sentences)
     {
@@ -70,8 +69,10 @@ public class DialogueManager : MonoBehaviour
   {
     if (sentences.Count == 0)                                // as sentences are dequeued to be read
     {
-      if (isPrologue)
+      if ("Prologue".Equals(SceneManager.GetActiveScene().name))
       {
+        StopAllCoroutines();                                    // stop coroutine of previous phrase before generating next one
+        StartCoroutine(DisplaySentence(""));
         EndPrologue();
         return;
       }
@@ -105,8 +106,9 @@ public class DialogueManager : MonoBehaviour
   {
     Animator.SetBool("isActive", false);                      // transitions to hidden dialogue box
     Debug.Log("End of conversation");
+    Debug.Log("Current Scene Name: " + SceneManager.GetActiveScene().name);
 
-    if (isPrologue)
+    if ("Prologue".Equals(SceneManager.GetActiveScene().name))
     {
       EndPrologue();
     }
