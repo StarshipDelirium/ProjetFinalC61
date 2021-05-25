@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
     MainMenu = 0,
     Prologue = 1,
     Cemetery = 2,
+    GameOver = 3,
 
 
     // Or add new at the end and never delete
@@ -61,18 +62,19 @@ public class LevelManager : MonoBehaviour
 
   public void OnLevelStart()
   {
-    if (CurrentLevel != Level.MainMenu && CurrentLevel != Level.Prologue)
+    if (CurrentLevel != Level.MainMenu && CurrentLevel != Level.Prologue && CurrentLevel != Level.GameOver)
     {
       LevelEntrances = FindObjectsOfType<LevelEntrance>();
       LevelExits = FindObjectsOfType<LevelExit>();
       //DebugCheckForErrors();
 
-      GameManager.Instance.Camera.GetComponent<FollowObject>().TargetTransform = GameManager.Instance.Player.transform;
-      GameManager.Instance.Player.gameObject.SetActive(true);
-      OnLevelStartCommon();
+      if(GameManager.Instance.Player != null)
+      {
+        GameManager.Instance.Camera.GetComponent<FollowObject>().TargetTransform = GameManager.Instance.Player.transform;
+        GameManager.Instance.Player.gameObject.SetActive(true);
+        OnLevelStartCommon();
+      }  
     }
-
-
   }
 
   private void OnLevelStartCommon()

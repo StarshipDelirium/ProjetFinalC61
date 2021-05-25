@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
   public int PlayerHP;
   public int PlayerMana;
 
+  private bool hasGameEnded = false;
+
   private void Initialize()
   {
     SoundManager = GetComponentInChildren<SoundManager>();
@@ -78,7 +80,7 @@ public class GameManager : MonoBehaviour
 
     Player = FindObjectOfType<Player>();
 
-    if (!SceneManager.GetActiveScene().name.Equals("MainMenu") && !SceneManager.GetActiveScene().name.Equals("Prologue"))
+    if (!SceneManager.GetActiveScene().name.Equals("MainMenu") && !SceneManager.GetActiveScene().name.Equals("Prologue") && !SceneManager.GetActiveScene().name.Equals("GameOver"))
     {
       if (!Player)
       {
@@ -141,5 +143,23 @@ public class GameManager : MonoBehaviour
     Time.timeScale = 1;
     Player.MovementController.enabled = true;
 
+  }
+
+  public void EndGame()
+  {
+    if(!hasGameEnded)
+    {
+      hasGameEnded = true;
+      Debug.Log("YOU DIED");
+      SoundManager.Stop();
+      SceneManager.LoadScene("GameOver");
+      Invoke("Restart", 9f);
+    }
+  }
+
+  void Restart()
+  {
+    hasGameEnded = false;
+    SceneManager.LoadScene("MainMenu");
   }
 }
