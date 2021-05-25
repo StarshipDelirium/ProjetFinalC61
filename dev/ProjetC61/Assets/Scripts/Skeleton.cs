@@ -74,10 +74,4 @@ public class Skeleton : SimpleEnemy
     CurrentAnimation = Animation.Action;
   }
 
-  private void OnTriggerEnter2D(Collider2D collision)
-  {
-    //
-  }
-
-
 }

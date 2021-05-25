@@ -3,11 +3,10 @@
 public class IntroDialogue : MonoBehaviour
 {
   public Dialogue dialogue;
-  LevelTransition transition;
+  public LevelTransition transition;
 
   private void Awake()
   {
-    transition = FindObjectOfType<LevelTransition>();
   }
 
   void Start()
@@ -27,6 +26,6 @@ public class IntroDialogue : MonoBehaviour
 
   public void OnPrologueEnd()
   {
-    transition.FadeToLevel(2);
+    //transition.FadeToLevel(2);
   }
 }

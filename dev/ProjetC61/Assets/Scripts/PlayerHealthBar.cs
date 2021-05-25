@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/************************************************************
+ * With help from tutorial
+ * How to make a health bar in Unity
+ * https://weeklyhow.com/how-to-make-a-health-bar-in-unity/
+ ************************************************************/
 public class PlayerHealthBar : MonoBehaviour
 {
   public Slider HealthBar;

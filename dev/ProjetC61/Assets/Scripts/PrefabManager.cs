@@ -15,6 +15,7 @@ public class PrefabManager : MonoBehaviour
 
   public enum Enemy
   {
+    Possessed,
     Skeleton,
     Sorcerer,
 

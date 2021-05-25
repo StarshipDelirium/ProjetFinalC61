@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 3844872647684888665}
   - component: {fileID: 3844872647684888664}
   - component: {fileID: 3844872647684888640}
+  - component: {fileID: 2453907730580269763}
   m_Layer: 10
   m_Name: Sorcerer
   m_TagString: Untagged
@@ -134,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Max: 3
-  Start: 3
+  StartValue: 10
 --- !u!114 &3844872647684888644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +244,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2453907730580269763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3844872647684888671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8958dd1f2b64df41932533cf303dd84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackDamage: 1
 --- !u!1 &3844872647702767847
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +299,7 @@ GameObject:
   - component: {fileID: 3844872647947480113}
   m_Layer: 11
   m_Name: EnemyHitBox
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

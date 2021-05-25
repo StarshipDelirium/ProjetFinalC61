@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/*******************************************************************
+ * Adapté du code reçu de Maël Perreault dans le cadre du cours C63
+ *******************************************************************/
 public class LevelManager : MonoBehaviour
 {
   public enum Level

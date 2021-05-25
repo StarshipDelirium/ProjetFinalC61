@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/*************************************************************************
+ *  Adapté du code reçu Maël Perreault et créé dans le cadre du cours C63
+ *************************************************************************/
 public class SoundManager : MonoBehaviour
 {
 

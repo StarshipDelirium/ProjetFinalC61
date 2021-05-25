@@ -38,6 +38,9 @@ public class Sorcerer : SimpleEnemy
   }
 
   public Animator Animator;
+  public Player player;
+  public BoxCollider2D playerCollider;
+  public BoxCollider2D enemyCollider;
   public FacingController FacingController;
   public Transform LeftFireballSpawnPoint;
   public Transform RightFireballSpawnPoint;
@@ -45,6 +48,9 @@ public class Sorcerer : SimpleEnemy
   public SorcererFireball fireballPrefab;
   private void Awake()
   {
+    player = GameManager.Instance.Player;
+    playerCollider = GetComponent<BoxCollider2D>();
+    enemyCollider = GetComponent<BoxCollider2D>();
     Animator = GetComponent<Animator>();
     FacingController = GetComponent<FacingController>();
     FacingController.Facing = Facing.Left;
@@ -54,6 +60,19 @@ public class Sorcerer : SimpleEnemy
   // Update is called once per frame
   void Update()
   {
+    if (player.isActiveAndEnabled)
+    {
+      if (playerCollider.bounds.max.x < enemyCollider.bounds.min.x)                     // adjust facing depending on player position
+      {
+        FacingController.Facing = Facing.Left;
+      }
+      else
+      {
+        FacingController.Facing = Facing.Right;
+      }
+    }
+
+
     if (FireballDelay > 5)
     {
       CurrentAnimation = Animation.Idle;

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/*********************************************************************
+ * Adapté du code reçu de Maël Perreault dans le cadre du cours C63
+ ********************************************************************/
 public class FacingController : MonoBehaviour
 {
   public Animator Animator;

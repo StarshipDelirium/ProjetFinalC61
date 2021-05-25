@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/************************************************************************
+ * Adapté du code reçu de Maël Perreault dans le cadre du cours C63
+ ************************************************************************/
 public class FollowObject : MonoBehaviour
 {
   public Transform TargetTransform;
@@ -7,9 +10,9 @@ public class FollowObject : MonoBehaviour
 
   private void Start()
   {
-    LevelBoss = GetComponent<LevelBoss>();
+    /*LevelBoss = GetComponent<LevelBoss>();
     LevelBoss.OnTriggerFight += OnTriggerFight;
-    LevelBoss.OnBossKilled += OnBossKilled;
+    LevelBoss.OnBossKilled += OnBossKilled;*/
   }
   void LateUpdate()
   {

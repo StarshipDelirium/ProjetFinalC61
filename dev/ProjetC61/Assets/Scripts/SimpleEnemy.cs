@@ -61,8 +61,6 @@ public class SimpleEnemy : MonoBehaviour
     Fade fade = gameObject.AddComponent<Fade>();
     fade.FadeOutTime = 1;
     fade.StartFade();
-
-    // Destroy object or store in pool
-    Destroy(gameObject);
+    fade.DestroyOnFadeOut = true;
   }
 }

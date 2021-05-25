@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/****************************************************************
+ *  « How to make a Dialogue System in Unity ». 
+ *  https://www.youtube.com/watch?v=_nRzoTzeyxU&t=254s
+  **************************************************************/
 public class DialogueManager : MonoBehaviour
 {
   public Text Name;                        // display name of character talking, empty string if game info

@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/**********************************************************
+ * With tutorial « How to Fade Between Scenes in Unity ». 
+ * https://www.youtube.com/watch?v=Oadq-IrOazg
+ **********************************************************/
 public class LevelTransition : MonoBehaviour
 {
   private Animator animator;

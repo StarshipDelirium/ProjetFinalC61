@@ -206,7 +206,6 @@ public class Player : MonoBehaviour
     if (Input.GetKeyUp(KeyCode.E) && interactable != null)
     {
       interactable.Interact();
-      Debug.Log("PLAY INTERRACYABLE NOT NULL");
 
     }
 
@@ -247,18 +246,22 @@ public class Player : MonoBehaviour
         saveCheckpoint = savePoint;
       }
     }
-  }
 
-  private void OnTriggerEnter2D(Collider2D collision)
-  {
     var transform = collision.GetComponentInParent<Transform>();
 
 
     if (!isInvincible && collision.CompareTag("Enemy"))
     {
       StartCoroutine(Knockback(transform));
-      Health.Value -= 1;
+
+      int damage = collision.GetComponentInParent<Damage>().AttackDamage;
+      Health.Value -= damage;
     }
+  }
+
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+
   }
 
   private void OnTriggerExit2D(Collider2D collision)

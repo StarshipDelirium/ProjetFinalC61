@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/*************************************************************************
+ *  Code reçu Maël Perreault dans le cadre du cours C63
+ *************************************************************************/
 static public class Vector3Extensions
 {
   public static Vector2 XY(this Vector3 v)
