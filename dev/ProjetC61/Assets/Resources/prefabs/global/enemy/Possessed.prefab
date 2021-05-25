@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 277894645651673222}
   - component: {fileID: 277894645651673221}
+  - component: {fileID: 3102191786613193857}
   m_Layer: 11
   m_Name: EnemyHitbox
   m_TagString: Enemy
@@ -57,6 +58,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3406696, y: 0.98580456}
   m_EdgeRadius: 0
+--- !u!114 &3102191786613193857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277894645651673223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8958dd1f2b64df41932533cf303dd84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackDamage: 3
 --- !u!1 &277894645817131667
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +89,6 @@ GameObject:
   - component: {fileID: 2373549162459092984}
   - component: {fileID: -3463686864264809108}
   - component: {fileID: 4827936827142816441}
-  - component: {fileID: 6590123324809078532}
   - component: {fileID: 6743085344324662762}
   m_Layer: 10
   m_Name: Possessed
@@ -93,7 +106,7 @@ Transform:
   m_GameObject: {fileID: 277894645817131667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.2, y: 9.27, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
   m_Children:
   - {fileID: 277894645651673222}
   m_Father: {fileID: 0}
@@ -225,6 +238,7 @@ MonoBehaviour:
   AttackDelay: 5
   bossCollider: {fileID: 277894645817131664}
   MovementController: {fileID: 2373549162459092984}
+  LevelBoss: {fileID: 0}
   StunnedTimer: 1
   AttackRange: 1.1
   playerInRange: 0
@@ -282,8 +296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5fb90e76900dc4e9cc30e1d19f660d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Max: 3
-  StartValue: 3
+  Max: 30
+  StartValue: 30
 --- !u!114 &4827936827142816441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,19 +313,6 @@ MonoBehaviour:
   FlashOnTime: 0.1
   FlashOffTime: 0.1
   Duration: 1
---- !u!114 &6590123324809078532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277894645817131667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8958dd1f2b64df41932533cf303dd84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttackDamage: 3
 --- !u!114 &6743085344324662762
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -250,7 +250,7 @@ public class Player : MonoBehaviour
     {
       Transform transform = collision.GetComponentInParent<Transform>();
       StartCoroutine(Knockback(transform, collision.name));
-      int damage = collision.GetComponentInParent<Damage>().AttackDamage;
+      int damage = collision.GetComponent<Damage>().AttackDamage;
       Health.Value -= damage;
     }
   }
