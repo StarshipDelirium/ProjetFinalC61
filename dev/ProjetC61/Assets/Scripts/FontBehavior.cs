@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -10,14 +11,17 @@ using UnityEngine.UI;
 public class FontBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
   public Text TextLabel;
+  public int selectedSize;
+  public Animator Animator;
   private Color defaultColor;
   private Font defaultFont;
   private int defaultSize;
   private Color selectedColor;
   private Font SelectedFont;
-  public int selectedSize;
+  private bool isDisabled = false;
+  private bool isShowingControls = false;
 
-  private void Awake()
+  private void Start()
   {
     TextLabel = gameObject.GetComponent<Text>();
     defaultFont = TextLabel.font;
@@ -25,12 +29,37 @@ public class FontBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     defaultSize = TextLabel.fontSize;
     selectedColor = Color.red;
     SelectedFont = (Font)Resources.Load("Fonts/GhastlyPixe");
+
+    if (!File.Exists(Application.persistentDataPath + "/hellvaniasave.json"))                                         // if no save file detected, change LoadGame color to grey
+    {
+      if (TextLabel.CompareTag("LoadGame"))
+      {
+        defaultColor = Color.grey;
+        TextLabel.color = defaultColor;
+        isDisabled = true;
+      }
+    }
   }
   public void OnPointerEnter(PointerEventData eventData)
   {
-    TextLabel.font = SelectedFont;
-    TextLabel.color = selectedColor;
-    TextLabel.fontSize = selectedSize;
+    if (!isDisabled)
+    {
+      TextLabel.font = SelectedFont;
+      TextLabel.color = selectedColor;
+      TextLabel.fontSize = selectedSize;
+    }
+    else if (!gameObject.CompareTag("LoadGame"))                                                     // if no save file, only apply OnHover mouse behaviour to non Load options
+    {
+      TextLabel.font = SelectedFont;
+      TextLabel.color = selectedColor;
+      TextLabel.fontSize = selectedSize;
+    }
+
+    if (gameObject.CompareTag("Controls"))
+    {
+      Animator.SetBool("isMenuOpen", true);
+      isShowingControls = true;
+    }
   }
 
   public void OnPointerExit(PointerEventData eventData)
@@ -38,5 +67,11 @@ public class FontBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     TextLabel.font = defaultFont;
     TextLabel.color = defaultColor;
     TextLabel.fontSize = defaultSize;
+
+    if (isShowingControls && gameObject.CompareTag("Controls"))
+    {
+      Animator.SetBool("isMenuOpen", false);
+      isShowingControls = false;
+    }
   }
 }

@@ -10,6 +10,9 @@ public class SaveGame
   public int ManaPotions = 0;
   public int ManaElixirs = 0;
   public int HasCemeteryKey = 0;                            // int instead of bool to include it in a Dictionary<string,int>
+  public int CurrentHP = 0;
+  public int CurrentMana = 0;
+
 
 
 

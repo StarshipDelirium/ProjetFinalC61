@@ -12,13 +12,16 @@ public class SaveLoadManager : MonoBehaviour
    ********************************************************************************/
 
   public SaveGame saveGame;
-  public bool saveFileLoaded = false;
+  public SaveGame loadGame;
   private string jsonSavePath;
+  private GameManager instance;
 
 
   private void Start()
   {
+    instance = GameManager.Instance;
     jsonSavePath = Application.persistentDataPath + "/hellvaniasave.json";
+    saveGame = new SaveGame();
 
     // JSON file saved under %userprofile%\AppData\LocalLow\DefaultCompany\ProjetC61
 
@@ -26,14 +29,18 @@ public class SaveLoadManager : MonoBehaviour
 
   private void OnEnable()
   {
-    saveGame = new SaveGame();
+    //saveFileLoaded = false;
+
   }
 
   public void LoadGameData()
   {
     saveGame = JsonUtility.FromJson<SaveGame>(File.ReadAllText(Application.persistentDataPath + "/hellvaniasave.json"));
+    GameManager.Instance.PlayerHP = saveGame.CurrentHP;
+    GameManager.Instance.PlayerMana = saveGame.CurrentMana;
+
     Dictionary<string, int> Inventory = new Dictionary<string, int>();
-    saveFileLoaded = true;
+    GameManager.Instance.SaveLoaded = true;
 
     Inventory.Add("HP", saveGame.HealthPotions);
     Inventory.Add("HE", saveGame.HealthElixirs);
@@ -44,7 +51,6 @@ public class SaveLoadManager : MonoBehaviour
     SceneManager.LoadScene(saveGame.SceneName);
     FindObjectOfType<InventoryManager>().LoadInventory(Inventory);
 
-    Debug.Log("LOAD: " + saveGame.ManaPotions);
   }
   public void SaveGameData(int SaveCheckpointID)
   {
@@ -54,7 +60,8 @@ public class SaveLoadManager : MonoBehaviour
 
     saveGame.SceneName = scene.name;
     saveGame.CheckpointID = SaveCheckpointID;
-
+    saveGame.CurrentHP = FindObjectOfType<PlayerHealthBar>().GetCurrentHealth();
+    saveGame.CurrentMana = FindObjectOfType<PlayerManaBar>().GetCurrentMana();
 
     playerInventory = FindObjectOfType<InventoryManager>().GetCurrentInventory();
 

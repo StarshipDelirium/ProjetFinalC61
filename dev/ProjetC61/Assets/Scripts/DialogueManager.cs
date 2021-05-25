@@ -1,27 +1,56 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
   public Text Name;                        // display name of character talking, empty string if game info
   public Text DialogText;                           // text to be displayed
+  public Text PrologueText;
+  public IntroDialogue intro;
+  public bool isPrologue;
   public Animator Animator;
   private Queue<string> sentences;                  // to store relevant dialog, First In First Out collection
+  private Text TextArea;
+  private float typingSpeed;
 
   private GameManager instance;
   void Start()
   {
     instance = GameManager.Instance;
     sentences = new Queue<string>();
+    intro = gameObject.GetComponent<IntroDialogue>();
+  }
+
+  private void OnEnable()
+  {
+    if (SceneManager.GetActiveScene().name.Equals("Prologue"))                        // to use DialogueManager with different Animators
+    {
+      isPrologue = true;
+      TextArea = PrologueText;
+      typingSpeed = 0.5f;
+    }
+    else
+    {
+      isPrologue = false;
+      TextArea = DialogText;
+      typingSpeed = 0.1f;
+    }
   }
 
   internal void StartDialogue(Dialogue dialogue)      // when triggered by a DialogueTrigger
   {
-    Debug.Log("Starting conversation with " + dialogue.CharacterName);
-    Animator.SetBool("isActive", true);             // parameter added in Unity Animator to transition between hide/show dialogue box on screen
-    Name.text = dialogue.CharacterName;
+
+    if (!isPrologue)
+    {
+      Animator.SetBool("isActive", true);             // parameter added in Unity Animator to transition between hide/show dialogue box on screen
+      Name.text = dialogue.CharacterName;
+    }
+
+
+
 
     sentences.Clear();                                          // clear any previous dialogue
 
@@ -37,8 +66,17 @@ public class DialogueManager : MonoBehaviour
   {
     if (sentences.Count == 0)                                // as sentences are dequeued to be read
     {
-      EndDialogue();
-      return;
+      if (isPrologue)
+      {
+        EndPrologue();
+        return;
+      }
+      else
+      {
+        EndDialogue();
+        return;
+      }
+
     }
 
     string sentence = sentences.Dequeue();
@@ -48,13 +86,13 @@ public class DialogueManager : MonoBehaviour
 
   IEnumerator DisplaySentence(string sentence)
   {
-    DialogText.text = "";                                     // erase previous phrase from dialogue box
+    TextArea.text = "";                                     // erase previous phrase from dialogue box
 
-    yield return new WaitForSeconds(0.1f);
+    yield return new WaitForSeconds(typingSpeed);
 
     foreach (char letter in sentence.ToCharArray())
     {
-      DialogText.text += letter;
+      TextArea.text += letter;
       yield return 1;                                         // return each letter in iteration for a typing effect
     }
   }
@@ -63,5 +101,15 @@ public class DialogueManager : MonoBehaviour
   {
     Animator.SetBool("isActive", false);                      // transitions to hidden dialogue box
     Debug.Log("End of conversation");
+
+    if (isPrologue)
+    {
+      EndPrologue();
+    }
+  }
+
+  public void EndPrologue()
+  {
+    FindObjectOfType<IntroDialogue>().OnPrologueEnd();
   }
 }

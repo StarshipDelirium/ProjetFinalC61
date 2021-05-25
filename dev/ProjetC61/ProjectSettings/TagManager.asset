@@ -12,6 +12,9 @@ TagManager:
   - MP
   - ME
   - CK
+  - StartGame
+  - LoadGame
+  - Controls
   layers:
   - Default
   - TransparentFX

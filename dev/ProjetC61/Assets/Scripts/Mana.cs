@@ -3,6 +3,7 @@
 public class Mana : MonoBehaviour
 {
   public int Max = 10;
+  public int StartValue = 10;
 
   public delegate void ManaEvent(Mana mana);
 
@@ -13,7 +14,14 @@ public class Mana : MonoBehaviour
 
   private void Awake()
   {
-    _value = Max;
+    if (GameManager.Instance.SaveLoaded)
+    {
+      _value = GameManager.Instance.PlayerMana;
+    }
+    else
+    {
+      _value = Max;
+    }
   }
 
   public int Value

@@ -10,7 +10,8 @@ public class LevelManager : MonoBehaviour
 
     // Define value by hand
     MainMenu = 0,
-    Cemetery = 1,
+    Prologue = 1,
+    Cemetery = 2,
 
 
     // Or add new at the end and never delete
@@ -57,7 +58,7 @@ public class LevelManager : MonoBehaviour
 
   public void OnLevelStart()
   {
-    if (CurrentLevel != Level.MainMenu)
+    if (CurrentLevel != Level.MainMenu && CurrentLevel != Level.Prologue)
     {
       LevelEntrances = FindObjectsOfType<LevelEntrance>();
       LevelExits = FindObjectsOfType<LevelExit>();

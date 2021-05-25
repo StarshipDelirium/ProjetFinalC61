@@ -4,6 +4,7 @@ public class LevelDoor : MonoBehaviour, IInteractable
 {
   public LevelExit exit;
   public Dialogue dialogue;
+  public bool hasReachedCrypt;
   private bool interacted;
   private bool isActivated = false;
 
@@ -13,6 +14,7 @@ public class LevelDoor : MonoBehaviour, IInteractable
     {
       FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
       interacted = true;
+      hasReachedCrypt = true;
     }
     else
     {

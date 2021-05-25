@@ -3,7 +3,7 @@
 
   private Mana playerMana;
 
-  private void Awake()
+  private void Start()
   {
     playerMana = GameManager.Instance.Player.GetComponent<Mana>();
     Name = "Mana Potion";

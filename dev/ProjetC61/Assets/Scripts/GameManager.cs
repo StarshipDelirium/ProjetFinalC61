@@ -44,6 +44,10 @@ public class GameManager : MonoBehaviour
   public Camera Camera { get; set; }
   public Plane[] FrustumPlanes { get; private set; }
 
+  public bool SaveLoaded;                                           // to apply player settings easily between scenes/save/load because of singleton
+  public int PlayerHP;
+  public int PlayerMana;
+
   private void Initialize()
   {
     SoundManager = GetComponentInChildren<SoundManager>();
@@ -74,22 +78,26 @@ public class GameManager : MonoBehaviour
 
     Player = FindObjectOfType<Player>();
 
-    if (!Player && !SceneManager.GetActiveScene().name.Equals("MainMenu"))
+    if (!SceneManager.GetActiveScene().name.Equals("MainMenu") && !SceneManager.GetActiveScene().name.Equals("Prologue"))
     {
-      Player = FindObjectOfType<Player>();
-
       if (!Player)
       {
-        var playerGameObject = PrefabManager.Spawn(PrefabManager.Global.Player, Vector3.zero);
-        Player = playerGameObject.GetComponent<Player>();
-        DontDestroyOnLoad(Player);
+        Player = FindObjectOfType<Player>();
+
+        if (!Player)
+        {
+          var playerGameObject = PrefabManager.Spawn(PrefabManager.Global.Player, Vector3.zero);
+          Player = playerGameObject.GetComponent<Player>();
+          DontDestroyOnLoad(Player);
+        }
       }
     }
 
-    if (SaveLoadManager.saveFileLoaded)
+
+
+    if (SaveLoaded)
     {
       LevelManager.OnSaveLoaded();
-      SaveLoadManager.saveFileLoaded = false;
     }
     else
     {

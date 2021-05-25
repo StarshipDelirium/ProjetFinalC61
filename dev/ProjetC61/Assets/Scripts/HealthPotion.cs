@@ -2,7 +2,7 @@
 {
   private Health playerHealth;
 
-  private void Awake()
+  private void Start()
   {
     playerHealth = GameManager.Instance.Player.GetComponent<Health>();
     Name = "Health Potion";

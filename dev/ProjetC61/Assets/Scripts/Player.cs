@@ -87,6 +87,9 @@ public class Player : MonoBehaviour
     Health.OnHit += OnHit;
     Health.OnDeath += OnDeath;
     Mana.OnUse += OnUse;
+
+
+
     Animator = gameObject.GetComponent<Animator>();
     MovementController = gameObject.GetComponent<MovementController>();
     MovementController.OnJump += OnJump;

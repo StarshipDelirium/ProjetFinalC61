@@ -10,7 +10,7 @@ public class LevelBounds : MonoBehaviour
   private bool isMax = false;
   private Vector2 screenBounds;
 
-  private void OnEnable()
+  private void Start()
   {
     cam = FindObjectOfType<Camera>();
     targetPlayer = GameManager.Instance.Player.GetComponent<Transform>();

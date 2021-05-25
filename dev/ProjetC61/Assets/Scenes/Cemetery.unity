@@ -468,7 +468,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ManaBar: {fileID: 237221593}
-  playerMana: {fileID: 0}
+  playerMana: {fileID: 4359081981045799233, guid: be8b09cf6867bcb4bacaff8dc8f60c57,
+    type: 3}
 --- !u!1 &247423518
 GameObject:
   m_ObjectHideFlags: 0
@@ -2097,12 +2098,12 @@ PrefabInstance:
     - target: {fileID: 5404560445697035703, guid: 7cf16e1843c6f6b43b8ebd815635bfda,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.29
+      value: 57.32
       objectReference: {fileID: 0}
     - target: {fileID: 5404560445697035703, guid: 7cf16e1843c6f6b43b8ebd815635bfda,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.15
+      value: -2.25
       objectReference: {fileID: 0}
     - target: {fileID: 5404560445697035703, guid: 7cf16e1843c6f6b43b8ebd815635bfda,
         type: 3}

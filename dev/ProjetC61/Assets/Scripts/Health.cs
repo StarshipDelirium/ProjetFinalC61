@@ -8,8 +8,8 @@ public class Health : MonoBehaviour
   public HealthEvent OnHit;
   public HealthEvent OnDeath;
 
-  public int Max;
-  public int Start;
+  public int Max = 10;
+  public int StartValue = 10;
   private int _value;
 
   public int Value
@@ -40,6 +40,13 @@ public class Health : MonoBehaviour
 
   private void Awake()
   {
-    _value = Start;
+    if (GameManager.Instance.SaveLoaded)
+    {
+      _value = GameManager.Instance.PlayerHP;
+    }
+    else
+    {
+      _value = Max;
+    }
   }
 }

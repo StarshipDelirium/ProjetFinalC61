@@ -265,12 +265,11 @@ MonoBehaviour:
   MovementController: {fileID: 377761947373174671}
   canFall: 0
   Health: {fileID: 6901430660938650582}
+  Mana: {fileID: 4359081981045799233}
   Flash: {fileID: 4455021148548693147}
   isInvincible: 0
   isRestart: 0
   invincibleTimer: 2
-  redPotion: 1
-  bluePotion: 3
 --- !u!114 &6901430660938650582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Max: 10
-  Start: 10
+  StartValue: 10
 --- !u!114 &4455021148548693147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,6 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Max: 10
+  StartValue: 10
 --- !u!50 &1577230552248152486
 Rigidbody2D:
   serializedVersion: 4
