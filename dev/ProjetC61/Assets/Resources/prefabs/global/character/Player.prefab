@@ -177,7 +177,7 @@ MonoBehaviour:
   MoveDeceleration: 15
   AirMoveSpeedMultiplier: 1.5
   JumpStrength: 300
-  Jumps: 3
+  Jumps: 2
   JumpDelay: 0.5
 --- !u!212 &377761947373174670
 SpriteRenderer:
@@ -269,7 +269,7 @@ MonoBehaviour:
   Flash: {fileID: 4455021148548693147}
   isInvincible: 0
   isRestart: 0
-  invincibleTimer: 2
+  invincibleTimer: 1.5
 --- !u!114 &6901430660938650582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,8 +282,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5fb90e76900dc4e9cc30e1d19f660d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Max: 10
-  StartValue: 10
+  Max: 100
+  StartValue: 100
 --- !u!114 &4455021148548693147
 MonoBehaviour:
   m_ObjectHideFlags: 0

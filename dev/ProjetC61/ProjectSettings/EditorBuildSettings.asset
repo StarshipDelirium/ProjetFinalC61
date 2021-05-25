@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Cemetery.unity
     guid: 718c296281ca3f34880e779f0ae6635d
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: ae5bbc02e74cbb145900452c8c1e8f27
   m_configObjects: {}

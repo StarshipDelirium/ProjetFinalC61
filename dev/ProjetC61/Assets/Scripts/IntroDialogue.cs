@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class IntroDialogue : MonoBehaviour
 {
   public Dialogue dialogue;
-  LevelTransition transition;
+  private LevelTransition transition;
 
   private void Awake()
   {

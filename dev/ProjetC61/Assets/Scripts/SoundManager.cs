@@ -52,4 +52,9 @@ public class SoundManager : MonoBehaviour
     MusicAudioSource.Play();
   }
 
+  public void Stop()
+  {
+    MusicAudioSource.Stop();
+  }
+
 }
