@@ -24,7 +24,7 @@ public class DialogueManager : MonoBehaviour
   {
     instance = GameManager.Instance;
     sentences = new Queue<string>();
-    intro = gameObject.GetComponent<IntroDialogue>();
+    intro = GetComponent<IntroDialogue>();
   }
 
   private void OnEnable()
@@ -52,7 +52,7 @@ public class DialogueManager : MonoBehaviour
       Name.text = dialogue.CharacterName;
     }
 
-    if(sentences != null)
+    if (sentences != null)
     {
       sentences.Clear();                              // clear any previous dialogue
     }

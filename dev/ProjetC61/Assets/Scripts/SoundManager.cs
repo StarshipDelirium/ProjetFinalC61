@@ -9,7 +9,6 @@ public class SoundManager : MonoBehaviour
   public enum Music
   {
     FestivalOfSpirits,
-    Music,
     UnholyIllusions,
 
     Count

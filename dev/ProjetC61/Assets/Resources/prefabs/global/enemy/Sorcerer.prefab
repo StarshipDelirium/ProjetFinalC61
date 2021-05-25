@@ -165,8 +165,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StunnedTimer: 1
   isHit: 0
-  Animator: {fileID: 0}
-  FacingController: {fileID: 0}
+  Animator: {fileID: 3844872647684888640}
+  player: {fileID: 377761947373174661, guid: be8b09cf6867bcb4bacaff8dc8f60c57, type: 3}
+  playerCollider: {fileID: 377761947373174658, guid: be8b09cf6867bcb4bacaff8dc8f60c57,
+    type: 3}
+  enemyCollider: {fileID: 3844872647684888664}
+  FacingController: {fileID: 3844872647684888665}
   LeftFireballSpawnPoint: {fileID: 3844872647702767840}
   RightFireballSpawnPoint: {fileID: 3844872647583865935}
   FireballDelay: 8
@@ -197,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 067a20db337870d4d9d37734ab6b163b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animator: {fileID: 0}
+  Animator: {fileID: 3844872647684888640}
   InitialFacing: 1
 --- !u!61 &3844872647684888664
 BoxCollider2D:

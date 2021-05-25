@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class IntroDialogue : MonoBehaviour
 {
@@ -8,6 +7,7 @@ public class IntroDialogue : MonoBehaviour
 
   private void Awake()
   {
+    transition = FindObjectOfType<LevelTransition>();
   }
 
   void Start()
@@ -27,6 +27,6 @@ public class IntroDialogue : MonoBehaviour
 
   public void OnPrologueEnd()
   {
-    //transition.FadeToLevel(2);
+    transition.FadeToLevel(2);
   }
 }

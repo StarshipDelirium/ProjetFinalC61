@@ -15,6 +15,7 @@ public class LevelMusic : MonoBehaviour
         Music = SoundManager.Music.FestivalOfSpirits;
         break;
       case 1:
+      case 2:
         Music = SoundManager.Music.UnholyIllusions;
         break;
       default:

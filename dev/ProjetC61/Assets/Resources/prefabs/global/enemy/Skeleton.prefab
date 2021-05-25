@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 3981531025573417136}
-  InitialFacing: 1
+  InitialFacing: -1
 --- !u!114 &7411113641255773938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,8 +249,9 @@ MonoBehaviour:
   isHit: 0
   Animator: {fileID: 3981531025573417136}
   skeletonCollider: {fileID: 3294853809927844074}
-  MovementController: {fileID: 0}
-  Player: {fileID: 0}
+  MovementController: {fileID: 7411113641255773938}
+  FacingController: {fileID: 1635223957265498612}
+  Player: {fileID: 377761947373174661, guid: be8b09cf6867bcb4bacaff8dc8f60c57, type: 3}
   NormalSpeed: 0
 --- !u!1 &5629219652167014578
 GameObject:

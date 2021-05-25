@@ -40,6 +40,7 @@ public class Skeleton : SimpleEnemy
   public Animator Animator;
   public BoxCollider2D skeletonCollider;
   public MovementController MovementController;
+  public FacingController FacingController;
   public Player Player;
   public float NormalSpeed;
   private void Awake()
@@ -47,6 +48,8 @@ public class Skeleton : SimpleEnemy
     Animator = gameObject.GetComponent<Animator>();
     skeletonCollider = gameObject.GetComponent<BoxCollider2D>();
     MovementController = gameObject.GetComponent<MovementController>();
+    FacingController = gameObject.GetComponent<FacingController>();
+    FacingController.Facing = Facing.Left;
     NormalSpeed = MovementController.MoveSpeed;
     Player = GameManager.Instance.Player;
     CurrentAnimation = Animation.Default;

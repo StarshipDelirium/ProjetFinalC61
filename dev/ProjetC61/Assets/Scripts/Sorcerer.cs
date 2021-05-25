@@ -60,17 +60,7 @@ public class Sorcerer : SimpleEnemy
   // Update is called once per frame
   void Update()
   {
-    if (player.isActiveAndEnabled)
-    {
-      if (playerCollider.bounds.max.x < enemyCollider.bounds.min.x)                     // adjust facing depending on player position
-      {
-        FacingController.Facing = Facing.Left;
-      }
-      else
-      {
-        FacingController.Facing = Facing.Right;
-      }
-    }
+
 
 
     if (FireballDelay > 5)

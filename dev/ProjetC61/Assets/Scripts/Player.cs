@@ -258,6 +258,22 @@ public class Player : MonoBehaviour
   private void OnTriggerEnter2D(Collider2D collision)
   {
 
+    if (!isInvincible && collision.CompareTag("Enemy"))
+    {
+      if (collision.GetComponentInParent<Damage>())
+      {
+        int damage = collision.GetComponentInParent<Damage>().AttackDamage;
+        Health.Value -= damage;
+      }
+      else
+      {
+        Health.Value -= 1;                                                    // Sorcerer fireball pooled too quickly to get component on trigger
+      }
+
+      Transform transform = collision.GetComponentInParent<Transform>();
+      StartCoroutine(Knockback(transform, collision.name));
+
+    }
   }
 
   private void OnTriggerExit2D(Collider2D collision)
@@ -381,7 +397,7 @@ public class Player : MonoBehaviour
   IEnumerator Knockback(Transform collisionSource, string collisionName)
   {
     MovementController.enabled = false;
-    if("SpikesHitBox".Equals(collisionName))
+    if ("SpikesHitBox".Equals(collisionName))
     {
       MovementController.Rigidbody2D.velocity = new Vector2((transform.position.x - collisionSource.position.x) * 2, transform.position.y - MovementController.Rigidbody2D.velocity.y + 4 * 1.75f);    // knocks back player in opposite direction of collision
     }
