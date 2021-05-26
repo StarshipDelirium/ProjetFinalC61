@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     Crouch,
     Fall,
     Block,
+    Magic
   }
 
   private Animation _currentAnimation;
@@ -110,40 +111,30 @@ public class Player : MonoBehaviour
 
     MovementController.InputMove = Input.GetAxisRaw("Horizontal");
 
-    if (Input.GetMouseButtonDown(0))
-    {
-      clickTime = Time.time;                                                    // Time saved until mouse button released to differentiate single click vs mouse hold
-      mouseClicked = true;
-    }
-
-    if (Input.GetMouseButtonUp(0))
+    /*if (Input.GetMouseButtonUp(0))
     {
       Animator.SetTrigger("IsAttacking");
       MovementController.IsAttacking = true;
 
-      if ((Time.time - clickTime < 0.2f))                                              // normal attack
-      {
-        CurrentDamage = 1;
-        CurrentAnimation = Animation.Attack;
-      }
-      else if (mouseClicked && (Time.time - clickTime) > 0.2f)                         // mouse button held down for power attack
-      {
-        CurrentDamage = 3;
-        CurrentAnimation = Animation.PowerAttack;
-
-      }
-    }
+    }*/
 
 
 
-    /*if (Input.GetButtonDown("Fire1"))
+    if (Input.GetButton("Fire1"))
     {
       Animator.SetTrigger("IsAttacking");
       MovementController.IsAttacking = true;
       CurrentAnimation = Animation.Attack;
 
-      //GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Attack);
-    }*/
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Attack);
+    }
+
+    if (Input.GetButton("Fire2"))
+    {
+      Animator.SetTrigger("IsAttacking");
+      MovementController.IsAttacking = true;
+      CurrentAnimation = Animation.Magic;
+    }
 
     if (Input.GetKeyUp(KeyCode.I))
     {
@@ -377,7 +368,7 @@ public class Player : MonoBehaviour
   {
     Animator.SetTrigger("IsJumping");
     CurrentAnimation = Animation.Jump;
-    //GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Jump);
+    GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Jump);
   }
 
   private void OnFall(MovementController platform)
@@ -449,6 +440,10 @@ public class Player : MonoBehaviour
     if (Input.GetMouseButton(0))
     {
       CurrentAnimation = Animation.Attack;
+    }
+    else if (Input.GetButtonDown("Fire2"))
+    {
+      CurrentAnimation = Animation.Magic;
     }
     else
     {
