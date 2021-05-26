@@ -5,8 +5,14 @@ public class LevelDoor : MonoBehaviour, IInteractable
   public LevelExit exit;
   public Dialogue dialogue;
   public bool hasReachedCrypt;
+  public LevelBoss LevelBoss;
   private bool interacted;
   private bool isActivated = false;
+
+  private void Awake()
+  {
+    LevelBoss = GetComponent<LevelBoss>();
+  }
 
   public void Interact()
   {
@@ -14,7 +20,8 @@ public class LevelDoor : MonoBehaviour, IInteractable
     {
       FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
       interacted = true;
-      hasReachedCrypt = true;
+
+
     }
     else
     {

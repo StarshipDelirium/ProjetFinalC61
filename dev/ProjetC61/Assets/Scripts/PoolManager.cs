@@ -11,7 +11,7 @@ public static class PoolManager
 
   class ObjectPool
   {
-    int nextID = 0;                         // give ID to each instantiated object for better tracking/debugging
+    int nextID = 0;                         // give ID to each instantiated object for better tracking/debugging in Hierarchy
 
     Stack<GameObject> inactiveObjects;      // stack and not List since no random access or search is needed
                                             // each pool will always handle a single prefab type

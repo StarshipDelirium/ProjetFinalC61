@@ -10,8 +10,6 @@ public class PlayerSword : MonoBehaviour
   }
 
   private int defaultDamage = 1;
-  //private int powerDamage = 3;
-  //private int specialDamage = 5;
   private bool hasHit;
   private float hitTimer;
   private Player player;

@@ -45,12 +45,13 @@ public class Sorcerer : SimpleEnemy
   public Transform LeftFireballSpawnPoint;
   public Transform RightFireballSpawnPoint;
   public float FireballDelay = 6;
-  public SorcererFireball fireballPrefab;
+  private SpriteRenderer Renderer;
   private void Awake()
   {
     player = GameManager.Instance.Player;
     playerCollider = GetComponent<BoxCollider2D>();
     enemyCollider = GetComponent<BoxCollider2D>();
+    Renderer = gameObject.GetComponent<SpriteRenderer>();
     Animator = GetComponent<Animator>();
     FacingController = GetComponent<FacingController>();
     FacingController.Facing = Facing.Left;
@@ -60,7 +61,10 @@ public class Sorcerer : SimpleEnemy
   // Update is called once per frame
   void Update()
   {
-
+    if (!Renderer.isVisible)                                                            // destroy object once it is off screen
+    {
+      Destroy(gameObject);
+    }
 
 
     if (FireballDelay > 5)

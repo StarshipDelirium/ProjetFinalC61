@@ -4,7 +4,7 @@ public class ElectroBall : MonoBehaviour
 {
   public enum Animation
   {
-    ElectroBall,
+    Cast,
   }
 
   private Animation _currentAnimation;
@@ -33,44 +33,65 @@ public class ElectroBall : MonoBehaviour
     Animator.Play(animation);
   }
   public BoxCollider2D projectileCollider;
-  Fade fade;
   public Animator Animator;
-  public float Speed = 1;
-  private bool hasHit = false;
+  public float Speed = 7;
+  public float PoolTimer = 8;
+  private Vector3 direction;
+  private int damage = 2;
 
   private void Awake()
   {
-    projectileCollider = GetComponent<BoxCollider2D>();
-    fade = GetComponent<Fade>();
     Animator = GetComponent<Animator>();
-    CurrentAnimation = Animation.ElectroBall;
 
   }
 
   private void Update()
   {
-    if (CurrentAnimation == Animation.ElectroBall)
+
+    transform.position += Speed * Time.deltaTime * direction;
+
+    PoolTimer -= Time.deltaTime;
+
+    //transform.position += Speed * Time.deltaTime * direction;
+
+    if (PoolTimer <= 0)                                                             // if no impact detected after countdown, return object to parent pool 
     {
-      transform.position += Speed * Time.deltaTime * transform.right;
+      PoolManager.Reclaim(gameObject);
+      PoolTimer = 8;
     }
 
   }
-  private void OnTriggerEnter2D(Collider2D collision)
+  private void OnTriggerStay2D(Collider2D collision)
   {
-    Health playerHealth = collision.GetComponent<Health>();
+    Health health = collision.GetComponentInParent<Health>();
+    health.Value -= damage;
+    PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Vfx.ElectricImpact), gameObject.transform.position, gameObject.transform.rotation);
+    PoolManager.Reclaim(gameObject);          // return fireball to parent pool
 
-    if (collision.CompareTag("Player") && !hasHit)
-    {
-      projectileCollider.enabled = false;
-      CurrentAnimation = Animation.Impact;
-      playerHealth.Value -= Damage;
-      hasHit = true;
-    }
 
   }
 
-  public void OnImpactComplete()
+  private void OnEnable()                             // Added step for pooled objects to reset animation on respawn
   {
-    Destroy(gameObject);
+    Animator.Update(0);
+    if (gameObject.transform.rotation == new Quaternion(0.0f, -90.0f, 0.0f, 0.0f))         // checks if x from rotation Quaternion is left
+    {
+      direction = new Vector3(-1.0f, 0.0f, 0.0f);
+
+    }
+    else
+    {
+      var scale = transform.localScale;                                                    // readjust and flip sprite/colliders direction
+      scale.x = scale.x * -1;
+      transform.localScale = scale;
+      direction = new Vector3(1.0f, 0.0f, 0.0f);
+    }
+
+    CurrentAnimation = Animation.Cast;
+  }
+
+  public void ReturnToPool()                          // Triggered by animation event set to call function on last animation frame
+  {
+    PoolManager.Reclaim(gameObject);
   }
 }

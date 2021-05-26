@@ -43,12 +43,14 @@ public class Skeleton : SimpleEnemy
   public FacingController FacingController;
   public Player Player;
   public float NormalSpeed;
+  private SpriteRenderer Renderer;
   private void Awake()
   {
     Animator = gameObject.GetComponent<Animator>();
     skeletonCollider = gameObject.GetComponent<BoxCollider2D>();
     MovementController = gameObject.GetComponent<MovementController>();
     FacingController = gameObject.GetComponent<FacingController>();
+    Renderer = gameObject.GetComponent<SpriteRenderer>();
     FacingController.Facing = Facing.Left;
     NormalSpeed = MovementController.MoveSpeed;
     Player = GameManager.Instance.Player;
@@ -57,6 +59,11 @@ public class Skeleton : SimpleEnemy
 
   void Update()
   {
+    if (!Renderer.isVisible)                                                            // destroy object once it is off screen
+    {
+      Destroy(gameObject);
+    }
+
     if (CurrentAnimation == Animation.Action)
     {
       MovementController.InputMove = MovementController.FacingController.Direction;

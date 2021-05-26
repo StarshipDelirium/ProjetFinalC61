@@ -42,26 +42,32 @@ public class Spawner : MonoBehaviour
   public Transform SpawnPoint;
   public Animator Animator;
   public Health Health;
+  private SpriteRenderer Renderer;
   private void Awake()
   {
     Health = GetComponent<Health>();
     Animator = gameObject.GetComponent<Animator>();
     Health.OnHit += OnHit;
     Health.OnDeath += OnDeath;
+    Renderer = gameObject.GetComponent<SpriteRenderer>();
     CurrentAnimation = Animation.Idle;
 
   }
 
   void Update()
   {
-    spawnTimer -= Time.deltaTime;
-
-    if (spawnTimer <= 0)
+    if (Renderer.isVisible)                                                            // only spawn Skeletons if Spawner is on screen
     {
-      GameManager.Instance.PrefabManager.Spawn(PrefabManager.Enemy.Skeleton, SpawnPoint.position, transform.rotation);
-      CurrentAnimation = Animation.Summon;
-      spawnTimer = 5;
+      spawnTimer -= Time.deltaTime;
+
+      if (spawnTimer <= 0)
+      {
+        GameManager.Instance.PrefabManager.Spawn(PrefabManager.Enemy.Skeleton, SpawnPoint.position, transform.rotation);
+        CurrentAnimation = Animation.Summon;
+        spawnTimer = 5;
+      }
     }
+
   }
 
   private void OnHit(Health health)

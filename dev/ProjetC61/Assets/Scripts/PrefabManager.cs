@@ -23,16 +23,18 @@ public class PrefabManager : MonoBehaviour
 
   };
 
-  public enum Projectiles             // Poolable
+  public enum Projectiles
   {
-    SorcererFireball,
+    ElectroBall,
+    SorcererFireball,               // Poolable
 
     Count
   }
 
-  public enum Vfx                    // Poolable
+  public enum Vfx
   {
-    Explosion,
+    ElectricImpact,
+    Explosion,                    // Poolable
     SaveFX,
 
     Count

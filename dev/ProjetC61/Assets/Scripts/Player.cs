@@ -48,11 +48,12 @@ public class Player : MonoBehaviour
   public Vector2 RunAnimationSpeed = new Vector2(0.05f, 0.35f);
   public Animator Animator;
   public MovementController MovementController;
-  public bool canFall = false;
+  public Transform LeftSpawnPoint;
+  public Transform RightSpawnPoint;
+  public FacingController FacingController;
+
   private float defaultSpeed;
   private int _currentDamage;                               // current damage dealt by player
-  private float clickTime;
-  private bool mouseClicked = false;
   private IInteractable interactable;
   private ISaveable saveCheckpoint;
   public int CurrentDamage
@@ -60,29 +61,20 @@ public class Player : MonoBehaviour
     get { return _currentDamage; }
     set { _currentDamage = value; }
   }
-  //public MovementController MovementController { get; private set; }
-  private BoxCollider2D playerCollider;
   public CapsuleCollider2D SwordCollider { get; private set; }
-  //public Animator Animator { get; private set; }
   public Health Health;
   public Mana Mana;
   public Flash Flash;
-  //public Health Health { get; private set; }
   public bool isInvincible = false;
-  public bool isRestart = false;
   public float invincibleTimer = 2;
   private bool isBlocking = false;
-
-  //private IEnumerator coroutine;
-
-
 
 
   private void Awake()
   {
     //MovementController = GetComponent<MovementController>();
     SwordCollider = GetComponentInChildren<CapsuleCollider2D>();
-    playerCollider = gameObject.GetComponent<BoxCollider2D>();
+    FacingController = gameObject.GetComponent<FacingController>();
     Flash = gameObject.GetComponent<Flash>();
     Health = GetComponent<Health>();
     Mana = GetComponent<Mana>();
@@ -110,14 +102,6 @@ public class Player : MonoBehaviour
     MovementController.InputJump = Input.GetKey("space");
 
     MovementController.InputMove = Input.GetAxisRaw("Horizontal");
-
-    /*if (Input.GetMouseButtonUp(0))
-    {
-      Animator.SetTrigger("IsAttacking");
-      MovementController.IsAttacking = true;
-
-    }*/
-
 
 
     if (Input.GetButton("Fire1"))
@@ -245,9 +229,9 @@ public class Player : MonoBehaviour
     if (!isInvincible && collision.CompareTag("Enemy"))
     {
       Transform transform = collision.GetComponentInParent<Transform>();
-      
+
       int damage = collision.GetComponent<Damage>().AttackDamage;
-      if(isBlocking)
+      if (isBlocking)
       {
         damage = damage / 2;
       }
@@ -278,7 +262,7 @@ public class Player : MonoBehaviour
           Transform transform = collision.GetComponentInParent<Transform>();
           StartCoroutine(Knockback(transform, collision.name));
         }
-        
+
         Health.Value -= damage;
       }
       else
@@ -320,7 +304,7 @@ public class Player : MonoBehaviour
   private void OnHit(Health health)
   {
     Flash.StartFlash();
-    if(isBlocking)
+    if (isBlocking)
     {
       CurrentAnimation = Animation.Block;
     }
@@ -328,7 +312,7 @@ public class Player : MonoBehaviour
     {
       CurrentAnimation = Animation.Hurt;
     }
-    
+
     isInvincible = true;
   }
 
@@ -396,6 +380,21 @@ public class Player : MonoBehaviour
   private void OnLand(MovementController platform)
   {
     ResumePlayerControl();
+  }
+
+  public void Cast()                                                              // to cast spell at specific frame during animation with animation event
+  {
+    if (FacingController.Facing == Facing.Left)
+    {
+      Quaternion rotation = new Quaternion(0f, -90.0f, 0.0f, 0.0f);
+      PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Projectiles.ElectroBall), LeftSpawnPoint.position, rotation);
+
+    }
+    else
+    {
+      Quaternion rotation = new Quaternion(0f, 90.0f, 0.0f, 0.0f);
+      PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Projectiles.ElectroBall), RightSpawnPoint.position, rotation);
+    }
   }
 
   public void OnAttackStart()                                                   // Fired on first frame of Attack Animation

@@ -7,11 +7,14 @@ public class FollowObject : MonoBehaviour
 {
   public Transform TargetTransform;
   public LevelBoss LevelBoss;
+  public SpriteRenderer Renderer;
 
   private void Start()
   {
     LevelBoss = GetComponent<LevelBoss>();
-    if(LevelBoss != null)
+    Renderer = GetComponent<SpriteRenderer>();
+
+    if (LevelBoss != null)
     {
       LevelBoss.OnTriggerFight += OnTriggerFight;
       LevelBoss.OnBossKilled += OnBossKilled;
@@ -30,9 +33,10 @@ public class FollowObject : MonoBehaviour
 
   public void OnTriggerFight(LevelBoss levelBoss)
   {
-    if (levelBoss.BossFight)
+    if (levelBoss.BossFight && !Renderer.isVisible)
     {
       TargetTransform = gameObject.transform;
+      Debug.Log("BOSS FIGHT");
     }
     else
     {

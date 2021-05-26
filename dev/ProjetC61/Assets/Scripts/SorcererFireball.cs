@@ -36,7 +36,6 @@ public class SorcererFireball : MonoBehaviour
     Animator.Play(animation);
   }
   public Animator Animator;
-  public BoxCollider2D fireballCollider;
   public float PoolTimer = 8;                                                       // if no impact detected, timer before object to returned to pool
   public int damage = 1;
   public float Speed = 5;
@@ -45,7 +44,6 @@ public class SorcererFireball : MonoBehaviour
   private void Awake()
   {
     Animator = GetComponent<Animator>();
-    fireballCollider = GetComponent<BoxCollider2D>();
 
   }
 

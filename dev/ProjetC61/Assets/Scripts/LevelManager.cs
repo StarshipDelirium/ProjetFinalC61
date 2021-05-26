@@ -68,12 +68,12 @@ public class LevelManager : MonoBehaviour
       LevelExits = FindObjectsOfType<LevelExit>();
       //DebugCheckForErrors();
 
-      if(GameManager.Instance.Player != null)
+      if (GameManager.Instance.Player != null)
       {
         GameManager.Instance.Camera.GetComponent<FollowObject>().TargetTransform = GameManager.Instance.Player.transform;
         GameManager.Instance.Player.gameObject.SetActive(true);
         OnLevelStartCommon();
-      }  
+      }
     }
   }
 
