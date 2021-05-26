@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
 
   public enum Music
   {
+    CursedVoices,
     FestivalOfSpirits,
     UnholyIllusions,
 
