@@ -235,7 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Animator: {fileID: 277894645817131665}
   FacingController: {fileID: 277894645817131670}
-  AttackDelay: 5
+  AttackDelay: 2
   bossCollider: {fileID: 277894645817131664}
   MovementController: {fileID: 2373549162459092984}
   LevelBoss: {fileID: 0}
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d40f71293d2d548b3ed3f09681549f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 1
+  MoveSpeed: 3
   MoveAcceleration: 1000
   MoveDeceleration: 1000
   AirMoveSpeedMultiplier: 1

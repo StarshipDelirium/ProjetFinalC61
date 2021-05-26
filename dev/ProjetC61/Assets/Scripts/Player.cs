@@ -70,6 +70,7 @@ public class Player : MonoBehaviour
   public bool isInvincible = false;
   public bool isRestart = false;
   public float invincibleTimer = 2;
+  private bool isBlocking = false;
 
   //private IEnumerator coroutine;
 
@@ -186,10 +187,14 @@ public class Player : MonoBehaviour
     if (Input.GetKeyDown("left shift"))
     {
       CurrentAnimation = Animation.Block;
+      isBlocking = true;
+      MovementController.Rigidbody2D.mass = 10000;
     }
 
     if (Input.GetKeyUp("left shift"))
     {
+      isBlocking = false;
+      MovementController.Rigidbody2D.mass = 1;
       CurrentAnimation = Animation.Idle;
     }
 
@@ -249,8 +254,17 @@ public class Player : MonoBehaviour
     if (!isInvincible && collision.CompareTag("Enemy"))
     {
       Transform transform = collision.GetComponentInParent<Transform>();
-      StartCoroutine(Knockback(transform, collision.name));
+      
       int damage = collision.GetComponent<Damage>().AttackDamage;
+      if(isBlocking)
+      {
+        damage = damage / 2;
+      }
+      else
+      {
+        StartCoroutine(Knockback(transform, collision.name));
+      }
+
       Health.Value -= damage;
     }
   }
@@ -263,16 +277,23 @@ public class Player : MonoBehaviour
       if (collision.GetComponentInParent<Damage>())
       {
         int damage = collision.GetComponentInParent<Damage>().AttackDamage;
+
+        if (isBlocking)
+        {
+          damage = damage / 2;
+        }
+        else
+        {
+          Transform transform = collision.GetComponentInParent<Transform>();
+          StartCoroutine(Knockback(transform, collision.name));
+        }
+        
         Health.Value -= damage;
       }
       else
       {
         Health.Value -= 1;                                                    // Sorcerer fireball pooled too quickly to get component on trigger
       }
-
-      Transform transform = collision.GetComponentInParent<Transform>();
-      StartCoroutine(Knockback(transform, collision.name));
-
     }
   }
 
@@ -308,8 +329,15 @@ public class Player : MonoBehaviour
   private void OnHit(Health health)
   {
     Flash.StartFlash();
-    CurrentAnimation = Animation.Hurt;
-
+    if(isBlocking)
+    {
+      CurrentAnimation = Animation.Block;
+    }
+    else
+    {
+      CurrentAnimation = Animation.Hurt;
+    }
+    
     isInvincible = true;
   }
 
@@ -359,7 +387,7 @@ public class Player : MonoBehaviour
 
   private void OnMoveStart(MovementController platform)
   {
-    if (MovementController.IsGrounded)
+    if (MovementController.IsGrounded && !isBlocking)
     {
       Animator.SetTrigger("IsRunning");
       CurrentAnimation = Animation.Run;
@@ -431,6 +459,10 @@ public class Player : MonoBehaviour
       else if (Input.GetKey(KeyCode.Space))
       {
         CurrentAnimation = Animation.Jump;
+      }
+      else if (Input.GetKey(KeyCode.LeftShift))
+      {
+        CurrentAnimation = Animation.Block;
       }
       else
       {

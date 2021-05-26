@@ -12,11 +12,13 @@ public class LevelMusic : MonoBehaviour
     switch (currentLevel)
     {
       case 0:
-        Music = SoundManager.Music.FestivalOfSpirits;
+        Music = SoundManager.Music.CursedVoices;
         break;
       case 1:
-      case 2:
         Music = SoundManager.Music.UnholyIllusions;
+        break;
+      case 2:
+        Music = SoundManager.Music.FestivalOfSpirits;
         break;
       default:
         break;
