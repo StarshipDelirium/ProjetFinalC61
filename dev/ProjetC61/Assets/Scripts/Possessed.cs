@@ -56,7 +56,7 @@ public class Possessed : MonoBehaviour
 
   private bool isHit;
 
-  private void Awake()
+  private void Start()
   {
     Animator = GetComponent<Animator>();
     LevelBoss = GetComponent<LevelBoss>();
