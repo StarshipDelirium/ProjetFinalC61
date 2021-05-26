@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5fb90e76900dc4e9cc30e1d19f660d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Max: 2
+  Max: 5
   StartValue: 10
 --- !u!114 &3294853809927844078
 MonoBehaviour:

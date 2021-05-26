@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -51,16 +52,6 @@ public class Player : MonoBehaviour
   public Transform LeftSpawnPoint;
   public Transform RightSpawnPoint;
   public FacingController FacingController;
-
-  private float defaultSpeed;
-  private int _currentDamage;                               // current damage dealt by player
-  private IInteractable interactable;
-  private ISaveable saveCheckpoint;
-  public int CurrentDamage
-  {
-    get { return _currentDamage; }
-    set { _currentDamage = value; }
-  }
   public CapsuleCollider2D SwordCollider { get; private set; }
   public Health Health;
   public Mana Mana;
@@ -68,11 +59,13 @@ public class Player : MonoBehaviour
   public bool isInvincible = false;
   public float invincibleTimer = 2;
   private bool isBlocking = false;
+  private float defaultSpeed;
+  private IInteractable interactable;
+  private ISaveable saveCheckpoint;
 
 
   private void Awake()
   {
-    //MovementController = GetComponent<MovementController>();
     SwordCollider = GetComponentInChildren<CapsuleCollider2D>();
     FacingController = gameObject.GetComponent<FacingController>();
     Flash = gameObject.GetComponent<Flash>();
@@ -93,7 +86,6 @@ public class Player : MonoBehaviour
     MovementController.OnLand += OnLand;
     defaultSpeed = MovementController.MoveSpeed;
     CurrentAnimation = Animation.Idle;
-    CurrentDamage = 1;
   }
 
   void Update()
@@ -103,26 +95,31 @@ public class Player : MonoBehaviour
 
     MovementController.InputMove = Input.GetAxisRaw("Horizontal");
 
-
-    if (Input.GetButton("Fire1"))
+    if (!EventSystem.current.IsPointerOverGameObject())                                   // if mouse click is not on UI Event, player attack
     {
-      Animator.SetTrigger("IsAttacking");
-      MovementController.IsAttacking = true;
-      CurrentAnimation = Animation.Attack;
+      if (Input.GetButton("Fire1"))
+      {
+        Animator.SetTrigger("IsAttacking");
+        MovementController.IsAttacking = true;
+        CurrentAnimation = Animation.Attack;
 
-      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Attack);
+        GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Attack);
+      }
+
+      if (Input.GetButton("Fire2"))
+      {
+        Animator.SetTrigger("IsAttacking");
+        MovementController.IsAttacking = true;
+        CurrentAnimation = Animation.Magic;
+      }
     }
 
-    if (Input.GetButton("Fire2"))
-    {
-      Animator.SetTrigger("IsAttacking");
-      MovementController.IsAttacking = true;
-      CurrentAnimation = Animation.Magic;
-    }
+
 
     if (Input.GetKeyUp(KeyCode.I))
     {
       FindObjectOfType<InventoryManager>().OpenInventory();
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Inventory);
     }
     if (Input.GetKeyUp(KeyCode.J))
     {
@@ -164,6 +161,7 @@ public class Player : MonoBehaviour
       CurrentAnimation = Animation.Block;
       isBlocking = true;
       MovementController.Rigidbody2D.mass = 10000;
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Block);
     }
 
     if (Input.GetKeyUp("left shift"))
@@ -186,6 +184,7 @@ public class Player : MonoBehaviour
     if (Input.GetKeyUp(KeyCode.E) && interactable != null)
     {
       interactable.Interact();
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Interact);
 
     }
 
@@ -249,9 +248,9 @@ public class Player : MonoBehaviour
 
     if (!isInvincible && collision.CompareTag("Enemy"))
     {
-      if (collision.GetComponentInParent<Damage>())
+      if (collision.GetComponent<Damage>())
       {
-        int damage = collision.GetComponentInParent<Damage>().AttackDamage;
+        int damage = collision.GetComponent<Damage>().AttackDamage;
 
         if (isBlocking)
         {
@@ -311,6 +310,7 @@ public class Player : MonoBehaviour
     else
     {
       CurrentAnimation = Animation.Hurt;
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Hurt);
     }
 
     isInvincible = true;
@@ -318,6 +318,7 @@ public class Player : MonoBehaviour
 
   private void OnDeath(Health health)
   {
+    GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Death);
     gameObject.SetActive(false);
     GameManager.Instance.EndGame();
   }
@@ -384,16 +385,22 @@ public class Player : MonoBehaviour
 
   public void Cast()                                                              // to cast spell at specific frame during animation with animation event
   {
-    if (FacingController.Facing == Facing.Left)
+    if (Mana.Value >= 2)
     {
-      Quaternion rotation = new Quaternion(0f, -90.0f, 0.0f, 0.0f);
-      PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Projectiles.ElectroBall), LeftSpawnPoint.position, rotation);
+      if (FacingController.Facing == Facing.Left)
+      {
+        Quaternion rotation = new Quaternion(0f, -90.0f, 0.0f, 0.0f);
+        PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Projectiles.ElectroBall), LeftSpawnPoint.position, rotation);
 
-    }
-    else
-    {
-      Quaternion rotation = new Quaternion(0f, 90.0f, 0.0f, 0.0f);
-      PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Projectiles.ElectroBall), RightSpawnPoint.position, rotation);
+      }
+      else
+      {
+        Quaternion rotation = new Quaternion(0f, 90.0f, 0.0f, 0.0f);
+        PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Projectiles.ElectroBall), RightSpawnPoint.position, rotation);
+      }
+
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.ElectroCast);
+      Mana.Value -= 2;
     }
   }
 
@@ -470,7 +477,7 @@ public class Player : MonoBehaviour
 
     if (saveCheckpoint != null)
     {
-      transform.position = saveCheckpoint.transform.position;
+      transform.position = saveCheckpoint.transform.position;                                     // place player at save position
     }
     else
     {

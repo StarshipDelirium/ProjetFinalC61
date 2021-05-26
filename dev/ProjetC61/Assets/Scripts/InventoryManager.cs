@@ -225,6 +225,7 @@ public class InventoryManager : MonoBehaviour
   {
     if (onScreen)
     {
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Select);
       selectedItem.Use();
     }
   }

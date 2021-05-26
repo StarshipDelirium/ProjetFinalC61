@@ -16,9 +16,11 @@
   {
     if (TotalCount > 0)
     {
+
       this.TotalCount -= 1;
       playerMana.Value += Stats;
       GetComponent<InventorySlot>().Qty.text = TotalCount.ToString();
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.ManaRegen);
     }
 
     CheckCount();

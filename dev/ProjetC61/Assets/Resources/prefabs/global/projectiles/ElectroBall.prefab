@@ -166,8 +166,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileCollider: {fileID: 6422300524000972744}
   Animator: {fileID: 6422300524000972747}
-  Speed: 5
-  PoolTimer: 8
+  Speed: 7
+  PoolTimer: 10
 --- !u!1 &6422300524702733828
 GameObject:
   m_ObjectHideFlags: 0

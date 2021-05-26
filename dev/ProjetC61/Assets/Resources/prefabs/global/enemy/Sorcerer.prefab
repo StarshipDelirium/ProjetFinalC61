@@ -47,7 +47,6 @@ GameObject:
   - component: {fileID: 3844872647684888665}
   - component: {fileID: 3844872647684888664}
   - component: {fileID: 3844872647684888640}
-  - component: {fileID: 2453907730580269763}
   m_Layer: 10
   m_Name: Sorcerer
   m_TagString: Enemy
@@ -110,7 +109,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 647176447
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 7fa1573012b99114987a47dd8a804845, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -174,7 +173,6 @@ MonoBehaviour:
   LeftFireballSpawnPoint: {fileID: 3844872647702767840}
   RightFireballSpawnPoint: {fileID: 3844872647583865935}
   FireballDelay: 8
-  fireballPrefab: {fileID: 0}
 --- !u!114 &3844872647684888666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,19 +246,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2453907730580269763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3844872647684888671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8958dd1f2b64df41932533cf303dd84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttackDamage: 1
 --- !u!1 &3844872647702767847
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,6 +286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3844872647947480112}
   - component: {fileID: 3844872647947480113}
+  - component: {fileID: 7341310421335258657}
   m_Layer: 11
   m_Name: EnemyHitBox
   m_TagString: Enemy
@@ -348,3 +334,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6184083, y: 1.3023586}
   m_EdgeRadius: 0
+--- !u!114 &7341310421335258657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3844872647947480119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8958dd1f2b64df41932533cf303dd84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackDamage: 1

@@ -6,19 +6,11 @@
 public class FollowObject : MonoBehaviour
 {
   public Transform TargetTransform;
-  public LevelBoss LevelBoss;
-  public SpriteRenderer Renderer;
+  private RestrictStage[] colliders;
 
   private void Start()
   {
-    LevelBoss = GetComponent<LevelBoss>();
-    Renderer = GetComponent<SpriteRenderer>();
-
-    if (LevelBoss != null)
-    {
-      LevelBoss.OnTriggerFight += OnTriggerFight;
-      LevelBoss.OnBossKilled += OnBossKilled;
-    }
+    colliders = FindObjectsOfType<RestrictStage>();
   }
   void LateUpdate()
   {
@@ -31,24 +23,24 @@ public class FollowObject : MonoBehaviour
     }
   }
 
-  public void OnTriggerFight(LevelBoss levelBoss)
+  public void OnTriggerBossFight()
   {
-    if (levelBoss.BossFight && !Renderer.isVisible)
+
+    TargetTransform = this.transform;
+
+    foreach (RestrictStage collider in colliders)
     {
-      TargetTransform = gameObject.transform;
-      Debug.Log("BOSS FIGHT");
-    }
-    else
-    {
-      TargetTransform = GameManager.Instance.Player.transform;
+      collider.LockStage();
     }
   }
 
-  public void OnBossKilled(LevelBoss levelBoss)
+  public void OnBossKilled()
   {
-    if (levelBoss.BossKilled)
+    foreach (RestrictStage collider in colliders)
     {
-      // drop item, enable door
+      collider.UnlockStage();
     }
+    TargetTransform = GameManager.Instance.Player.transform;
+    // drop key
   }
 }

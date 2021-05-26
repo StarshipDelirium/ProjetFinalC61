@@ -10,6 +10,7 @@ public class SoundManager : MonoBehaviour
   {
     CursedVoices,
     FestivalOfSpirits,
+    RequiemForTheBeast,
     UnholyIllusions,
 
     Count
@@ -18,10 +19,28 @@ public class SoundManager : MonoBehaviour
   public enum Sfx
   {
     Attack,
+    Block,
+    BossHit,
+    BossScream,
+    Death,
+    ElectroCast,
+    ElectroImpact,
+    EnemyDeath,
+    FireballCast,
+    FireballExplosion,
+    HealthRegen,
+    Hit,
+    Hover,
     Hurt,
+    Interact,
+    Inventory,
     Jump,
-    Kil,
-    Rise,
+    ManaRegen,
+    NeedMana,
+    Save,
+    Select,
+    Spawner,
+    Vomit,
 
     Count
   }
@@ -29,6 +48,7 @@ public class SoundManager : MonoBehaviour
   public AudioClip[] MusicAudioClips;
   public AudioClip[] SfxAudioClips;
   public AudioSource MusicAudioSource { get; private set; }
+  public AudioSource SfxAudioSource { get; private set; }
   void Awake()
   {
     MusicAudioClips = Resources.LoadAll<AudioClip>("audio/music");
@@ -37,10 +57,11 @@ public class SoundManager : MonoBehaviour
     SfxAudioClips = Resources.LoadAll<AudioClip>("audio/sfx");
     Debug.Assert((int)Sfx.Count == SfxAudioClips.Length, "SoundManager : Sfx enum length " + (int)Sfx.Count + ") does not match Resources folder (" + SfxAudioClips.Length + ")");
 
-    //MusicAudioSource = gameObject.AddComponent<AudioSource>();
+    SfxAudioSource = gameObject.AddComponent<AudioSource>();
     MusicAudioSource = gameObject.AddComponent<AudioSource>();
     MusicAudioSource.loop = true;
-    MusicAudioSource.volume = 0.06f;
+    MusicAudioSource.volume = 0.09f;
+    SfxAudioSource.volume = 0.1f;
   }
 
   public void Play(Music music)
@@ -51,8 +72,8 @@ public class SoundManager : MonoBehaviour
 
   public void Play(Sfx sfx)
   {
-    MusicAudioSource.clip = MusicAudioClips[(int)sfx];
-    MusicAudioSource.Play();
+    SfxAudioSource.clip = SfxAudioClips[(int)sfx];
+    SfxAudioSource.Play();
   }
 
   public void Stop()

@@ -80,6 +80,7 @@ public class SorcererFireball : MonoBehaviour
   private void OnTriggerStay2D(Collider2D Collider)
   {
     PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Vfx.Explosion), gameObject.transform.position, gameObject.transform.rotation);                   // On hit, trigger explosion
+    GameManager.Instance.SoundManager.Play(SoundManager.Sfx.FireballExplosion);
     PoolManager.Reclaim(gameObject);          // return fireball to parent pool
 
   }

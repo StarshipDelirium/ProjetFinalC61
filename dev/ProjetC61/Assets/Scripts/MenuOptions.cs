@@ -13,7 +13,7 @@ public class MenuOptions : MonoBehaviour, IPointerClickHandler
   public void OnPointerClick(PointerEventData eventData)
   {
     var selection = eventData.rawPointerPress.name;
-    Debug.Log(selection);
+    GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Select);
 
     if (selection.Equals("Start"))
     {
@@ -21,7 +21,6 @@ public class MenuOptions : MonoBehaviour, IPointerClickHandler
 
       if (File.Exists(Application.persistentDataPath + "/hellvaniasave.json"))                                     // if new game selected and a save file exists, delete save file
       {
-        Debug.Log("FILE EXISTS");
         File.Delete(Application.persistentDataPath + "/hellvaniasave.json");
       }
     }

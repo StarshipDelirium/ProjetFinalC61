@@ -20,7 +20,7 @@ public class InventorySlot : MonoBehaviour
 
     if (item != null)
     {
-      Debug.Log(item.Name + " clicked");
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Select);
       FindObjectOfType<InventoryManager>().DisplayItemInfo(item);
     }
 

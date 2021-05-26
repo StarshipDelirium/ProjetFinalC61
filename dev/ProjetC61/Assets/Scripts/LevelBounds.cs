@@ -19,8 +19,6 @@ public class LevelBounds : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    //Debug.Log("PLAYER X: " + targetPlayer.position.x);
-    //Debug.Log("CAMERA X: " + cam.transform.position.x);
 
     if (minBounds.isVisible)
     {
