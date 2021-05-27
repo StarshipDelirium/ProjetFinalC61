@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8384896205599921633}
   - component: {fileID: 8384896205599921638}
   - component: {fileID: 8384896205599921639}
+  - component: {fileID: 1508697580787975676}
   m_Layer: 19
   m_Name: ManaPotion
   m_TagString: MP
@@ -121,3 +122,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b626a9e72834a5e4c93c01a36d6c4fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1508697580787975676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8384896205599921636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe62aa747b206854c8b58076c760271c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
+  Description: 
+  ID: 
+  Stats: 0
+  TotalCount: 0
+  IsConsumable: 0

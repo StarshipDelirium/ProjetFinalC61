@@ -73,9 +73,6 @@ public class Player : MonoBehaviour
     Mana = GetComponent<Mana>();
     Health.OnHit += OnHit;
     Health.OnDeath += OnDeath;
-    Mana.OnUse += OnUse;
-
-
 
     Animator = gameObject.GetComponent<Animator>();
     MovementController = gameObject.GetComponent<MovementController>();
@@ -121,15 +118,8 @@ public class Player : MonoBehaviour
       FindObjectOfType<InventoryManager>().OpenInventory();
       GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Inventory);
     }
-    if (Input.GetKeyUp(KeyCode.J))
-    {
-      GameManager.Instance.SaveLoadManager.SaveGameData(0);
-    }
 
-    if (Input.GetKeyUp(KeyCode.K))
-    {
-      Mana.Value -= 2;
-    }
+    // Cheat keys for testing
 
     if (Input.GetKeyUp(KeyCode.P))
     {
@@ -139,11 +129,6 @@ public class Player : MonoBehaviour
     if (Input.GetKeyUp(KeyCode.O))
     {
       FindObjectOfType<InventoryManager>().CheckInventory("MP");
-    }
-
-    if (Input.GetKeyUp(KeyCode.L))
-    {
-      GameManager.Instance.SaveLoadManager.LoadGameData();
     }
 
     if (CurrentAnimation == Animation.Run)
@@ -286,18 +271,6 @@ public class Player : MonoBehaviour
     {
       saveCheckpoint = null;
     }
-
-    // reset animator trigger to hide dialogue box
-  }
-
-  private void OnChanged(Mana mana)
-  {
-
-  }
-
-  private void OnUse(Mana mana)
-  {
-
   }
 
   private void OnHit(Health health)

@@ -34,6 +34,7 @@ public class InventoryManager : MonoBehaviour
   }
   public void CheckInventory(string newItemID)
   {
+    Debug.Log("ITEM ID: " + newItemID);
     bool hasThisItem = false;
     foreach (InventorySlot slot in Slots)
     {
@@ -178,7 +179,6 @@ public class InventoryManager : MonoBehaviour
     {
       CloseInventory();
     }
-
   }
 
   public void CloseInventory()
@@ -186,7 +186,6 @@ public class InventoryManager : MonoBehaviour
     Animator.SetBool("isOpen", false);
     onScreen = false;
     GameManager.Instance.ResumeGame();
-
   }
 
   public void DisplayItemInfo(Item item)
@@ -249,8 +248,6 @@ public class InventoryManager : MonoBehaviour
   {
     Dictionary<string, int> currentInventory = new Dictionary<string, int>();                 // create Dictionary of itemID and quantity on hand for save file
 
-    Debug.Log("SLOTS: " + Slots.ToString());
-
     foreach (InventorySlot slot in Slots)
     {
       if (slot.hasItem)
@@ -259,7 +256,6 @@ public class InventoryManager : MonoBehaviour
 
         string itemID = item.ID;
         int qty = item.TotalCount;
-        Debug.Log("ITEM " + itemID + " " + qty);
 
         currentInventory.Add(itemID, qty);
       }

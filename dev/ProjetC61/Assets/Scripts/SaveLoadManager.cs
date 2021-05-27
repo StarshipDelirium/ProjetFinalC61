@@ -88,7 +88,6 @@ public class SaveLoadManager : MonoBehaviour
           break;
       }
     }
-    Debug.Log("SAVE CHECKPOINT: " + saveGame.CheckpointID);
 
     string jsonData = JsonUtility.ToJson(saveGame, true);                 // transforms save data into json file
     File.WriteAllText(jsonSavePath, jsonData);

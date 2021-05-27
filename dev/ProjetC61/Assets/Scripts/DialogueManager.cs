@@ -31,13 +31,11 @@ public class DialogueManager : MonoBehaviour
   {
     if ("Prologue".Equals(SceneManager.GetActiveScene().name))                        // to use DialogueManager with different Animators
     {
-      Debug.Log("THIS IS PROLOGUE");
       TextArea = PrologueText;
       typingSpeed = 0.5f;
     }
     else
     {
-      Debug.Log("THIS IS NOT PROLOGUE");
       TextArea = DialogText;
       typingSpeed = 0.1f;
     }
@@ -105,8 +103,6 @@ public class DialogueManager : MonoBehaviour
   public void EndDialogue()
   {
     Animator.SetBool("isActive", false);                      // transitions to hidden dialogue box
-    Debug.Log("End of conversation");
-    Debug.Log("Current Scene Name: " + SceneManager.GetActiveScene().name);
 
     if ("Prologue".Equals(SceneManager.GetActiveScene().name))
     {
