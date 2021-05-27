@@ -145,7 +145,7 @@ public class Player : MonoBehaviour
     {
       CurrentAnimation = Animation.Block;
       isBlocking = true;
-      MovementController.Rigidbody2D.mass = 10000;
+      MovementController.Rigidbody2D.mass = 1000000;
       GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Block);
     }
 

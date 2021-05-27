@@ -181,6 +181,7 @@ public class Possessed : MonoBehaviour
     fade.StartFade();
     fade.DestroyOnFadeOut = true;
     GameManager.Instance.Camera.GetComponent<FollowObject>().OnBossKilled();                                                // resume camera follow
+    GameManager.Instance.Victory();
   }
 
   public void OnAttackComplete()

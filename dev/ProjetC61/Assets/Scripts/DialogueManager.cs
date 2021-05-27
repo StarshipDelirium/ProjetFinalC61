@@ -31,12 +31,12 @@ public class DialogueManager : MonoBehaviour
   {
     if ("Prologue".Equals(SceneManager.GetActiveScene().name))                        // to use DialogueManager with different Animators
     {
-      TextArea = PrologueText;
+      //TextArea = PrologueText;
       typingSpeed = 0.5f;
     }
     else
     {
-      TextArea = DialogText;
+      //TextArea = DialogText;
       typingSpeed = 0.1f;
     }
   }
@@ -44,11 +44,8 @@ public class DialogueManager : MonoBehaviour
   internal void StartDialogue(Dialogue dialogue)      // when triggered by a DialogueTrigger
   {
 
-    if (!"Prologue".Equals(SceneManager.GetActiveScene().name))
-    {
-      Animator.SetBool("isActive", true);             // parameter added in Unity Animator to transition between hide/show dialogue box on screen
-      Name.text = dialogue.CharacterName;
-    }
+    Animator.SetBool("isActive", true);             // parameter added in Unity Animator to transition between hide/show dialogue box on screen
+    Name.text = dialogue.CharacterName;
 
     if (sentences != null)
     {
@@ -89,13 +86,13 @@ public class DialogueManager : MonoBehaviour
 
   IEnumerator DisplaySentence(string sentence)
   {
-    TextArea.text = "";                                     // erase previous phrase from dialogue box
+    DialogText.text = "";                                     // erase previous phrase from dialogue box
 
     yield return new WaitForSeconds(typingSpeed);
 
     foreach (char letter in sentence.ToCharArray())
     {
-      TextArea.text += letter;
+      DialogText.text += letter;
       yield return 1;                                         // return each letter in iteration for a typing effect
     }
   }
@@ -112,6 +109,7 @@ public class DialogueManager : MonoBehaviour
 
   public void EndPrologue()
   {
+    Animator.SetBool("isActive", false);
     FindObjectOfType<IntroDialogue>().OnPrologueEnd();
   }
 }

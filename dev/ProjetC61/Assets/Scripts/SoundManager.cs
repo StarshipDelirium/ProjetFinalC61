@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     FestivalOfSpirits,
     RequiemForTheBeast,
     UnholyIllusions,
+    VictoryFanfare,
 
     Count
   }

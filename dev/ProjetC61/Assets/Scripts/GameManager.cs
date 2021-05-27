@@ -157,6 +157,16 @@ public class GameManager : MonoBehaviour
     }
   }
 
+  public void Victory()
+  {
+    if (!hasGameEnded)
+    {
+      hasGameEnded = true;
+      GameManager.Instance.SoundManager.Play(SoundManager.Music.VictoryFanfare);
+      Invoke("Restart", 9f);
+    }
+  }
+
   void Restart()
   {
     hasGameEnded = false;
