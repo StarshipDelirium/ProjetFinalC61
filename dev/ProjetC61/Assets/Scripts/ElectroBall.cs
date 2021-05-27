@@ -35,9 +35,11 @@ public class ElectroBall : MonoBehaviour
   public BoxCollider2D projectileCollider;
   public Animator Animator;
   public float Speed = 7;
-  public float PoolTimer = 8;
+  public float PoolTimer = 10;
+  public int damage = 2;
+  public bool hasHit = false;
   private Vector3 direction;
-  private int damage = 2;
+
 
   private void Awake()
   {
@@ -52,27 +54,34 @@ public class ElectroBall : MonoBehaviour
 
     PoolTimer -= Time.deltaTime;
 
-    //transform.position += Speed * Time.deltaTime * direction;
-
     if (PoolTimer <= 0)                                                             // if no impact detected after countdown, return object to parent pool 
     {
       PoolManager.Reclaim(gameObject);
-      PoolTimer = 8;
+      PoolTimer = 10;
     }
 
   }
+
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    if (!hasHit)
+    {
+      Health health = collision.GetComponentInParent<Health>();
+      health.Value -= damage;
+      hasHit = true;
+    }
+  }
   private void OnTriggerStay2D(Collider2D collision)
   {
-    Health health = collision.GetComponentInParent<Health>();
-    health.Value -= damage;
-    PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Vfx.ElectricImpact), gameObject.transform.position, gameObject.transform.rotation);
+    PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Vfx.Impact), gameObject.transform.position, gameObject.transform.rotation);
     PoolManager.Reclaim(gameObject);          // return fireball to parent pool
-
 
   }
 
   private void OnEnable()                             // Added step for pooled objects to reset animation on respawn
   {
+    damage = 2;
+    hasHit = false;
     Animator.Update(0);
     if (gameObject.transform.rotation == new Quaternion(0.0f, -90.0f, 0.0f, 0.0f))         // checks if x from rotation Quaternion is left
     {

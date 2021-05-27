@@ -132,7 +132,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &6422300524000972747
 Animator:
   serializedVersion: 3
@@ -166,8 +166,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileCollider: {fileID: 6422300524000972744}
   Animator: {fileID: 6422300524000972747}
-  Speed: 5
-  PoolTimer: 8
+  Speed: 7
+  PoolTimer: 10
+  damage: 2
+  hasHit: 0
 --- !u!1 &6422300524702733828
 GameObject:
   m_ObjectHideFlags: 0

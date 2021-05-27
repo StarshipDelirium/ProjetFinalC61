@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5413539562231111644}
   - component: {fileID: 5413539562231111645}
   - component: {fileID: 5413539562231111634}
+  - component: {fileID: 8275014956616328147}
   m_Layer: 19
   m_Name: ManaElixir
   m_TagString: ME
@@ -121,3 +122,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b626a9e72834a5e4c93c01a36d6c4fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8275014956616328147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413539562231111635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cfbeca6f592eb844af1070c4faf235b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
+  Description: 
+  ID: 
+  Stats: 0
+  TotalCount: 0
+  IsConsumable: 0

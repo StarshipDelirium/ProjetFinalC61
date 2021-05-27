@@ -61,11 +61,6 @@ public class Sorcerer : SimpleEnemy
   // Update is called once per frame
   void Update()
   {
-    if (!Renderer.isVisible)                                                            // destroy object once it is off screen
-    {
-      Destroy(gameObject);
-    }
-
 
     if (FireballDelay > 5)
     {
@@ -88,6 +83,8 @@ public class Sorcerer : SimpleEnemy
         Quaternion rotation = new Quaternion(0f, 90.0f, 0.0f, 0.0f);
         PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Projectiles.SorcererFireball), RightFireballSpawnPoint.position, rotation);
       }
+
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.FireballCast);
     }
     else
     {

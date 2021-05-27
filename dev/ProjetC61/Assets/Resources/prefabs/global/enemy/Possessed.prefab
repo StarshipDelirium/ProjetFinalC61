@@ -84,12 +84,12 @@ GameObject:
   - component: {fileID: 277894645817131665}
   - component: {fileID: 277894645817131666}
   - component: {fileID: 277894645817131670}
-  - component: {fileID: 4865224052258641831}
   - component: {fileID: 6751044346164964536}
   - component: {fileID: 2373549162459092984}
-  - component: {fileID: -3463686864264809108}
   - component: {fileID: 4827936827142816441}
   - component: {fileID: 6743085344324662762}
+  - component: {fileID: 6789203040548474528}
+  - component: {fileID: 7362322567692774967}
   m_Layer: 10
   m_Name: Possessed
   m_TagString: Enemy
@@ -221,29 +221,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Animator: {fileID: 277894645817131665}
   InitialFacing: -1
---- !u!114 &4865224052258641831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277894645817131667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a4061cd13403e147903a1ea72fe87d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Animator: {fileID: 277894645817131665}
-  FacingController: {fileID: 277894645817131670}
-  AttackDelay: 2
-  bossCollider: {fileID: 277894645817131664}
-  MovementController: {fileID: 2373549162459092984}
-  LevelBoss: {fileID: 0}
-  StunnedTimer: 1
-  AttackRange: 1.3
-  playerInRange: 0
-  playerCollider: {fileID: 377761947373174658, guid: be8b09cf6867bcb4bacaff8dc8f60c57,
-    type: 3}
 --- !u!50 &6751044346164964536
 Rigidbody2D:
   serializedVersion: 4
@@ -262,8 +239,8 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &2373549162459092984
 MonoBehaviour:
@@ -277,27 +254,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d40f71293d2d548b3ed3f09681549f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 3
+  MoveSpeed: 1.5
   MoveAcceleration: 1000
   MoveDeceleration: 1000
   AirMoveSpeedMultiplier: 1
   JumpStrength: 200
   Jumps: 1
   JumpDelay: 0.05
---- !u!114 &-3463686864264809108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277894645817131667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d5fb90e76900dc4e9cc30e1d19f660d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Max: 30
-  StartValue: 30
 --- !u!114 &4827936827142816441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,7 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FlashOnTime: 0.1
   FlashOffTime: 0.1
-  Duration: 1
+  Duration: 1.5
 --- !u!114 &6743085344324662762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,3 +288,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a883cfdee3a3ef44db5b7e22fc2c8aee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6789203040548474528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277894645817131667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d5fb90e76900dc4e9cc30e1d19f660d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Max: 10
+  StartValue: 10
+--- !u!114 &7362322567692774967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277894645817131667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4061cd13403e147903a1ea72fe87d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Animator: {fileID: 277894645817131665}
+  FacingController: {fileID: 277894645817131670}
+  AttackDelay: 5
+  bossCollider: {fileID: 0}
+  MovementController: {fileID: 2373549162459092984}
+  LevelBoss: {fileID: 6743085344324662762}
+  Renderer: {fileID: 277894645817131666}
+  StunnedTimer: 1
+  AttackRange: 1.3
+  playerInRange: 0
+  playerCollider: {fileID: 377761947373174658, guid: be8b09cf6867bcb4bacaff8dc8f60c57,
+    type: 3}
+  NormalSpeed: 0

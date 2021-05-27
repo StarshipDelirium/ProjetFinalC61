@@ -59,10 +59,6 @@ public class Skeleton : SimpleEnemy
 
   void Update()
   {
-    if (!Renderer.isVisible)                                                            // destroy object once it is off screen
-    {
-      Destroy(gameObject);
-    }
 
     if (CurrentAnimation == Animation.Action)
     {

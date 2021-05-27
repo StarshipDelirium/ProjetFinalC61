@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 3507114442863783633}
   - component: {fileID: 7572782678011039280}
   - component: {fileID: 1923041114040084657}
-  - component: {fileID: 898745713734927878}
   - component: {fileID: 1739594812552313558}
   m_Layer: 17
   m_Name: SkeletonSpawner
@@ -176,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Max: 5
-  Start: 5
+  StartValue: 10
 --- !u!114 &1923041114040084657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,22 +191,6 @@ MonoBehaviour:
   FlashOnTime: 0.1
   FlashOffTime: 0.1
   Duration: 1
---- !u!114 &898745713734927878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1070704353146425801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9ab28d7ef2a3f14584edf63d083b529, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FadeInTime: 0
-  FadeWaitTime: 0
-  FadeOutTime: 1
-  DestroyOnFadeOut: 0
 --- !u!114 &1739594812552313558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959152351777462510}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.37, y: -3.16, z: 0}
+  m_LocalPosition: {x: -2.26, y: -1.86, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1070704353146425802}

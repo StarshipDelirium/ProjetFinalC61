@@ -4,7 +4,6 @@ public class LevelDoor : MonoBehaviour, IInteractable
 {
   public LevelExit exit;
   public Dialogue dialogue;
-  public bool hasReachedCrypt;
   public LevelBoss LevelBoss;
   private bool interacted;
   private bool isActivated = false;
@@ -20,8 +19,7 @@ public class LevelDoor : MonoBehaviour, IInteractable
     {
       FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
       interacted = true;
-
-
+      SpawnBoss();
     }
     else
     {
@@ -45,5 +43,11 @@ public class LevelDoor : MonoBehaviour, IInteractable
     interacted = false;
     FindObjectOfType<DialogueManager>().EndDialogue();
     FindObjectOfType<InteractPrompt>().HidePrompt();
+  }
+
+  public void SpawnBoss()
+  {
+    Vector3 spawnPoint = new Vector3(63.75f, -2.47f, 0f);                                                                      // position near fight area
+    GameManager.Instance.PrefabManager.Spawn(PrefabManager.Enemy.Possessed, spawnPoint, Quaternion.identity);
   }
 }

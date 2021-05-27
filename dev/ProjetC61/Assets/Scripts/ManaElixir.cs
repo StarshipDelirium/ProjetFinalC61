@@ -1,9 +1,9 @@
 ﻿public class ManaElixir : Item
 {
   private Mana playerMana;
-  private void Awake()
+  private void Start()
   {
-    playerMana = GameManager.Instance.Player.GetComponent<Mana>();
+    playerMana = FindObjectOfType<Player>().GetComponent<Mana>();
     Name = "Mana Elixir";
     ID = "ME";
     Description = "Fully restores mana";
@@ -17,6 +17,7 @@
       this.TotalCount -= 1;
       playerMana.Value += Stats;
       GetComponent<InventorySlot>().Qty.text = TotalCount.ToString();
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.ManaRegen);
     }
     CheckCount();
   }

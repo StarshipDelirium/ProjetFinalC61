@@ -46,22 +46,26 @@ public class Possessed : MonoBehaviour
   public MovementController MovementController;
   public LevelBoss LevelBoss;
   public Health Health { get; private set; }
-  public float StunnedTimer = 1;
+  public SpriteRenderer Renderer;
+  public float StunnedTimer = 1f;
   public float AttackRange;
   public bool playerInRange = false;
   public BoxCollider2D playerCollider;
   private Vector3 StartPosition;
   private Player player;
+  public float NormalSpeed;
 
 
   private bool isHit;
+  private bool isOnScreen = false;
 
-  private void Start()
+  private void Awake()
   {
     Animator = GetComponent<Animator>();
-    LevelBoss = GetComponent<LevelBoss>();
     MovementController = GetComponent<MovementController>();
-    Health = GetComponent<Health>();
+    NormalSpeed = MovementController.MoveSpeed;
+    Renderer = GetComponent<SpriteRenderer>();
+    Health = gameObject.GetComponent<Health>();
     Health.OnHit += OnHit;
     Health.OnDeath += OnDeath;
     player = GameManager.Instance.Player;
@@ -75,7 +79,18 @@ public class Possessed : MonoBehaviour
   void Update()
   {
 
-    if (player.isActiveAndEnabled)
+
+    if (!isOnScreen && Renderer.isVisible)                                                                                            // since spawned off screen, wait until player enters area before moving
+    {
+      isOnScreen = true;
+      GameManager.Instance.Camera.GetComponent<FollowObject>().OnTriggerBossFight();                                          // stop camera from following player to enclose stage
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.BossScream);
+      GameManager.Instance.SoundManager.Play(SoundManager.Music.RequiemForTheBeast);
+
+
+    }
+
+    if (isOnScreen && CurrentAnimation != Animation.Death)
     {
       var playerPositionX = playerCollider.bounds.max.x;
       var bossPositionX = bossCollider.bounds.max.x;
@@ -102,7 +117,7 @@ public class Possessed : MonoBehaviour
       {
         FacingController.Facing = Facing.Left;
       }
-      else
+      else if (playerCollider.bounds.min.x > bossCollider.bounds.max.x)
       {
         FacingController.Facing = Facing.Right;
       }
@@ -115,47 +130,63 @@ public class Possessed : MonoBehaviour
       else if (AttackDelay <= 0 && playerInRange)
       {
         CurrentAnimation = Animation.Vomit;
+        GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Vomit);
         AttackDelay = 5;
       }
 
       if (isHit && StunnedTimer > 0)
       {
         StunnedTimer -= Time.deltaTime;
+        isHit = true;
+        Animator.enabled = false;
+
       }
       else if (isHit && StunnedTimer <= 0)
       {
         isHit = false;
-        StunnedTimer = 1;
+        StunnedTimer = 1f;
         Animator.enabled = true;
+        MovementController.MoveSpeed = NormalSpeed;
       }
     }
   }
 
   public void OnHit(Health health)
   {
-    Flash flash = gameObject.GetComponent<Flash>();                 // if enemy is hit, will stop moving and flash for 1 second
-    flash.Duration = 1.0f;
-    flash.StartFlash();
+    Debug.Log("HEALTH: " + Health.Value);
     isHit = true;
-    Animator.enabled = false;
+    MovementController.MoveSpeed = 0.0f;
+    Flash flash = gameObject.GetComponent<Flash>();                 // if enemy is hit, will stop moving and flash for 1 second
+    flash.Duration = 1f;
+    flash.StartFlash();
+
+    GameManager.Instance.SoundManager.Play(SoundManager.Sfx.BossHit);
   }
 
   public void OnDeath(Health health)
   {
+    GameManager.Instance.SoundManager.Play(SoundManager.Sfx.BossScream);
+    Animator.SetBool("isDead", true);
+    MovementController.MoveSpeed = 0.0f;
     CurrentAnimation = Animation.Death;
-    bossCollider.isTrigger = false;
+
+
   }
 
   public void OnDeathComplete()
   {
+
     Fade fade = gameObject.AddComponent<Fade>();
-    fade.FadeOutTime = 2;
+    fade.FadeOutTime = 5;
     fade.StartFade();
     fade.DestroyOnFadeOut = true;
+    GameManager.Instance.Camera.GetComponent<FollowObject>().OnBossKilled();                                                // resume camera follow
+    GameManager.Instance.Victory();
   }
 
   public void OnAttackComplete()
   {
     CurrentAnimation = Animation.Idle;
   }
+
 }

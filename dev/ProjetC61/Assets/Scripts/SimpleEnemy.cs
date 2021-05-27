@@ -44,7 +44,7 @@ public class SimpleEnemy : MonoBehaviour
 
   private void OnHit(Health health)
   {
-    //Play hit sound
+    GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Hit);
     Flash flash = gameObject.GetComponent<Flash>();                 // if enemy is hit, will stop moving and flash for 1 second
     flash.Duration = 1.0f;
     flash.StartFlash();
@@ -55,6 +55,18 @@ public class SimpleEnemy : MonoBehaviour
 
   private void OnDeath(Health health)
   {
+    float LootChance = Random.Range(0.0f, 1.0f);
+
+    if (LootChance < 0.10)
+    {
+      GameManager.Instance.PrefabManager.Spawn(PrefabManager.Usable.HealthPotion, gameObject.transform.position, gameObject.transform.rotation);              // 10% chance of dropping Health Potion on death
+    }
+    else if (LootChance > 0.95)
+    {
+      GameManager.Instance.PrefabManager.Spawn(PrefabManager.Usable.ManaPotion, gameObject.transform.position, gameObject.transform.rotation);                // 5% chance mana potion
+    }
+
+    GameManager.Instance.SoundManager.Play(SoundManager.Sfx.EnemyDeath);
 
     Flash flash = gameObject.GetComponent<Flash>();
     flash.StartFlash();

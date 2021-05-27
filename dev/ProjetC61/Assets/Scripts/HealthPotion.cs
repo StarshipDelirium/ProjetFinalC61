@@ -4,7 +4,7 @@
 
   private void Start()
   {
-    playerHealth = GameManager.Instance.Player.GetComponent<Health>();
+    playerHealth = FindObjectOfType<Player>().GetComponent<Health>();
     Name = "Health Potion";
     ID = "HP";
     Description = "Restores 5 HP";
@@ -19,9 +19,11 @@
   {
     if (TotalCount > 0)
     {
+
       this.TotalCount -= 1;
       playerHealth.Value += Stats;
       GetComponent<InventorySlot>().Qty.text = TotalCount.ToString();
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.HealthRegen);
     }
 
     CheckCount();

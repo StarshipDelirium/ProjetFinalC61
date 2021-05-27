@@ -65,6 +65,7 @@ public class SaveCheckpoint : MonoBehaviour, IInteractable, ISaveable
   }
   public void Save()
   {
+    GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Save);
     GameManager.Instance.SaveLoadManager.SaveGameData(this.ID);
     GameManager.Instance.PrefabManager.Spawn(PrefabManager.Vfx.SaveFX, VFX.position, gameObject.transform.rotation);
     FindObjectOfType<DialogueManager>().DisplayNextSentence();

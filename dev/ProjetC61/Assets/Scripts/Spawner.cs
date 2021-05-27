@@ -65,6 +65,7 @@ public class Spawner : MonoBehaviour
         GameManager.Instance.PrefabManager.Spawn(PrefabManager.Enemy.Skeleton, SpawnPoint.position, transform.rotation);
         CurrentAnimation = Animation.Summon;
         spawnTimer = 5;
+        GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Spawner);
       }
     }
 
@@ -80,6 +81,28 @@ public class Spawner : MonoBehaviour
 
   private void OnDeath(Health health)
   {
+    float LootChance = Random.Range(0.0f, 1.0f);
+
+    if (LootChance < 0.40)
+    {
+      GameManager.Instance.PrefabManager.Spawn(PrefabManager.Usable.HealthElixir, gameObject.transform.position, gameObject.transform.rotation);              // 40% chance of dropping Health Elixir on death
+    }
+    else if (LootChance > 0.40 && LootChance < 0.80)
+    {
+      GameManager.Instance.PrefabManager.Spawn(PrefabManager.Usable.ManaPotion, gameObject.transform.position, gameObject.transform.rotation);                // 40% chance Mana Elixir
+    }
+    else
+    {
+      Vector3 dropPosition = gameObject.transform.position;                                                                                                   // 20% chance of dropping both elixirs
+      float xHE = dropPosition.x - 0.5f;
+      float xME = dropPosition.x + 0.5f;
+
+      dropPosition.x = xHE;
+      GameManager.Instance.PrefabManager.Spawn(PrefabManager.Usable.HealthElixir, dropPosition, gameObject.transform.rotation);
+
+      dropPosition.x = xME;
+      GameManager.Instance.PrefabManager.Spawn(PrefabManager.Usable.ManaPotion, dropPosition, gameObject.transform.rotation);
+    }
 
     CurrentAnimation = Animation.Destruct;
   }

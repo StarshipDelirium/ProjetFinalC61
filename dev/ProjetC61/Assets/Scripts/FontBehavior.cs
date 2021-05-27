@@ -42,11 +42,13 @@ public class FontBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
   }
   public void OnPointerEnter(PointerEventData eventData)
   {
+
     if (!isDisabled)
     {
       TextLabel.font = SelectedFont;
       TextLabel.color = selectedColor;
       TextLabel.fontSize = selectedSize;
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Hover);
     }
     else if (!gameObject.CompareTag("LoadGame"))                                                     // if no save file, only apply OnHover mouse behaviour to non Load options
     {

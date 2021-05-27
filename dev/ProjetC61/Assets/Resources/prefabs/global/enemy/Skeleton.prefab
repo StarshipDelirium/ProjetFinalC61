@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Max: 2
-  StartValue: 10
+  StartValue: 2
 --- !u!114 &3294853809927844078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 3981531025573417136}
-  InitialFacing: -1
+  InitialFacing: 1
 --- !u!114 &7411113641255773938
 MonoBehaviour:
   m_ObjectHideFlags: 0

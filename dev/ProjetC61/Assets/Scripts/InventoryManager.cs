@@ -34,6 +34,7 @@ public class InventoryManager : MonoBehaviour
   }
   public void CheckInventory(string newItemID)
   {
+    Debug.Log("ITEM ID: " + newItemID);
     bool hasThisItem = false;
     foreach (InventorySlot slot in Slots)
     {
@@ -85,8 +86,8 @@ public class InventoryManager : MonoBehaviour
             slot.GetComponent<InventorySlot>().Icon.sprite = ManaElixir;
             break;
           case "CK":                                              // Cemetery Key
-            slot.gameObject.AddComponent<ManaElixir>();
-            slot.GetComponent<InventorySlot>().Icon.sprite = ManaElixir;
+            slot.gameObject.AddComponent<CemeteryKey>();
+            slot.GetComponent<InventorySlot>().Icon.sprite = CemeteryKey;
             break;
           default:
             break;
@@ -140,8 +141,12 @@ public class InventoryManager : MonoBehaviour
               Destroy(mp);
               break;
             case "ME":
+              ManaElixir me = slot.gameObject.GetComponent<ManaElixir>();
+              Destroy(me);
               break;
             case "CK":
+              CemeteryKey ck = slot.gameObject.GetComponent<CemeteryKey>();
+              Destroy(ck);
               break;
             default:
               break;
@@ -168,23 +173,19 @@ public class InventoryManager : MonoBehaviour
     {
       GameManager.Instance.PauseGame();
       Animator.SetBool("isOpen", true);
-      Debug.Log("INVENTORY OPEN");
       onScreen = true;
     }
     else
     {
       CloseInventory();
     }
-
   }
 
   public void CloseInventory()
   {
     Animator.SetBool("isOpen", false);
     onScreen = false;
-    Debug.Log("INVENTORY CLOSED");
     GameManager.Instance.ResumeGame();
-
   }
 
   public void DisplayItemInfo(Item item)
@@ -225,6 +226,7 @@ public class InventoryManager : MonoBehaviour
   {
     if (onScreen)
     {
+      GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Select);
       selectedItem.Use();
     }
   }
