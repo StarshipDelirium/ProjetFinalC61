@@ -4,7 +4,7 @@
 
   private void Start()
   {
-    playerHealth = GameManager.Instance.Player.GetComponent<Health>();
+    playerHealth = FindObjectOfType<Player>().GetComponent<Health>();
     Name = "Health Elixir";
     ID = "HE";
     Description = "Fully restores health";

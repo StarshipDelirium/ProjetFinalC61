@@ -5,7 +5,7 @@
 
   private void Start()
   {
-    playerMana = GameManager.Instance.Player.GetComponent<Mana>();
+    playerMana = FindObjectOfType<Player>().GetComponent<Mana>();
     Name = "Mana Potion";
     ID = "MP";
     Description = "Restores 5 mana";

@@ -300,8 +300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5fb90e76900dc4e9cc30e1d19f660d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Max: 3
-  StartValue: 3
+  Max: 10
+  StartValue: 10
 --- !u!114 &7362322567692774967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
   MovementController: {fileID: 2373549162459092984}
   LevelBoss: {fileID: 6743085344324662762}
   Renderer: {fileID: 277894645817131666}
-  StunnedTimer: 1.5
+  StunnedTimer: 1
   AttackRange: 1.3
   playerInRange: 0
   playerCollider: {fileID: 377761947373174658, guid: be8b09cf6867bcb4bacaff8dc8f60c57,

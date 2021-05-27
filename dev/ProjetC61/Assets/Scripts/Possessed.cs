@@ -47,7 +47,7 @@ public class Possessed : MonoBehaviour
   public LevelBoss LevelBoss;
   public Health Health { get; private set; }
   public SpriteRenderer Renderer;
-  public float StunnedTimer = 1.5f;
+  public float StunnedTimer = 1f;
   public float AttackRange;
   public bool playerInRange = false;
   public BoxCollider2D playerCollider;
@@ -65,7 +65,7 @@ public class Possessed : MonoBehaviour
     MovementController = GetComponent<MovementController>();
     NormalSpeed = MovementController.MoveSpeed;
     Renderer = GetComponent<SpriteRenderer>();
-    Health = GetComponent<Health>();
+    Health = gameObject.GetComponent<Health>();
     Health.OnHit += OnHit;
     Health.OnDeath += OnDeath;
     player = GameManager.Instance.Player;
@@ -90,7 +90,7 @@ public class Possessed : MonoBehaviour
 
     }
 
-    if (isOnScreen)
+    if (isOnScreen && CurrentAnimation != Animation.Death)
     {
       var playerPositionX = playerCollider.bounds.max.x;
       var bossPositionX = bossCollider.bounds.max.x;
@@ -137,12 +137,14 @@ public class Possessed : MonoBehaviour
       if (isHit && StunnedTimer > 0)
       {
         StunnedTimer -= Time.deltaTime;
+        isHit = true;
+        Animator.enabled = false;
 
       }
       else if (isHit && StunnedTimer <= 0)
       {
         isHit = false;
-        StunnedTimer = 1.5f;
+        StunnedTimer = 1f;
         Animator.enabled = true;
         MovementController.MoveSpeed = NormalSpeed;
       }
@@ -152,29 +154,33 @@ public class Possessed : MonoBehaviour
   public void OnHit(Health health)
   {
     Debug.Log("HEALTH: " + Health.Value);
+    isHit = true;
     MovementController.MoveSpeed = 0.0f;
     Flash flash = gameObject.GetComponent<Flash>();                 // if enemy is hit, will stop moving and flash for 1 second
-    flash.Duration = 1.5f;
+    flash.Duration = 1f;
     flash.StartFlash();
-    isHit = true;
-    Animator.enabled = false;
+
     GameManager.Instance.SoundManager.Play(SoundManager.Sfx.BossHit);
   }
 
   public void OnDeath(Health health)
   {
-    CurrentAnimation = Animation.Death;
     GameManager.Instance.SoundManager.Play(SoundManager.Sfx.BossScream);
+    Animator.SetBool("isDead", true);
+    MovementController.MoveSpeed = 0.0f;
+    CurrentAnimation = Animation.Death;
+
 
   }
 
   public void OnDeathComplete()
   {
-    GameManager.Instance.Camera.GetComponent<FollowObject>().OnBossKilled();                                                // resume camera follow
+
     Fade fade = gameObject.AddComponent<Fade>();
-    fade.FadeOutTime = 2;
+    fade.FadeOutTime = 5;
     fade.StartFade();
     fade.DestroyOnFadeOut = true;
+    GameManager.Instance.Camera.GetComponent<FollowObject>().OnBossKilled();                                                // resume camera follow
   }
 
   public void OnAttackComplete()

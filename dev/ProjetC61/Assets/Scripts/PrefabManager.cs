@@ -33,8 +33,8 @@ public class PrefabManager : MonoBehaviour
 
   public enum Vfx
   {
-    ElectricImpact,
     Explosion,                    // Poolable
+    Impact,
     SaveFX,
 
     Count

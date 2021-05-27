@@ -3,7 +3,7 @@
 public class PickUp : MonoBehaviour
 {
   private string itemType;
-  private void Awake()
+  private void Start()
   {
     itemType = gameObject.tag;
   }

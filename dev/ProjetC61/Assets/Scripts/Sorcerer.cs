@@ -61,11 +61,6 @@ public class Sorcerer : SimpleEnemy
   // Update is called once per frame
   void Update()
   {
-    if (!Renderer.isVisible)                                                            // destroy object once it is off screen
-    {
-      Destroy(gameObject);
-    }
-
 
     if (FireballDelay > 5)
     {

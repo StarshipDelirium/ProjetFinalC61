@@ -3,7 +3,7 @@
   private Mana playerMana;
   private void Start()
   {
-    playerMana = GameManager.Instance.Player.GetComponent<Mana>();
+    playerMana = FindObjectOfType<Player>().GetComponent<Mana>();
     Name = "Mana Elixir";
     ID = "ME";
     Description = "Fully restores mana";
@@ -14,7 +14,6 @@
   {
     if (TotalCount > 0)
     {
-
       this.TotalCount -= 1;
       playerMana.Value += Stats;
       GetComponent<InventorySlot>().Qty.text = TotalCount.ToString();

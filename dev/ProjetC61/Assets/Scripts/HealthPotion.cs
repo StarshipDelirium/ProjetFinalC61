@@ -4,7 +4,7 @@
 
   private void Start()
   {
-    playerHealth = GameManager.Instance.Player.GetComponent<Health>();
+    playerHealth = FindObjectOfType<Player>().GetComponent<Health>();
     Name = "Health Potion";
     ID = "HP";
     Description = "Restores 5 HP";

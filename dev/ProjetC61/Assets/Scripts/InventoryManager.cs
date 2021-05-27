@@ -85,8 +85,8 @@ public class InventoryManager : MonoBehaviour
             slot.GetComponent<InventorySlot>().Icon.sprite = ManaElixir;
             break;
           case "CK":                                              // Cemetery Key
-            slot.gameObject.AddComponent<ManaElixir>();
-            slot.GetComponent<InventorySlot>().Icon.sprite = ManaElixir;
+            slot.gameObject.AddComponent<CemeteryKey>();
+            slot.GetComponent<InventorySlot>().Icon.sprite = CemeteryKey;
             break;
           default:
             break;
@@ -140,8 +140,12 @@ public class InventoryManager : MonoBehaviour
               Destroy(mp);
               break;
             case "ME":
+              ManaElixir me = slot.gameObject.GetComponent<ManaElixir>();
+              Destroy(me);
               break;
             case "CK":
+              CemeteryKey ck = slot.gameObject.GetComponent<CemeteryKey>();
+              Destroy(ck);
               break;
             default:
               break;
@@ -168,7 +172,6 @@ public class InventoryManager : MonoBehaviour
     {
       GameManager.Instance.PauseGame();
       Animator.SetBool("isOpen", true);
-      Debug.Log("INVENTORY OPEN");
       onScreen = true;
     }
     else
@@ -182,7 +185,6 @@ public class InventoryManager : MonoBehaviour
   {
     Animator.SetBool("isOpen", false);
     onScreen = false;
-    Debug.Log("INVENTORY CLOSED");
     GameManager.Instance.ResumeGame();
 
   }
@@ -247,6 +249,8 @@ public class InventoryManager : MonoBehaviour
   {
     Dictionary<string, int> currentInventory = new Dictionary<string, int>();                 // create Dictionary of itemID and quantity on hand for save file
 
+    Debug.Log("SLOTS: " + Slots.ToString());
+
     foreach (InventorySlot slot in Slots)
     {
       if (slot.hasItem)
@@ -255,6 +259,7 @@ public class InventoryManager : MonoBehaviour
 
         string itemID = item.ID;
         int qty = item.TotalCount;
+        Debug.Log("ITEM " + itemID + " " + qty);
 
         currentInventory.Add(itemID, qty);
       }

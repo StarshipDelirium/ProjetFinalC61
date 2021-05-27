@@ -64,25 +64,17 @@ public class ElectroBall : MonoBehaviour
 
   private void OnTriggerEnter2D(Collider2D collision)
   {
-
-    Debug.Log("TRIGGER ENTER");
     if (!hasHit)
     {
       Health health = collision.GetComponentInParent<Health>();
       health.Value -= damage;
+      hasHit = true;
     }
-
-
-
   }
   private void OnTriggerStay2D(Collider2D collision)
   {
-    Debug.Log("TRIGGER STAY");
-
-
-    PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Vfx.ElectricImpact), gameObject.transform.position, gameObject.transform.rotation);
+    PoolManager.Spawn(GameManager.Instance.PrefabManager.Spawn(PrefabManager.Vfx.Impact), gameObject.transform.position, gameObject.transform.rotation);
     PoolManager.Reclaim(gameObject);          // return fireball to parent pool
-
 
   }
 
