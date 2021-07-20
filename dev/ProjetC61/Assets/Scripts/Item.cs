@@ -13,7 +13,7 @@ public class Item : MonoBehaviour
   {
     if (TotalCount == 0)
     {
-      FindObjectOfType<InventoryManager>().RemoveItem(ID);
+      FindObjectOfType<InventoryManager>().RemoveItem(this.ID);
     }
   }
 }

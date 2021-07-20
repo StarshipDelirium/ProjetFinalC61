@@ -45,10 +45,11 @@ public class InventoryManager : MonoBehaviour
 
         if (newItemID.Equals(slotItem.ID))
         {
-          ++slotItem.TotalCount;                        // increment same item count if already in inventory
+          slotItem.TotalCount += 1;                        // increment same item count if already in inventory
           slot.Qty.text = slotItem.TotalCount.ToString();
           hasThisItem = true;
           Debug.Log(slotItem.Name + " " + slotItem.TotalCount);
+          break;
         }
       }
     }
@@ -161,7 +162,6 @@ public class InventoryManager : MonoBehaviour
           var tempColor = slot.Icon.color;                                              // set alpha to 0 to avoid white image over button
           tempColor.a = 0f;
           slot.Icon.color = tempColor;
-
           break;
         }
       }
@@ -196,6 +196,7 @@ public class InventoryManager : MonoBehaviour
 
     if (item.IsConsumable)
     {
+      Debug.Log("IS CONSUMABLE");
       UseButton.gameObject.SetActive(true);
     }
     else
@@ -226,6 +227,7 @@ public class InventoryManager : MonoBehaviour
   {
     if (onScreen)
     {
+      Debug.Log("USE ITEM");
       GameManager.Instance.SoundManager.Play(SoundManager.Sfx.Select);
       selectedItem.Use();
     }

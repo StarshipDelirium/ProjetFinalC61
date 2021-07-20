@@ -8,7 +8,7 @@ public class InventorySlot : MonoBehaviour
   public Text Qty;
   public Button Button;
 
-  private void Start()
+  private void Awake()
   {
     Button button = Button.GetComponent<Button>();
     button.onClick.AddListener(OnSlotClicked);
@@ -16,7 +16,7 @@ public class InventorySlot : MonoBehaviour
 
   private void OnSlotClicked()
   {
-    Item item = GetComponent<Item>();
+    Item item = gameObject.GetComponent<Item>();
 
     if (item != null)
     {

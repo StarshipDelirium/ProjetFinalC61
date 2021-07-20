@@ -1,15 +1,14 @@
 ﻿public class HealthElixir : Item
 {
-  private Health playerHealth;
+  public Health playerHealth;
 
-  private void Start()
+  private void Awake()
   {
-    playerHealth = FindObjectOfType<Player>().GetComponent<Health>();
+
     Name = "Health Elixir";
     ID = "HE";
     Description = "Fully restores health";
     Stats = playerHealth.Max;
-    TotalCount = 0;
     IsConsumable = true;
 
   }
@@ -19,6 +18,7 @@
     {
 
       this.TotalCount -= 1;
+      playerHealth = FindObjectOfType<Player>().GetComponent<Health>();
       playerHealth.Value += Stats;
       GetComponent<InventorySlot>().Qty.text = TotalCount.ToString();
       GameManager.Instance.SoundManager.Play(SoundManager.Sfx.HealthRegen);

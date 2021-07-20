@@ -1,15 +1,14 @@
 ﻿public class HealthPotion : Item
 {
-  private Health playerHealth;
+  public Health playerHealth;
 
-  private void Start()
+  private void OnEnable()
   {
-    playerHealth = FindObjectOfType<Player>().GetComponent<Health>();
+
     Name = "Health Potion";
     ID = "HP";
     Description = "Restores 5 HP";
     Stats = 5;
-    TotalCount = 0;
     IsConsumable = true;
 
   }
@@ -21,6 +20,7 @@
     {
 
       this.TotalCount -= 1;
+      playerHealth = FindObjectOfType<Player>().GetComponent<Health>();
       playerHealth.Value += Stats;
       GetComponent<InventorySlot>().Qty.text = TotalCount.ToString();
       GameManager.Instance.SoundManager.Play(SoundManager.Sfx.HealthRegen);
